@@ -1,0 +1,13 @@
+Source: regolith-i3xrocks-config
+Section: x11
+Priority: optional
+Maintainer: Ken Gilmer <kgilmer@gmail.com>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.1.2
+Homepage: https://github.com/regolith-linux/regolith-desktop
+Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
+
+Package: regolith-i3xrocks-config
+Architecture: any
+Depends: ${misc:Depends}, sysstat, acpi, xrescat
+Description: Regolith configuration for i3xrocks launcher

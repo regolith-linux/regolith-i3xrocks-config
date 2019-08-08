@@ -1,0 +1,3 @@
+#!/bin/sh
+DATE_FORMAT=`xrescat i3xrocks.date.format "+ %m-%d %H:%M "`
+echo "<span font_desc='`xrescat i3xrocks.value.font`' color='`xrescat i3xrocks.value.color`'>`date "$DATE_FORMAT"`</span>"
