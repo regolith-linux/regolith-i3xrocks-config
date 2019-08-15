@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (1.8-1ubuntu1ppa1) disco; urgency=medium
+
+  * Stage scripts in /usr/share (thanks @leosunmo)
+  * Fix path of blocks 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Wed, 14 Aug 2019 23:40:34 -0700
+
 regolith-i3xrocks-config (1.7-1ubuntu1ppa1) disco; urgency=medium
 
   * Move from /usr/share to /etc/regolith/i3xrocks for consistency
