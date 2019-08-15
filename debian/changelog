@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.9-1ubuntu1ppa1) disco; urgency=medium
+
+  * i3xrocks conf needs to terminate with linefeed. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Thu, 15 Aug 2019 08:07:20 -0700
+
 regolith-i3xrocks-config (1.8-1ubuntu1ppa1) disco; urgency=medium
 
   * Stage scripts in /usr/share (thanks @leosunmo)
