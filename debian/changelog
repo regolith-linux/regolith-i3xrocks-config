@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (1.7-1ubuntu1ppa1) disco; urgency=medium
+
+  * Move from /usr/share to /etc/regolith/i3xrocks for consistency
+  * Rename config file from i3xrocks.conf to config. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Wed, 14 Aug 2019 21:48:48 -0700
+
 regolith-i3xrocks-config (1.6-1ubuntu1ppa2) bionic; urgency=medium
 
   * Add acpi as dependency for default battery blocklet. 

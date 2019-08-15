@@ -2,13 +2,13 @@ INSTALL = install
 DESTDIR ?= /
 PREFIX  ?= $(DESTDIR)
 
-TARGET = $(PREFIX)/usr/share/i3xrocks
+TARGET = $(PREFIX)/etc/regolith/i3xrocks
 
 all:
 	@echo "Nothing to do"
 
 install:
-	$(INSTALL) -m0644 -D i3xrocks.conf $(TARGET)/i3xrocks.conf
+	$(INSTALL) -m0644 -D i3xrocks.conf $(TARGET)/config
 	$(INSTALL) -m0755 -D scripts/bandwidth $(TARGET)/bandwidth
 	$(INSTALL) -m0755 -D scripts/battery $(TARGET)/battery
 	$(INSTALL) -m0755 -D scripts/cpu_usage $(TARGET)/cpu_usage
