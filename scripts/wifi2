@@ -1,6 +1,8 @@
 #!/bin/bash
 
-INTERFACE="${BLOCK_INSTANCE:-wlan0}"
+DEFAULT_DEVICE=$(cat /proc/net/wireless | perl -ne '/(\w+):/ && print $1')
+
+INTERFACE="${BLOCK_INSTANCE:-${DEFAULT_DEVICE}}"
 
 # As per #36 -- It is transparent: e.g. if the machine has no battery or wireless
 # connection (think desktop), the corresponding block should not be displayed.
