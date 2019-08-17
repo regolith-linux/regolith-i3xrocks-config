@@ -3,7 +3,7 @@
 # Copyright (C) 2016 James Murphy
 # Licensed under the GPL version 2 only
 #
-# Modofied by Leo Palmer 2019
+# Modified by Leo Palmer 2019
 #
 # A battery indicator blocklet script for i3blocks
 
@@ -104,17 +104,31 @@ else:
             return "#FFFF66"
         return "#FFFFFF"
 
-    if os.environ.get('percent_color'):
-        form =  '<span color="{}">{}%</span>'
-        fulltext += form.format(color(percentleft), percentleft)
+    # make sure we use proper short vs full text
+    shorttext = fulltext
+    if os.environ.get('icon_only'):
+        if os.environ.get('percent_color'):
+            form = '<span color="{}">{}%</span>'
+            fulltext = form.format(color(percentleft),fulltext.strip())
+            shorttext = form.format(color(percentleft),shorttext.strip())
+        else:
+            fulltext = fulltext.strip()
+            shorttext = shorttext.strip()
+
     else:
-        form =  '<span>{}%</span>'
-        fulltext += form.format(percentleft)
-    if os.environ.get('display_time_left'):
-        fulltext += timeleft
-    
+        if os.environ.get('percent_color'):
+            form =  '<span color="{}">{}%</span>'
+            fulltext += form.format(color(percentleft), percentleft)
+            shorttext += form.format(color(percentleft), percentleft)
+        else:
+            form =  '<span>{}%</span>'
+            fulltext += form.format(percentleft)
+            shorttext += form.format(percentleft)
+        if os.environ.get('display_time_left'):
+            fulltext += timeleft
+
 
 print(fulltext)
-print(fulltext)
+print(shorttext)
 if percentleft < 10:
     exit(33)
