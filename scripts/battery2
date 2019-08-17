@@ -9,6 +9,7 @@
 
 import re
 from subprocess import check_output
+import os
 
 status = check_output(['acpi'], universal_newlines=True)
 
@@ -103,9 +104,15 @@ else:
             return "#FFFF66"
         return "#FFFFFF"
 
-    form =  '<span color="{}">{}%</span>'
-    fulltext += form.format(color(percentleft), percentleft)
-    fulltext += timeleft
+    if os.environ.get('percent_color'):
+        form =  '<span color="{}">{}%</span>'
+        fulltext += form.format(color(percentleft), percentleft)
+    else:
+        form =  '<span>{}%</span>'
+        fulltext += form.format(percentleft)
+    if os.environ.get('display_time_left'):
+        fulltext += timeleft
+    
 
 print(fulltext)
 print(fulltext)
