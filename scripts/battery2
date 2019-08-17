@@ -14,6 +14,8 @@ import os
 status = check_output(['acpi'], universal_newlines=True)
 default_color = os.getenv('color', check_output(['/usr/bin/xrescat', 'i3xrocks.value.color'], universal_newlines=True))
 default_label_color = os.getenv('label_color', check_output(['/usr/bin/xrescat', 'i3xrocks.label.color'], universal_newlines=True))
+valuefont = os.getenv('font', check_output(['/usr/bin/xrescat', 'i3xrocks.value.font'], universal_newlines=True))
+
 
 if not status:
     print("")
@@ -115,15 +117,16 @@ else:
             shorttext = shorttext.strip()
     else:
         if os.environ.get('percent_color'):
-            form =  '<span color="{}">{}{}</span>'
-            fulltext += form.format(color(percentleft), percentleft, "%")
-            shorttext = form.format(color(percentleft), percentleft, "")
+            form =  '<span font_desc="{}" color="{}">{}{}</span>'
+            fulltext += form.format(valuefont, color(percentleft), percentleft, "%")
+            shorttext = form.format(valuefont, color(percentleft), percentleft, "")
         else:
-            form =  '<span>{}{}</span>'
-            fulltext += form.format(percentleft, "%")
-            shorttext = form.format(percentleft, "%")
+            form =  '<span font_desc="{}" >{}{}</span>'
+            fulltext += form.format(valuefont, percentleft, "%")
+            shorttext = form.format(valuefont, percentleft, "%")
         if os.environ.get('display_time_left'):
-            fulltext += timeleft
+            form =  '<span font_desc="{}">{}</span>'
+            fulltext += form.format(valuefont, timeleft)
 
 print(fulltext)
 print(shorttext)

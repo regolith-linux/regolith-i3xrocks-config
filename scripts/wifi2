@@ -4,9 +4,10 @@ DEFAULT_DEVICE=$(cat /proc/net/wireless | perl -ne '/(\w+):/ && print $1')
 
 INTERFACE="${BLOCK_INSTANCE:-${DEFAULT_DEVICE}}"
 
-VALUE_COLOR=${color:=$(xrescat i3xrocks.value.color)}
-LABEL_COLOR=${label_color:=$(xrescat i3xrocks.label.color)}
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color)}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color)}
 
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
 
 # As per #36 -- It is transparent: e.g. if the machine has no battery or wireless
 # connection (think desktop), the corresponding block should not be displayed.
@@ -16,5 +17,5 @@ LABEL_COLOR=${label_color:=$(xrescat i3xrocks.label.color)}
 ESSID=$(/sbin/iwconfig $INTERFACE | perl -n -e'/ESSID:"(.*?)"/ && print $1')
 
 
-echo "<span color=\"${LABEL_COLOR}\"> </span><span color=\"${VALUE_COLOR}\">$ESSID</span>" # full text
-echo "<span color=\"${VALUE_COLOR}\">$ESSID</span>" # short text
+echo "<span color=\"${LABEL_COLOR}\"> </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$ESSID</span>" # full text
+echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$ESSID</span>" # short text
