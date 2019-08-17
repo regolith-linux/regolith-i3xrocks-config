@@ -12,5 +12,5 @@ INTERFACE="${BLOCK_INSTANCE:-${DEFAULT_DEVICE}}"
 ESSID=$(/sbin/iwconfig $INTERFACE | perl -n -e'/ESSID:"(.*?)"/ && print $1')
 
 
-echo " $ESSID" # full text
-echo $ESSID # short text
+echo "<span> $ESSID</span>" # full text
+echo "<span>$ESSID</span>" # short text

@@ -10,6 +10,7 @@ use strict;
 use warnings;
 use utf8;
 use Getopt::Long;
+use open ':std', ':encoding(UTF-8)';
 
 # default values
 my $t_warn = 50;
@@ -40,10 +41,11 @@ close(MPSTAT);
 
 $cpu_usage eq -1 and die 'Can\'t find CPU information';
 
-
+# Get color values
+my $label_color = $ENV{'label_color'} || `xrescat i3xrocks.label.color`;
 
 # Print short_text, full_text
-printf "<span font_desc='%s' color='%s'>%2d%%</span>\n", `xrescat i3xrocks.value.font`, `xrescat i3xrocks.value.color`, $cpu_usage;
-printf "<span font_desc='%s' color='%s'>%2d%%</span>\n", `xrescat i3xrocks.value.font`, `xrescat i3xrocks.value.color`, $cpu_usage;
+printf "<span color='%s'></span><span color='%s'>%2d%%</span>\n", $label_color, `xrescat i3xrocks.value.color`, $cpu_usage;
+printf "<span color='%s'>%2d%%</span>\n", `xrescat i3xrocks.value.color`, $cpu_usage;
 
 exit 0;

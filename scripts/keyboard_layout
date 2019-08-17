@@ -1,5 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-gsettings get org.gnome.desktop.input-sources mru-sources | sed -r "s/\S*\s'([^']+).*/\1/"
-gsettings monitor org.gnome.desktop.input-sources mru-sources | sed -u -r "s/\S*\s\S*\s'([^']+).*/\1/"
+VALUE_COLOR=${color:=$(xrescat i3xrocks.value.color)}
+
+PANGO_START="<span color='${VALUE_COLOR}' font_desc='$(xrescat i3xrocks.value.font)'>"
+PANGO_END="</span>"
+
+gsettings get org.gnome.desktop.input-sources mru-sources | sed -r "s#\S*\s'([^']+).*#$PANGO_START\1$PANGO_END#"
+gsettings monitor org.gnome.desktop.input-sources mru-sources | sed -u -r "s#\S*\s\S*\s'([^']+).*#$PANGO_START\1$PANGO_END#"
 

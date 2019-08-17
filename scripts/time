@@ -1,3 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 DATE_FORMAT=`xrescat i3xrocks.date.format "+ %m-%d %H:%M "`
-echo "<span font_desc='`xrescat i3xrocks.value.font`' color='`xrescat i3xrocks.value.color`'>`date "$DATE_FORMAT"`</span>"
+LABEL_COLOR=${label_color:=$(xrescat i3xrocks.label.color)}
+VALUE_COLOR=${color:=$(xrescat i3xrocks.value.color)}
+echo "<span color='${LABEL_COLOR}' font='FontAwesome'></span><span color='${VALUE_COLOR}'>$(date "$DATE_FORMAT")</span>"

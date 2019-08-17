@@ -1,4 +1,14 @@
-#!/bin/sh
-nmcli -t connection show --active | awk -F ':' '
+#!/bin/bash
+
+CONNECTION=$(nmcli -t connection show --active | awk -F ':' '
 /tun0/{vpn="ON"} /vpn/{name=$1}
-END{if(vpn) printf("%s\n%s\n", name, vpn)}'
+END{if(vpn) printf("%s", name)}')
+
+LABEL="<span color=\"${label_color}\">vpn: </span>"
+
+if [[ -z "$CONNECTION" ]]; then
+    exit 0
+else
+   echo "${LABEL}<span color=\"${color}\">$CONNECTION</span>" # full text
+   echo "<span color=\"${color}\">ON</span>" # short text
+fi

@@ -12,11 +12,13 @@ from subprocess import check_output
 import os
 
 status = check_output(['acpi'], universal_newlines=True)
+default_color = os.getenv('color', check_output(['/usr/bin/xrescat', 'i3xrocks.value.color'], universal_newlines=True))
+default_label_color = os.getenv('label_color', check_output(['/usr/bin/xrescat', 'i3xrocks.label.color'], universal_newlines=True))
 
 if not status:
-    # stands for no battery found
-    fulltext = "<span color='red'><span font='FontAwesome'>\uf00d \uf240</span></span>"
-    percentleft = 100
+    print("")
+    print("")
+    exit(0)
 else:
     # if there is more than one battery in one laptop, the percentage left is 
     # available for each battery separately, although state and remaining 
@@ -45,13 +47,15 @@ else:
                 percentleft_batteries.append(p)
             commasplitstatus_batteries.append(commasplitstatus)
     state = state_batteries[0]
+    if state_batteries[0] == "Unknown":
+        state = state_batteries[1]
     commasplitstatus = commasplitstatus_batteries[0]
     if percentleft_batteries:
         percentleft = int(sum(percentleft_batteries)/len(percentleft_batteries))
     else:
         percentleft = 0
     
-    def battery_icon(percent):
+    def get_battery_icon(percent):
         if percent < 20:
             # exit code 33 will turn background red
             return "\uf244"
@@ -64,25 +68,28 @@ else:
         return "\uf240"
 
     # stands for charging
-    FA_LIGHTNING = "<span color='yellow'><span font='FontAwesome'>\uf0e7</span></span>"
+    FA_LIGHTNING = "\uf0e7"
 
     # stands for plugged in
-    FA_PLUG = "<span font='FontAwesome'>\uf1e6</span>"
+    FA_PLUG = "\uf1e6"
 
     # stands for unknown status of battery
-    FA_QUESTION = "<span font='FontAwesome'>\uf128</span>"
+    FA_QUESTION = "\uf128"
 
 
     if state == "Discharging":
-        fulltext = battery_icon(percentleft) + "   "
+        battery_icon = get_battery_icon(percentleft) + "  "
     elif state == "Full":
-        fulltext = FA_PLUG + " "
+        battery_icon = FA_PLUG + "  "
         timeleft = ""
     elif state == "Unknown":
-        fulltext = FA_QUESTION + " " + FA_BATTERY + " "
+        battery_icon = FA_QUESTION + "  " + get_battery_icon(percentleft) + "  "
         timeleft = ""
     else:
-        fulltext = FA_LIGHTNING + " " + FA_PLUG + " "
+        battery_icon = FA_LIGHTNING + " " + FA_PLUG + "  "
+
+    label_form = '<span color="{}" font="FontAwesome">{}</span>'
+    fulltext = label_form.format(default_label_color, battery_icon)
 
     def color(percent):
         if percent < 10:
@@ -94,15 +101,7 @@ else:
             return "#FF6600"
         if percent < 40:
             return "#FF9900"
-        if percent < 50:
-            return "#FFCC00"
-        if percent < 60:
-            return "#FFFF00"
-        if percent < 70:
-            return "#FFFF33"
-        if percent < 80:
-            return "#FFFF66"
-        return "#FFFFFF"
+        return default_color
 
     # make sure we use proper short vs full text even if they don't differ much
     shorttext = fulltext
@@ -125,7 +124,6 @@ else:
             shorttext = form.format(percentleft, "%")
         if os.environ.get('display_time_left'):
             fulltext += timeleft
-
 
 print(fulltext)
 print(shorttext)
