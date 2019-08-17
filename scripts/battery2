@@ -50,12 +50,12 @@ else:
         percentleft = int(sum(percentleft_batteries)/len(percentleft_batteries))
     else:
         percentleft = 0
-
+    
     def battery_icon(percent):
-        if percent < 10:
+        if percent < 20:
             # exit code 33 will turn background red
             return "\uf244"
-        if percent < 25:
+        if percent < 35:
             return "\uf243"
         if percent < 50:
             return "\uf242"
@@ -74,7 +74,7 @@ else:
 
 
     if state == "Discharging":
-        fulltext = battery_icon(percentleft) + " "
+        fulltext = battery_icon(percentleft) + "   "
     elif state == "Full":
         fulltext = FA_PLUG + " "
         timeleft = ""
@@ -104,26 +104,25 @@ else:
             return "#FFFF66"
         return "#FFFFFF"
 
-    # make sure we use proper short vs full text
+    # make sure we use proper short vs full text even if they don't differ much
     shorttext = fulltext
     if os.environ.get('icon_only'):
         if os.environ.get('percent_color'):
-            form = '<span color="{}">{}%</span>'
+            form = '<span color="{}">{}</span>'
             fulltext = form.format(color(percentleft),fulltext.strip())
             shorttext = form.format(color(percentleft),shorttext.strip())
         else:
             fulltext = fulltext.strip()
             shorttext = shorttext.strip()
-
     else:
         if os.environ.get('percent_color'):
-            form =  '<span color="{}">{}%</span>'
-            fulltext += form.format(color(percentleft), percentleft)
-            shorttext += form.format(color(percentleft), percentleft)
+            form =  '<span color="{}">{}{}</span>'
+            fulltext += form.format(color(percentleft), percentleft, "%")
+            shorttext = form.format(color(percentleft), percentleft, "")
         else:
-            form =  '<span>{}%</span>'
-            fulltext += form.format(percentleft)
-            shorttext += form.format(percentleft)
+            form =  '<span>{}{}</span>'
+            fulltext += form.format(percentleft, "%")
+            shorttext = form.format(percentleft, "%")
         if os.environ.get('display_time_left'):
             fulltext += timeleft
 
