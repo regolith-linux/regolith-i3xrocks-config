@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+#
+# Copyright (C) 2016 James Murphy
+# Licensed under the GPL version 2 only
+#
+# Modified by Leo Palmer 2019
+#
+# A battery indicator blocklet script for i3blocks
+
+import re
+from subprocess import check_output
+import os
+
+status = check_output(['acpi'], universal_newlines=True)
+default_color = os.getenv('color', check_output(['/usr/bin/xrescat', 'i3xrocks.value.color'], universal_newlines=True))
+default_label_color = os.getenv('label_color', check_output(['/usr/bin/xrescat', 'i3xrocks.label.color'], universal_newlines=True))
+valuefont = os.getenv('font', check_output(['/usr/bin/xrescat', 'i3xrocks.value.font'], universal_newlines=True))
+
+
+if not status:
+    print("")
+    print("")
+    exit(0)
+else:
+    # if there is more than one battery in one laptop, the percentage left is 
+    # available for each battery separately, although state and remaining 
+    # time for overall block is shown in the status of the first battery 
+    batteries = status.split("\n")
+    state_batteries=[]
+    commasplitstatus_batteries=[]
+    percentleft_batteries=[]
+    time = ""
+    for battery in batteries:
+        if battery!='':
+            state_batteries.append(battery.split(": ")[1].split(", ")[0])
+            commasplitstatus = battery.split(", ")
+            if not time:
+                time = commasplitstatus[-1].strip()
+                # check if it matches a time
+                time = re.match(r"(\d+):(\d+)", time)
+                if time:
+                    time = ":".join(time.groups())
+                    timeleft = " ({})".format(time)
+                else:
+                    timeleft = ""
+
+            p = int(commasplitstatus[1].rstrip("%\n"))
+            if p>0:
+                percentleft_batteries.append(p)
+            commasplitstatus_batteries.append(commasplitstatus)
+    # Default battery state to unknown
+    state = "Unknown"
+    # Loop over batteries
+    for s in state_batteries:
+        # If the battery is anything but unknown, use it
+        if s != "Unknown":
+            state = s
+            # If one battery is full and one is charging/discharging, we use that state
+            if s != "Full":
+                state = s
+    commasplitstatus = commasplitstatus_batteries[0]
+    if percentleft_batteries:
+        percentleft = int(sum(percentleft_batteries)/len(percentleft_batteries))
+    else:
+        percentleft = 0
+    
+    def get_battery_icon(percent):
+        if percent < 20:
+            # exit code 33 will turn background red
+            return "\uf244"
+        if percent < 35:
+            return "\uf243"
+        if percent < 50:
+            return "\uf242"
+        if percent < 75:
+            return "\uf241"
+        return "\uf240"
+
+    # stands for charging
+    FA_LIGHTNING = "\uf0e7"
+
+    # stands for plugged in
+    FA_PLUG = "\uf1e6"
+
+    # stands for unknown status of battery
+    FA_QUESTION = "\uf128"
+
+
+    if state == "Discharging":
+        battery_icon = get_battery_icon(percentleft) + "  "
+    elif state == "Full":
+        battery_icon = FA_PLUG + "  "
+        timeleft = ""
+    elif state == "Unknown":
+        battery_icon = FA_QUESTION + "  " + get_battery_icon(percentleft) + "  "
+        timeleft = ""
+    else:
+        battery_icon = FA_LIGHTNING + " " + FA_PLUG + "  "
+
+    label_form = '<span color="{}" font="FontAwesome">{}</span>'
+    fulltext = label_form.format(default_label_color, battery_icon)
+
+    def color(percent):
+        if os.environ.get('percent_color'):
+            if percent < 10:
+                # exit code 33 will turn background red
+                return "#FFFFFF"
+            if percent < 20:
+                return "#FF3300"
+            if percent < 30:
+                return "#FF6600"
+            if percent < 35:
+                return "#FCBD00"
+            return default_color
+        else:
+            return default_color
+
+    def gettimeleft():
+        if os.environ.get('display_time_left'):
+            return timeleft
+        return ""
+
+    # make sure we use proper short vs full text even if they don't differ much
+    shorttext = fulltext
+    if os.environ.get('icon_only'):
+        if os.environ.get('percent_color'):
+            form = '<span color="{}">{}</span>'
+            fulltext = form.format(color(percentleft),fulltext.strip())
+            shorttext = form.format(color(percentleft),shorttext.strip())
+        else:
+            fulltext = fulltext.strip()
+            shorttext = shorttext.strip()
+    else:
+        form =  '<span font_desc="{}" color="{}">{}{}{}</span>'
+        fulltext += form.format(valuefont, color(percentleft), percentleft, "%", gettimeleft())
+        shorttext = form.format(valuefont, color(percentleft), percentleft, "", "")
+
+
+print(fulltext)
+print(shorttext)
+if percentleft < 10:
+    exit(33)

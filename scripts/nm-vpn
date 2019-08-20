@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CONNECTION=$(nmcli -t connection show --active | awk -F ':' '
+/tun0/{vpn="ON"} /vpn/{name=$1}
+END{if(vpn) printf("%s", name)}')
+
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color)}
+VALUE_COLOR="${color:-$(xrescat i3xrocks.value.color)}"
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
+
+if [[ -z "$CONNECTION" ]]; then
+    exit 0
+else
+   echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">vpn: </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$CONNECTION</span>" # full text
+   echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">ON</span>" # short text
+fi
