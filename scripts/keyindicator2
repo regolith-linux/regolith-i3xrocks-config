@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+#
+# Copyright 2019 MerlinElMago 
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#Variables
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color)}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
+COLOR_ON="#4e9a06"
+COLOR_OFF="#222222"
+TOGGLE_OFF=""
+TOGGLE_ON=""
+KB_MASK=`xset -q | grep -o "mask:[\ 0-9]*$" | cut -d" " -f 3`
+
+#Set icon variables (can be overridden from the i3 config file)
+[[ -z "$caps_icon" ]] && CAPS_ICON="" || CAPS_ICON=$caps_icon
+[[ -z "$num_icon" ]] && NUM_ICON="" || NUM_ICON=$num_icon
+
+#Print the lines
+#Check the first bit of the mask (caps)
+if [[ $((KB_MASK & 1)) == 1 ]];then
+	echo -n "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\">${CAPS_ICON} </span> <span color=\"${COLOR_ON}\" font=\"FontAwesome\">${TOGGLE_ON} </span> "
+else
+	echo -n "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\">${CAPS_ICON} </span> <span color=\"${COLOR_OFF}\" font=\"FontAwesome\">${TOGGLE_OFF} </span> "
+fi
+
+#Now check the second bit of the mask (num)
+if [[ $(((KB_MASK & 2) >> 1)) == 1 ]];then
+	echo "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\">${NUM_ICON} </span> <span color=\"${COLOR_ON}\" font=\"FontAwesome\">${TOGGLE_ON} </span>"
+else
+	echo "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\">${NUM_ICON} </span> <span color=\"${COLOR_OFF}\" font=\"FontAwesome\">${TOGGLE_OFF} </span>"
+fi
