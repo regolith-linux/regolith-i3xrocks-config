@@ -1,4 +1,4 @@
-regolith-i3xrocks-config (1.10-1ubuntu1ppa1) disco; urgency=medium
+regolith-i3xrocks-config (1.11-1ubuntu1ppa1) disco; urgency=medium
 
   * Add missing battery2 and wifi2 blocklets. 
 
