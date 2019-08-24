@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.10-1ubuntu1ppa1) disco; urgency=medium
+
+  * Add missing battery2 and wifi2 blocklets. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Fri, 23 Aug 2019 20:54:50 -0700
+
 regolith-i3xrocks-config (1.9-1ubuntu1ppa1) disco; urgency=medium
 
   * i3xrocks conf needs to terminate with linefeed. 

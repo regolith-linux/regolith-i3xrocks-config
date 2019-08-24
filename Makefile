@@ -12,9 +12,11 @@ install:
 	$(INSTALL) -m0644 -D i3xrocks.conf $(CONF_TARGET)/config
 	$(INSTALL) -m0755 -D scripts/bandwidth $(SCRIPT_TARGET)/bandwidth
 	$(INSTALL) -m0755 -D scripts/battery $(SCRIPT_TARGET)/battery
+	$(INSTALL) -m0755 -D scripts/battery2 $(SCRIPT_TARGET)/battery2
 	$(INSTALL) -m0755 -D scripts/cpu_usage $(SCRIPT_TARGET)/cpu_usage
 	$(INSTALL) -m0755 -D scripts/disk $(SCRIPT_TARGET)/disk
 	$(INSTALL) -m0755 -D scripts/iface $(SCRIPT_TARGET)/iface
+	$(INSTALL) -m0755 -D scripts/keyboard_layout $(SCRIPT_TARGET)/keyboard_layout
 	$(INSTALL) -m0755 -D scripts/keyindicator $(SCRIPT_TARGET)/keyindicator
 	$(INSTALL) -m0755 -D scripts/load_average $(SCRIPT_TARGET)/load_average
 	$(INSTALL) -m0755 -D scripts/mediaplayer $(SCRIPT_TARGET)/mediaplayer
@@ -24,6 +26,7 @@ install:
 	$(INSTALL) -m0755 -D scripts/time $(SCRIPT_TARGET)/time
 	$(INSTALL) -m0755 -D scripts/volume $(SCRIPT_TARGET)/volume
 	$(INSTALL) -m0755 -D scripts/wifi $(SCRIPT_TARGET)/wifi
+	$(INSTALL) -m0755 -D scripts/wifi2 $(SCRIPT_TARGET)/wifi2
 
 uninstall:
 	rm -Rf $(SCRIPT_TARGET) $(CONF_TARGET)
