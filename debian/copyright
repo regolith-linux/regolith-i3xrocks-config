@@ -64,6 +64,15 @@ Files: scripts/wifi
 Copyright: Copyright (C) 2014 Alexander Keller <github@nycroth.com>
 License: GPL-3+
 
+Files: scripts/wifi2
+       scripts/battery2
+Copyright: Copyright (C) 2019 leo palmer sunmo <leo.sunmo@gmail.com>
+License: GPL-3+
+
+Files: scripts/keyindicator2 
+Copyright: Copyright 2019 MerlinElMago 
+License: GPL-3+
+
 Files: debian/*
 Copyright: 2019 Ken Gilmer <kgilmer@gmail.com>
 License: GPL-3.0+
