@@ -78,7 +78,7 @@ sub print_output {
                     if ($current_config_path =~ /(\w+).conf/) {
                         $current_config_name=$1;
                     } else {
-                        $current_config_name='unknow';
+                        $current_config_name='unknown';
                     }
                     # Get OpenVPN interface device name
                     open(CONFIG, '<', $current_config_path) or die "Can't read config file '$current_config_path': $!\n";
