@@ -9,5 +9,9 @@ Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
 
 Package: regolith-i3xrocks-config
 Architecture: any
-Depends: ${misc:Depends}, sysstat, acpi, xrescat
+Depends: ${misc:Depends}, 
+    sysstat, 
+    acpi,
+    network-manager,
+    xrescat
 Description: Regolith configuration for i3xrocks launcher

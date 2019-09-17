@@ -1,3 +1,15 @@
+regolith-i3xrocks-config (1.13-1ubuntu1~ppa4) disco; urgency=medium
+
+  * Add network-manager dependency for wifi blocklet. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Tue, 17 Sep 2019 07:14:08 -0700
+
+regolith-i3xrocks-config (1.13-1ubuntu1~ppa3) disco; urgency=medium
+
+  * Package @leosunmo's fix in previous commit. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Tue, 17 Sep 2019 07:09:57 -0700
+
 regolith-i3xrocks-config (1.13-1ubuntu1~ppa2) disco; urgency=medium
 
   * Update wifi2 blocklet to use nmcli for better UTF-8 compatibility.
