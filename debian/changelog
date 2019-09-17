@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.13-1ubuntu1~ppa2) disco; urgency=medium
+
+  * Update wifi2 blocklet to use nmcli for better UTF-8 compatibility.
+
+ -- Leo Palmer <leo.sunmo@gmail.com>  Tue, 17 Sep 2019 18:34:04 +1200
+
 regolith-i3xrocks-config (1.12-1ubuntu1~ppa2) disco; urgency=medium
 
   * Add attribution for recent contributions to copyright file.
