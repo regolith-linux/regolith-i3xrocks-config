@@ -6,6 +6,7 @@ LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color)}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
 
 ESSID=$(nmcli -t -f active,ssid dev wifi |  perl -n -e '/yes:(.*)/ && print $1')
-
-echo "<span color=\"${LABEL_COLOR}\"> </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$ESSID</span>" # full text
-echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$ESSID</span>" # short text
+if [ ! -z "$ESSID" ]; then
+    echo "<span color=\"${LABEL_COLOR}\"> </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$ESSID</span>" # full text
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$ESSID</span>" # short text
+fi
