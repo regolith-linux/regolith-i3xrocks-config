@@ -4,7 +4,7 @@ CONNECTION=$(nmcli -t connection show --active | awk -F ':' '
 /wg0|tun0/{vpn="ON"} /wireguard|tun|vpn/{name=$1}
 END{if(vpn) printf("%s", name)}')
 
-LABEL_COLOR=${vpn_color:-$(xrescat i3xrocks.vpn.color)}
+LABEL_COLOR=${vpn_label_color:-$(xrescat i3xrocks.vpn.label_color)}
 VALUE_COLOR="${vpn_color:-$(xrescat i3xrocks.vpn.color)}"
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
 
