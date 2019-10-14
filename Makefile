@@ -11,7 +11,6 @@ all:
 install:
 	$(INSTALL) -m0644 -D i3xrocks.conf $(CONF_TARGET)/config
 	$(INSTALL) -m0755 -D scripts/bandwidth $(SCRIPT_TARGET)/bandwidth
-	$(INSTALL) -m0755 -D scripts/battery $(SCRIPT_TARGET)/battery
 	$(INSTALL) -m0755 -D scripts/battery2 $(SCRIPT_TARGET)/battery2
 	$(INSTALL) -m0755 -D scripts/cpu_usage $(SCRIPT_TARGET)/cpu_usage
 	$(INSTALL) -m0755 -D scripts/disk $(SCRIPT_TARGET)/disk
