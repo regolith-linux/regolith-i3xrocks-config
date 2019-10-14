@@ -67,23 +67,23 @@ else:
     def get_battery_icon(percent):
         if percent < 20:
             # exit code 33 will turn background red
-            return "\uf244"
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery0'], universal_newlines=True)
         if percent < 35:
-            return "\uf243"
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery20'], universal_newlines=True)
         if percent < 50:
-            return "\uf242"
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery50'], universal_newlines=True)
         if percent < 75:
-            return "\uf241"
-        return "\uf240"
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery80'], universal_newlines=True)
+        return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery100'], universal_newlines=True)
 
     # stands for charging
-    FA_LIGHTNING = "\uf0e7"
+    FA_LIGHTNING = check_output(['/usr/bin/xrescat', 'typeface_bar_glyph_battery_charging'], universal_newlines=True)
 
     # stands for plugged in
-    FA_PLUG = "\uf1e6"
+    FA_PLUG = check_output(['/usr/bin/xrescat', 'typeface_bar_glyph_battery_ac'], universal_newlines=True)
 
     # stands for unknown status of battery
-    FA_QUESTION = "\uf128"
+    FA_QUESTION = check_output(['/usr/bin/xrescat', 'typeface_bar_glyph_battery_unknown'], universal_newlines=True)
 
 
     if state == "Discharging":

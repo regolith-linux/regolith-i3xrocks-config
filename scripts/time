@@ -1,7 +1,8 @@
 #!/bin/bash
 DATE_FORMAT=`xrescat i3xrocks.date.format "+ %m-%d %H:%M "`
+LABEL_ICON=${icon:-$(xrescat i3xrocks.label.time )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color)}
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color)}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
-[[ -z "$icon" ]] && VALUE_ICON="" || VALUE_ICON=$icon
-echo "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\">$VALUE_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$(date "$DATE_FORMAT")</span>"
+
+echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$(date "$DATE_FORMAT")</span>"

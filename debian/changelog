@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (1.15-1ubuntu1~ppa1) disco; urgency=medium
+
+  * Remove deprecated battery script.
+  * Use Xresource for bar icons for default-on blocklets.
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Sun, 13 Oct 2019 19:08:16 -0700
+
 regolith-i3xrocks-config (1.14-1ubuntu1~ppa1) disco; urgency=medium
 
   * Source version bump to appease package builder. 

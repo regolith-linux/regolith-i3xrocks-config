@@ -45,7 +45,7 @@ $cpu_usage eq -1 and die 'Can\'t find CPU information';
 my $label_color = $ENV{'label_color'} || `xrescat i3xrocks.label.color`;
 my $value_color = $ENV{'color'} || `xrescat i3xrocks.value.color`;
 my $value_font = $ENV{'font'} || `xrescat i3xrocks.value.font`;
-my $value_icon = $ENV{'icon'} || "";
+my $value_icon = $ENV{'icon'} || `xrescat i3xrocks.label.cpu `;
 
 # Print short_text, full_text
 printf "<span color='%s'>%s</span><span font_desc='%s' color='%s'>%2d%%</span>\n", $label_color, $value_icon, $value_font, $value_color, $cpu_usage;
