@@ -77,13 +77,13 @@ else:
         return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery100'], universal_newlines=True)
 
     # stands for charging
-    FA_LIGHTNING = check_output(['/usr/bin/xrescat', 'typeface_bar_glyph_battery_charging'], universal_newlines=True)
+    FA_LIGHTNING = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batterycharging'], universal_newlines=True)
 
     # stands for plugged in
-    FA_PLUG = check_output(['/usr/bin/xrescat', 'typeface_bar_glyph_battery_ac'], universal_newlines=True)
+    FA_PLUG = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batteryac'], universal_newlines=True)
 
     # stands for unknown status of battery
-    FA_QUESTION = check_output(['/usr/bin/xrescat', 'typeface_bar_glyph_battery_unknown'], universal_newlines=True)
+    FA_QUESTION = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batteryunknown'], universal_newlines=True)
 
 
     if state == "Discharging":
@@ -104,13 +104,15 @@ else:
         if os.environ.get('percent_color'):
             if percent < 10:
                 # exit code 33 will turn background red
-                return "#FFFFFF"
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.nominal'], universal_newlines=True)
             if percent < 20:
-                return "#FF3300"
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.critical.color'], universal_newlines=True)
             if percent < 30:
-                return "#FF6600"
-            if percent < 35:
-                return "#FCBD00"
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.error.color'], universal_newlines=True)
+            if percent < 40:
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.warning'], universal_newlines=True)
+            if percent < 50:
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.nominal'], universal_newlines=True)
             return default_color
         else:
             return default_color

@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.18-1ubuntu1~ppa1) disco; urgency=medium
+
+  * Fix invalid Xresource keys for color definitions. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Thu, 17 Oct 2019 08:10:26 -0700
+
 regolith-i3xrocks-config (1.17-1ubuntu1~ppa1) disco; urgency=medium
 
   * Fix wifi icon rendering w/ material design. 
