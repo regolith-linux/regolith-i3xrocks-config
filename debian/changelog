@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.17-1ubuntu1~ppa1) disco; urgency=medium
+
+  * Fix wifi icon rendering w/ material design. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Wed, 16 Oct 2019 21:12:50 -0700
+
 regolith-i3xrocks-config (1.16-1ubuntu1~ppa1) disco; urgency=medium
 
   * Fix makefile after removing battery script. 
