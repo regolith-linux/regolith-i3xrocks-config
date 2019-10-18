@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.19-1ubuntu1~ppa1) disco; urgency=medium
+
+  * add wireguard support and fancy icon by @gigglearrows  
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Thu, 17 Oct 2019 21:20:06 -0700
+
 regolith-i3xrocks-config (1.18-1ubuntu1~ppa1) disco; urgency=medium
 
   * Fix invalid Xresource keys for color definitions. 
