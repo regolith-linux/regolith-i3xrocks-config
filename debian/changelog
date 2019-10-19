@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.20-1ubuntu1~ppa1) disco; urgency=medium
+
+  * Add some padding after time blocklet. 
+
+ -- Ken Gilmer <kgilmer@skade>  Sat, 19 Oct 2019 15:54:12 -0700
+
 regolith-i3xrocks-config (1.19-1ubuntu1~ppa1) disco; urgency=medium
 
   * add wireguard support and fancy icon by @gigglearrows  
