@@ -87,17 +87,17 @@ else:
 
 
     if state == "Discharging":
-        battery_icon = get_battery_icon(percentleft) + "  "
+        battery_icon = get_battery_icon(percentleft)
     elif state == "Full":
-        battery_icon = FA_PLUG + "  "
+        battery_icon = FA_PLUG
         timeleft = ""
     elif state == "Unknown":
-        battery_icon = FA_QUESTION + "  " + get_battery_icon(percentleft) + "  "
+        battery_icon = get_battery_icon(percentleft)
         timeleft = ""
     else:
-        battery_icon = FA_LIGHTNING + " " + FA_PLUG + "  "
+        battery_icon = FA_LIGHTNING + FA_PLUG 
 
-    label_form = '<span color="{}" font="FontAwesome">{}</span>'
+    label_form = '<span color="{}">{}</span>'
     fulltext = label_form.format(default_label_color, battery_icon)
 
     def color(percent):
@@ -133,7 +133,7 @@ else:
             fulltext = fulltext.strip()
             shorttext = shorttext.strip()
     else:
-        form =  '<span font_desc="{}" color="{}">{}{}{}</span>'
+        form =  '<span font_desc="{}" color="{}"> {}{}{}</span>'
         fulltext += form.format(valuefont, color(percentleft), percentleft, "%", gettimeleft())
         shorttext = form.format(valuefont, color(percentleft), percentleft, "", "")
 
