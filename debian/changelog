@@ -3,7 +3,7 @@ regolith-i3xrocks-config (1.20-1ubuntu1~ppa1) disco; urgency=medium
   * Add some padding after time blocklet. 
   * Add padding between battery icon and quantity.
 
- -- Ken Gilmer <kgilmer@skade>  Sat, 19 Oct 2019 15:54:12 -0700
+ -- Ken Gilmer <kgilmer@gmail.com>  Sat, 19 Oct 2019 15:54:12 -0700
 
 regolith-i3xrocks-config (1.19-1ubuntu1~ppa1) disco; urgency=medium
 
