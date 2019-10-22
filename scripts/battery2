@@ -12,9 +12,9 @@ from subprocess import check_output
 import os
 
 status = check_output(['acpi'], universal_newlines=True)
-default_color = os.getenv('color', check_output(['/usr/bin/xrescat', 'i3xrocks.value.color'], universal_newlines=True))
-default_label_color = os.getenv('label_color', check_output(['/usr/bin/xrescat', 'i3xrocks.label.color'], universal_newlines=True))
-valuefont = os.getenv('font', check_output(['/usr/bin/xrescat', 'i3xrocks.value.font'], universal_newlines=True))
+default_color = os.getenv('color', check_output(['/usr/bin/xrescat', 'i3xrocks.value.color', '#D8DEE9'], universal_newlines=True))
+default_label_color = os.getenv('label_color', check_output(['/usr/bin/xrescat', 'i3xrocks.label.color', '#7B8394'], universal_newlines=True))
+valuefont = os.getenv('font', check_output(['/usr/bin/xrescat', 'i3xrocks.value.font', 'Source Code Pro Medium 13'], universal_newlines=True))
 
 
 if not status:
@@ -67,23 +67,23 @@ else:
     def get_battery_icon(percent):
         if percent < 20:
             # exit code 33 will turn background red
-            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery0'], universal_newlines=True)
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery0', ''], universal_newlines=True)
         if percent < 35:
-            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery20'], universal_newlines=True)
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery20', ''], universal_newlines=True)
         if percent < 50:
-            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery50'], universal_newlines=True)
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery50', ''], universal_newlines=True)
         if percent < 75:
-            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery80'], universal_newlines=True)
-        return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery100'], universal_newlines=True)
+            return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery80', ''], universal_newlines=True)
+        return check_output(['/usr/bin/xrescat', 'i3xrocks.label.battery100', ''], universal_newlines=True)
 
     # stands for charging
-    FA_LIGHTNING = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batterycharging'], universal_newlines=True)
+    FA_LIGHTNING = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batterycharging', ''], universal_newlines=True)
 
     # stands for plugged in
-    FA_PLUG = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batteryac'], universal_newlines=True)
+    FA_PLUG = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batteryac', ''], universal_newlines=True)
 
     # stands for unknown status of battery
-    FA_QUESTION = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batteryunknown'], universal_newlines=True)
+    FA_QUESTION = check_output(['/usr/bin/xrescat', 'i3xrocks.label.batteryunknown', ''], universal_newlines=True)
 
 
     if state == "Discharging":
@@ -104,15 +104,15 @@ else:
         if os.environ.get('percent_color'):
             if percent < 10:
                 # exit code 33 will turn background red
-                return check_output(['/usr/bin/xrescat', 'i3xrocks.nominal'], universal_newlines=True)
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.nominal', '#D8DEE9'], universal_newlines=True)
             if percent < 20:
-                return check_output(['/usr/bin/xrescat', 'i3xrocks.critical.color'], universal_newlines=True)
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.critical.color', '#BF616A'], universal_newlines=True)
             if percent < 30:
-                return check_output(['/usr/bin/xrescat', 'i3xrocks.error.color'], universal_newlines=True)
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.error.color', '#D08770'], universal_newlines=True)
             if percent < 40:
-                return check_output(['/usr/bin/xrescat', 'i3xrocks.warning'], universal_newlines=True)
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.warning', '#EBCB8B'], universal_newlines=True)
             if percent < 50:
-                return check_output(['/usr/bin/xrescat', 'i3xrocks.nominal'], universal_newlines=True)
+                return check_output(['/usr/bin/xrescat', 'i3xrocks.nominal', '#D8DEE9'], universal_newlines=True)
             return default_color
         else:
             return default_color

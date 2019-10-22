@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (1.21-1ubuntu1~ppa1) disco; urgency=medium
+
+  * Add defaults to Xresources so blocklets dont crash if a key 
+    is undefined.
+  * Misc minor cleanup. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Mon, 21 Oct 2019 19:34:51 -0700
+
 regolith-i3xrocks-config (1.20-1ubuntu1~ppa1) disco; urgency=medium
 
   * Add some padding after time blocklet. 
