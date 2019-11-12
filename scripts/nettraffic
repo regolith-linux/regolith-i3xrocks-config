@@ -13,11 +13,6 @@ ULEV=2
 IF=`ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' '`
 IF="${BLOCK_INSTANCE:-${IF}}"
 
-PREV_IN=0
-PREV_OUT=0
-
-PREV_FILE="/tmp/.nettraffic"
-
 while getopts i:a:u:e:s:t:U:D:lhv option
 do
   case "${option}"
