@@ -13,6 +13,11 @@ ULEV=2
 IF=`ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' '`
 IF="${BLOCK_INSTANCE:-${IF}}"
 
+PREV_IN=0
+PREV_OUT=0
+
+PREV_FILE="/tmp/.nettraffic"
+
 while getopts i:a:u:e:s:t:U:D:lhv option
 do
   case "${option}"
@@ -117,9 +122,9 @@ AN="0.0"
 while :
 do
   if [ "$RT" = "up" ]; then
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $TN$SUF</span><span color=\"${LABEL_COLOR}\">${UP}</span>"
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
   elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\">${DN}</span>"
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>"
   elif [ "$RT" = "total" ]; then
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $AN$SUF</span>"
   else
@@ -127,14 +132,14 @@ do
       if [ "$LABEL" = false ]; then
         echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $TN$SUF</span>"
       else
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\">${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\">${UP}</span>"
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
       fi
     else
       if [ "$LABEL" = false ]; then
         echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $SEP $TN$SUF</span>"
       else
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
-    $RN$SUF</span><span color=\"${LABEL_COLOR}\">${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\">${UP}</span>"
+    $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
       fi
     fi
   fi
