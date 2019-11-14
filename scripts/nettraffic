@@ -114,73 +114,70 @@ RN="0.0"
 TN="0.0"
 AN="0.0"
 
-while :
-do
-  if [ "$RT" = "up" ]; then
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
-  elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>"
-  elif [ "$RT" = "total" ]; then
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $AN$SUF</span>"
+RX1=`$GET | grep $IF | awk '{print $2}'`; TX1=`$GET | grep $IF | awk '{print $10}'`
+sleep $DLY
+RX2=`$GET | grep $IF | awk '{print $2}'`; TX2=`$GET | grep $IF | awk '{print $10}'`
+
+RX=`echo "scale = 0; ($RX2-$RX1)/$DLY" | bc -l`
+TX=`echo "scale = 0; ($TX2-$TX1)/$DLY" | bc -l`
+AX=`echo "scale = 0; $RX+$TX" | bc -l`
+
+if [ "$UNIT" = "" ]; then
+  if [ "$RX" -ge 102400 -o "$TX" -ge 102400 ]; then
+    FAC=1048576
+    case "$ULEV"
+    in
+      0) SUF="";;
+      1) SUF="M";;
+      2) SUF="MB";;
+      3) SUF="M/s";;
+      *) SUF="MB/s";;
+    esac
+  elif [ "$RX" -ge 100 -o "$TX" -ge 100 ]; then
+    FAC=1024
+    case "$ULEV"
+    in
+      0) SUF="";;
+      1) SUF="K";;
+      2) SUF="KB";;
+      3) SUF="K/s";;
+      *) SUF="KB/s";;
+    esac
   else
-    if [ "$SEP" = "" ]; then
-      if [ "$LABEL" = false ]; then
-        echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $TN$SUF</span>"
-      else
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
-      fi
+    FAC=1
+    case "$ULEV"
+    in
+      0) SUF="";;
+      1) SUF="B";;
+      2) SUF="B";;
+      *) SUF="B/s";;
+    esac
+  fi
+fi
+
+RN=`echo $RX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
+TN=`echo $TX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
+AN=`echo $AX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
+
+if [ "$RT" = "up" ]; then
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
+elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>"
+elif [ "$RT" = "total" ]; then
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $AN$SUF</span>"
+else
+  if [ "$SEP" = "" ]; then
+    if [ "$LABEL" = false ]; then
+      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $TN$SUF</span>"
     else
-      if [ "$LABEL" = false ]; then
-        echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $SEP $TN$SUF</span>"
-      else
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
-    $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
-      fi
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
+    fi
+  else
+    if [ "$LABEL" = false ]; then
+      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $SEP $TN$SUF</span>"
+    else
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
+  $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
     fi
   fi
-
-  RX1=`$GET | grep $IF | awk '{print $2}'`; TX1=`$GET | grep $IF | awk '{print $10}'`
-  sleep $DLY
-  RX2=`$GET | grep $IF | awk '{print $2}'`; TX2=`$GET | grep $IF | awk '{print $10}'`
-
-  RX=`echo "scale = 0; ($RX2-$RX1)/$DLY" | bc -l`
-  TX=`echo "scale = 0; ($TX2-$TX1)/$DLY" | bc -l`
-  AX=`echo "scale = 0; $RX+$TX" | bc -l`
-
-  if [ "$UNIT" = "" ]; then
-    if [ "$RX" -ge 102400 -o "$TX" -ge 102400 ]; then
-      FAC=1048576
-      case "$ULEV"
-      in
-        0) SUF="";;
-        1) SUF="M";;
-        2) SUF="MB";;
-        3) SUF="M/s";;
-        *) SUF="MB/s";;
-      esac
-    elif [ "$RX" -ge 100 -o "$TX" -ge 100 ]; then
-      FAC=1024
-      case "$ULEV"
-      in
-        0) SUF="";;
-        1) SUF="K";;
-        2) SUF="KB";;
-        3) SUF="K/s";;
-        *) SUF="KB/s";;
-      esac
-    else
-      FAC=1
-      case "$ULEV"
-      in
-        0) SUF="";;
-        1) SUF="B";;
-        2) SUF="B";;
-        *) SUF="B/s";;
-      esac
-    fi
-  fi
-
-  RN=`echo $RX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
-  TN=`echo $TX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
-  AN=`echo $AX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
-done
+fi
