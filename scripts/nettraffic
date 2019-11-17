@@ -9,9 +9,18 @@ GET="cat /proc/net/dev"
 LABEL=true
 UPL=${label_icon:-$(xrescat i3xrocks.label.up ▲)}
 DNL=${label_icon:-$(xrescat i3xrocks.label.dn ▼)}
+WFL=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 ULEV=2
+
 IF=`ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' '`
 IF="${BLOCK_INSTANCE:-${IF}}"
+
+[ "$IF" = "" ] && exit
+
+ESSID=$(nmcli -t -f active,ssid dev wifi |  perl -n -e '/yes:(.*)/ && print $1')
+if [ ! -z "$ESSID" ]; then
+    WF=" <span color=\"${LABEL_COLOR}\">${WFL}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>"
+fi
 
 while getopts i:a:u:e:s:t:U:D:lhv option
 do
@@ -54,10 +63,6 @@ do
   esac
 done
 
-if [ "$IF" = "" ]; then
-  echo "No interface specified"
-  exit
-fi
 
 if [ "$LABEL" = true ]; then
   if [ "$UPL" = "" ]; then
@@ -128,7 +133,7 @@ if [ "$UNIT" = "" ]; then
     case "$ULEV"
     in
       0) SUF="";;
-      1) SUF="M";;
+      1) SUF=" M";;
       2) SUF="MB";;
       3) SUF="M/s";;
       *) SUF="MB/s";;
@@ -138,7 +143,7 @@ if [ "$UNIT" = "" ]; then
     case "$ULEV"
     in
       0) SUF="";;
-      1) SUF="K";;
+      1) SUF=" K";;
       2) SUF="KB";;
       3) SUF="K/s";;
       *) SUF="KB/s";;
@@ -148,36 +153,36 @@ if [ "$UNIT" = "" ]; then
     case "$ULEV"
     in
       0) SUF="";;
-      1) SUF="B";;
-      2) SUF="B";;
+      1) SUF=" B";;
+      2) SUF=" B";;
       *) SUF="B/s";;
     esac
   fi
 fi
 
-RN=`echo $RX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
-TN=`echo $TX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
-AN=`echo $AX/$FAC | bc -l | awk '{ x = sprintf("%.1f", $1); print x }'`
+RN=`echo $RX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
+TN=`echo $TX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
+AN=`echo $AX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
 
 if [ "$RT" = "up" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
+  $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>${WF}"
 elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>${WF}"
 elif [ "$RT" = "total" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $AN$SUF</span>"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $AN$SUF</span>${WF}"
 else
   if [ "$SEP" = "" ]; then
     if [ "$LABEL" = false ]; then
-      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $TN$SUF</span>"
+      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $TN$SUF</span>${WF}"
     else
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>${WF}"
     fi
   else
     if [ "$LABEL" = false ]; then
-      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $SEP $TN$SUF</span>"
+      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $SEP $TN$SUF</span>${WF}"
     else
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
-  $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>${WF}"
     fi
   fi
 fi
