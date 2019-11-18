@@ -7,8 +7,8 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
 GET="cat /proc/net/dev"
 LABEL=true
-UPL=${label_icon:-$(xrescat i3xrocks.label.up ▲)}
-DNL=${label_icon:-$(xrescat i3xrocks.label.dn ▼)}
+UPL=${label_icon:-$(xrescat i3xrocks.label.up )}
+DNL=${label_icon:-$(xrescat i3xrocks.label.dn )}
 ULEV=2
 
 IF=`ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' '`
@@ -17,7 +17,7 @@ IF="${BLOCK_INSTANCE:-${IF}}"
 [ "$IF" = "" ] && exit
 
 case "$IF" in
-    e*) NIC=${label_icon:-$(xrescat i3xrocks.label.wired )};;
+    e*) NIC=${label_icon:-$(xrescat i3xrocks.label.wired )};;
     w*) NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 esac
 
