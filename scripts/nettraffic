@@ -9,7 +9,6 @@ GET="cat /proc/net/dev"
 LABEL=true
 UPL=${label_icon:-$(xrescat i3xrocks.label.up ▲)}
 DNL=${label_icon:-$(xrescat i3xrocks.label.dn ▼)}
-WFL=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 ULEV=2
 
 IF=`ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' '`
@@ -17,10 +16,10 @@ IF="${BLOCK_INSTANCE:-${IF}}"
 
 [ "$IF" = "" ] && exit
 
-ESSID=$(nmcli -t -f active,ssid dev wifi |  perl -n -e '/yes:(.*)/ && print $1')
-if [ ! -z "$ESSID" ]; then
-    WF=" <span color=\"${LABEL_COLOR}\">${WFL}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>"
-fi
+case "$IF" in
+    e*) NIC=${label_icon:-$(xrescat i3xrocks.label.wired )};;
+    w*) NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
+esac
 
 while getopts i:a:u:e:s:t:U:D:lhv option
 do
@@ -166,23 +165,23 @@ AN=`echo $AX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
 
 if [ "$RT" = "up" ]; then
   echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
-  $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>${WF}"
+  $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${NIC} ${UP}</span>"
 elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>${WF}"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>"
 elif [ "$RT" = "total" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $AN$SUF</span>${WF}"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $AN$SUF</span>"
 else
   if [ "$SEP" = "" ]; then
     if [ "$LABEL" = false ]; then
-      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $TN$SUF</span>${WF}"
+      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF $TN$SUF</span>"
     else
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>${WF}"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
     fi
   else
     if [ "$LABEL" = false ]; then
-      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF $SEP $TN$SUF</span>${WF}"
+      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF $SEP $TN$SUF</span>"
     else
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>${WF}"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
     fi
   fi
 fi
