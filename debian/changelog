@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (1.22-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Package new nettraffic script by @cheginit. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Mon, 18 Nov 2019 20:12:42 -0800
+
 regolith-i3xrocks-config (1.21-1ubuntu1~ppa1) disco; urgency=medium
 
   * Add defaults to Xresources so blocklets dont crash if a key 
