@@ -185,7 +185,7 @@ AN=`echo $AX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
 if [ "$RT" = "up" ]; then
     echo "$(lspan "${NIC}")$(fspan "$TN$SUF")$(lspan "${UP}")"
 elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
-    echo "$(lspanj"${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")"
+    echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")"
 elif [ "$RT" = "total" ]; then
     echo "$(lspan "${NIC}")$(fspan "$AN$SUF")"
 else
