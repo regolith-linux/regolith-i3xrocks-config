@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# span for font
+# span for text
 fspan(){
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${1}</span>"
 }
 
 # span for label/icon
 lspan(){
-    echo "<span color=\"${LABEL_COLOR}\"> ${1}</span>"
+    echo "<span color=\"${LABEL_COLOR}\">${1}</span>"
 }
 
 # get font specifics from xresource file
@@ -52,19 +52,21 @@ do
     t)
       DLY=${OPTARG};;
     l)
-      LABEL=true;;
+      LABEL=false;;
     h)
-      echo -e "Usage: nettraffic [OPTION]"
-      echo -e "Options:"
-      echo -e "  -i  (%ifname%)\t Specify which network interface to monitor. Required."
-      echo -e "  -a  (up|dn|total)\t Shows which data to display. Prints both if not used."
-      echo -e "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
-      echo -e "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
-      echo -e "    \t\t\t 4 for KB/s). Default if 4."
-      echo -e "  -l\t\t\t Choose whether or not to display the label (up or down)."
-      echo -e "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
-      echo -e "  -v\t\t\t Prints version number."
-      echo -e "  -h\t\t\t Prints this help."
+      echo "Usage: nettraffic [OPTION]"
+      echo "Options:"
+      echo "  -i  (%ifname%)\t Specify which network interface to monitor. By"
+      echo "    \t\t\t default it is detected automatically."
+      echo "  -a  (up|dn|total)\t Shows which data to display. Default is both."
+      echo "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
+      echo "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
+      echo "    \t\t\t 4 for KB/s). Default if 2."
+      echo "  -l  (true|false)\t Choose whether or not to display the icons."
+      echo "    \t\t\t Default is true"
+      echo "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
+      echo "  -v\t\t\t Prints version number."
+      echo "  -h\t\t\t Prints this help."
       echo "For full help, visit http://github.com/ma-santoso/nettrafic/"
       exit;;
     v)
@@ -113,13 +115,13 @@ elif [ "$UNIT" = "KB" -o "$UNIT" = "K" ]; then
     3) SUF="K/s";;
     *) SUF="KB/s";;
   esac
-elif [ "$UNIT" = "B" -o "$UNIT" = "" ]; then
+elif [ "$UNIT" = "B" ]; then
   FAC=1
   case "$ULEV"
   in
     0) SUF="";;
-    1) SUF="B";;
-    2) SUF="B";;
+    1) SUF=" B";;
+    2) SUF=" B";;
     *) SUF="B/s";;
   esac
 fi
@@ -142,7 +144,7 @@ RX=`echo "scale = 0; ($RX2-$RX1)/$DLY" | bc -l`
 TX=`echo "scale = 0; ($TX2-$TX1)/$DLY" | bc -l`
 AX=`echo "scale = 0; $RX+$TX" | bc -l`
 
-# set net speed unit
+# set net unit automatically
 if [ "$UNIT" = "" ]; then
   if [ "$RX" -ge 102400 -o "$TX" -ge 102400 ]; then
     FAC=1048576
