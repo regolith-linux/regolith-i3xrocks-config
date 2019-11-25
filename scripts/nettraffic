@@ -20,8 +20,8 @@ GET="cat /proc/net/dev"
 
 # some default values for arguments"
 LABEL=true
-UPL=${label_icon:-$(xrescat i3xrocks.label.up ▴)}
-DNL=${label_icon:-$(xrescat i3xrocks.label.dn ▾)}
+UPL=${label_icon:-$(xrescat i3xrocks.label.up )}
+DNL=${label_icon:-$(xrescat i3xrocks.label.dn )}
 ULEV=2
 
 # determine the net interface name
