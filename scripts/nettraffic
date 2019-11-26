@@ -2,7 +2,7 @@
 
 # span for text
 fspan(){
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${1}</span>"
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
 }
 
 # span for label/icon
