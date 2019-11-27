@@ -1,27 +1,43 @@
 #!/bin/sh
 
+# span for text
+fspan(){
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
+}
+
+# span for label/icon
+lspan(){
+    echo "<span color=\"${LABEL_COLOR}\">${1}</span>"
+}
+
+# get font specifics from xresource file
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
+# read the dev file for extracting net usage
 GET="cat /proc/net/dev"
+
+# some default values for arguments"
 LABEL=true
-UPL=${label_icon:-$(xrescat i3xrocks.label.up ▴)}
-DNL=${label_icon:-$(xrescat i3xrocks.label.dn ▾)}
+UPL=${label_icon:-$(xrescat i3xrocks.label.up )}
+DNL=${label_icon:-$(xrescat i3xrocks.label.dn )}
 ULEV=2
 
+# determine the net interface name
 IF=`ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' '`
 IF="${BLOCK_INSTANCE:-${IF}}"
 
 [ "$IF" = "" ] && exit
 
+# set net icon based on wire or wireless connection
 case "$IF" in
     e*) NIC=${label_icon:-$(xrescat i3xrocks.label.wired )};;
     w*) NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 esac
 
-while getopts i:a:u:e:s:t:U:D:lhv option
+# get arguments
+while getopts i:a:u:e:t:U:D:lhv option
 do
   case "${option}"
   in
@@ -33,25 +49,24 @@ do
       UNIT=${OPTARG};;
     e)
       ULEV=${OPTARG};;
-    s)
-      SEP=${OPTARG};;
     t)
       DLY=${OPTARG};;
     l)
-      LABEL=true;;
+      LABEL=false;;
     h)
-      echo -e "Usage: nettraffic [OPTION]"
-      echo -e "Options:"
-      echo -e "  -i  (%ifname%)\t Specify which network interface to monitor. Required."
-      echo -e "  -a  (up|dn|total)\t Shows which data to display. Prints both if not used."
-      echo -e "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
-      echo -e "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
-      echo -e "    \t\t\t 4 for KB/s). Default if 4."
-      echo -e "  -l\t\t\t Choose whether or not to display the label (up or down)."
-      echo -e "  -s  (%string%)\t A separator to divide between up and down. Default is none."
-      echo -e "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
-      echo -e "  -v\t\t\t Prints version number."
-      echo -e "  -h\t\t\t Prints this help."
+      echo "Usage: nettraffic [OPTION]"
+      echo "Options:"
+      echo "  -i  (%ifname%)\t Specify which network interface to monitor. By"
+      echo "    \t\t\t default it is detected automatically."
+      echo "  -a  (up|dn|total)\t Shows which data to display. Default is both."
+      echo "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
+      echo "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
+      echo "    \t\t\t 4 for KB/s). Default if 2."
+      echo "  -l  (true|false)\t Choose whether or not to display the icons."
+      echo "    \t\t\t Default is true"
+      echo "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
+      echo "  -v\t\t\t Prints version number."
+      echo "  -h\t\t\t Prints this help."
       echo "For full help, visit http://github.com/ma-santoso/nettrafic/"
       exit;;
     v)
@@ -62,7 +77,7 @@ do
   esac
 done
 
-
+# set up/download icons
 if [ "$LABEL" = true ]; then
   if [ "$UPL" = "" ]; then
     UP=" up"
@@ -79,12 +94,13 @@ else
   DN=""
 fi
 
+# set units
 if [ "$UNIT" = "MB" -o "$UNIT" = "M" ]; then
   FAC=1048576
   case "$ULEV"
   in
     0) SUF="";;
-    1) SUF="M";;
+    1) SUF=" M";;
     2) SUF="MB";;
     3) SUF="M/s";;
     *) SUF="MB/s";;
@@ -94,22 +110,23 @@ elif [ "$UNIT" = "KB" -o "$UNIT" = "K" ]; then
   case "$ULEV"
   in
     0) SUF="";;
-    1) SUF="K";;
+    1) SUF=" K";;
     2) SUF="KB";;
     3) SUF="K/s";;
     *) SUF="KB/s";;
   esac
-elif [ "$UNIT" = "B" -o "$UNIT" = "" ]; then
+elif [ "$UNIT" = "B" ]; then
   FAC=1
   case "$ULEV"
   in
     0) SUF="";;
-    1) SUF="B";;
-    2) SUF="B";;
+    1) SUF=" B";;
+    2) SUF=" B";;
     *) SUF="B/s";;
   esac
 fi
 
+# set sleep time between reading the net usage from dev file
 if [ "$DLY" = "" ]; then
   DLY=1;
 fi
@@ -118,6 +135,7 @@ RN="0.0"
 TN="0.0"
 AN="0.0"
 
+# read dev file and compute net usage
 RX1=`$GET | grep $IF | awk '{print $2}'`; TX1=`$GET | grep $IF | awk '{print $10}'`
 sleep $DLY
 RX2=`$GET | grep $IF | awk '{print $2}'`; TX2=`$GET | grep $IF | awk '{print $10}'`
@@ -126,6 +144,7 @@ RX=`echo "scale = 0; ($RX2-$RX1)/$DLY" | bc -l`
 TX=`echo "scale = 0; ($TX2-$TX1)/$DLY" | bc -l`
 AX=`echo "scale = 0; $RX+$TX" | bc -l`
 
+# set net unit automatically
 if [ "$UNIT" = "" ]; then
   if [ "$RX" -ge 102400 -o "$TX" -ge 102400 ]; then
     FAC=1048576
@@ -159,29 +178,18 @@ if [ "$UNIT" = "" ]; then
   fi
 fi
 
+# format net usage output with fixed width
 RN=`echo $RX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
 TN=`echo $TX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
 AN=`echo $AX/$FAC | bc -l | awk '{ printf("%4.1f", $1)}'`
 
+# output net usage using pango markup
 if [ "$RT" = "up" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">
-  $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${NIC} ${UP}</span>"
+    echo "$(lspan "${NIC}")$(fspan "$TN$SUF")$(lspan "${UP}")"
 elif [ "$RT" = "down" -o "$RT" = "dn" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN}</span>"
+    echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")"
 elif [ "$RT" = "total" ]; then
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $AN$SUF</span>"
+    echo "$(lspan "${NIC}")$(fspan "$AN$SUF")"
 else
-  if [ "$SEP" = "" ]; then
-    if [ "$LABEL" = false ]; then
-      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF $TN$SUF</span>"
-    else
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
-    fi
-  else
-    if [ "$LABEL" = false ]; then
-      echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF $SEP $TN$SUF</span>"
-    else
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${NIC} $RN$SUF</span><span color=\"${LABEL_COLOR}\"> ${DN} </span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$SEP $TN$SUF</span><span color=\"${LABEL_COLOR}\"> ${UP}</span>"
-    fi
-  fi
+    echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")$(fspan "$TN$SUF")$(lspan "${UP}")"
 fi
