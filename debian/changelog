@@ -1,3 +1,16 @@
+regolith-i3xrocks-config (1.25-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Make package install nettraffic script
+  * Add default configuration for Rofication 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Fri, 29 Nov 2019 15:40:37 -0800
+
+regolith-i3xrocks-config (1.23-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Package fixes and enhancements to nettraffic by @cheginit. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Tue, 26 Nov 2019 21:21:37 -0800
+
 regolith-i3xrocks-config (1.22-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Package new nettraffic script by @cheginit. 

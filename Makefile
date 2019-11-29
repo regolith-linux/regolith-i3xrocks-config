@@ -20,6 +20,7 @@ install:
 	$(INSTALL) -m0755 -D scripts/load_average $(SCRIPT_TARGET)/load_average
 	$(INSTALL) -m0755 -D scripts/mediaplayer $(SCRIPT_TARGET)/mediaplayer
 	$(INSTALL) -m0755 -D scripts/memory $(SCRIPT_TARGET)/memory
+	$(INSTALL) -m0755 -D scripts/nettraffic $(SCRIPT_TARGET)/nettraffic
 	$(INSTALL) -m0755 -D scripts/openvpn $(SCRIPT_TARGET)/openvpn
 	$(INSTALL) -m0755 -D scripts/temperature $(SCRIPT_TARGET)/temperature
 	$(INSTALL) -m0755 -D scripts/time $(SCRIPT_TARGET)/time

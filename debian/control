@@ -13,5 +13,6 @@ Depends: ${misc:Depends},
     sysstat, 
     acpi,
     network-manager,
-    xrescat
+    xrescat,
+    regolith-rofication
 Description: Regolith configuration for i3xrocks launcher
