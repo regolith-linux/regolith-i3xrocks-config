@@ -1,4 +1,10 @@
-regolith-i3xrocks-config (1.3.0-1ubuntu1~ppa1) eoan; urgency=medium
+regolith-i3xrocks-config (2.0.1-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Move position of help blocklet. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Sat, 30 Nov 2019 09:20:54 -0800
+
+regolith-i3xrocks-config (2.0.0-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Make battery2, nettraffic, cpu_usage, time clickable.
   * Add help blocket that toggles conky.
