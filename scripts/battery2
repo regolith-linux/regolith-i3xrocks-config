@@ -8,7 +8,7 @@
 # A battery indicator blocklet script for i3blocks
 
 import re
-from subprocess import check_output
+from subprocess import check_output, run
 import os
 
 status = check_output(['acpi'], universal_newlines=True)
@@ -140,5 +140,9 @@ else:
 
 print(fulltext)
 print(shorttext)
+
 if percentleft < 10:
     exit(33)
+
+if (os.getenv('button', "")):
+    run(['/usr/bin/gnome-control-center', 'power'])

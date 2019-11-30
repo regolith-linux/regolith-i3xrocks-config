@@ -11,3 +11,7 @@ if [ ! -z "$ESSID" ]; then
     echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>" # full text
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>" # short text
 fi
+
+if [ ! -z "$button" ]; then
+    /usr/bin/gnome-control-center wifi
+fi

@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # span for text
-fspan(){
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
+fspan() {
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1} </span>"
 }
 
 # span for label/icon
-lspan(){
+lspan() {
     echo "<span color=\"${LABEL_COLOR}\">${1}</span>"
 }
 
@@ -192,4 +192,8 @@ elif [ "$RT" = "total" ]; then
     echo "$(lspan "${NIC}")$(fspan "$AN$SUF")"
 else
     echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")$(fspan "$TN$SUF")$(lspan "${UP}")"
+fi
+
+if [ ! -z "$button" ]; then
+    /usr/bin/gnome-control-center network
 fi
