@@ -35,6 +35,10 @@ Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
            Copyright (C) 2014 Alexander Keller <github@nycroth.com>
 License: GPL-3+
 
+Files: scripts/focused-window-name
+Copyright: Copyright © 2019 Bence Ferdinandy <bence@ferdinandy.com>
+License: GPL-3+
+
 Files: scripts/keyindicator
 Copyright: Copyright 2014 Marcelo Cerri <mhcerri at gmail dot com>
 License: GPL-3+

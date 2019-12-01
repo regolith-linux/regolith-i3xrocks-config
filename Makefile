@@ -15,6 +15,7 @@ install:
 	$(INSTALL) -m0755 -D scripts/cpu_usage $(SCRIPT_TARGET)/cpu_usage
 	$(INSTALL) -m0755 -D scripts/disk $(SCRIPT_TARGET)/disk
 	$(INSTALL) -m0755 -D scripts/iface $(SCRIPT_TARGET)/iface
+	$(INSTALL) -m0755 -D scripts/focused_window_name $(SCRIPT_TARGET)/focused_window_name
 	$(INSTALL) -m0755 -D scripts/keyboard_layout $(SCRIPT_TARGET)/keyboard_layout
 	$(INSTALL) -m0755 -D scripts/keyindicator $(SCRIPT_TARGET)/keyindicator
 	$(INSTALL) -m0755 -D scripts/load_average $(SCRIPT_TARGET)/load_average
