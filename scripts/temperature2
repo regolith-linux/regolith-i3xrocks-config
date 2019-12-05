@@ -4,12 +4,12 @@
 
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
-TEMP=$(sensors -u | grep -Po 'temp1_input: \K\d*')
+TEMP=$(sensors -u | grep -Po 'temp1_input: \K\d*' | head -n 1)
 
-if [ "$TEMP" -gt 90 ]
+if [[ ${TEMP} -gt 90 ]]
 then
   COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}
-elif [ "$TEMP" -gt 70 ]
+elif [[ ${TEMP} -gt 70 ]]
 then
   COLOR=${warning:-$(xrescat i3xrocks.warning "#EBCB8B")}
 else
