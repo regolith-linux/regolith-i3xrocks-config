@@ -68,7 +68,7 @@ focused = i3.get_tree().find_focused()
 name = focused.name
 
 # LibreOffice adds it's own name at the end so we need to remove that
-if "LibreOffice" in name.split("-")[-1]:
+if "LibreOffice" in name.split("-")[-1] and focused.window_instance == "libreoffice":
     name = "-".join(name.split("-")[:-1])
 
 if len(filter_list) == 0:
