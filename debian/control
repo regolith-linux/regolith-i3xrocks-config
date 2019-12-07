@@ -16,3 +16,10 @@ Depends: ${misc:Depends},
     xrescat,
     regolith-rofication
 Description: Regolith configuration for i3xrocks launcher
+
+Package: regolith-i3xrocks-focused-window-name
+Architecture: any
+Depends: ${misc:Depends}, 
+    regolith-i3xrocks-config,
+    i3ipc-python
+Description: Blocklet to show focused window name.

@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (2.1.0-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Package @priestoferis blocklet in new binary package due to
+    additional dependency. 
+  * Move from makefile to Debian install files.
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Sat, 07 Dec 2019 13:08:40 -0800
+
 regolith-i3xrocks-config (2.0.1-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Move position of help blocklet. 
