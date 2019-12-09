@@ -3,6 +3,8 @@
 # Depends on lm-sensors (https://packages.ubuntu.com/bionic/lm-sensors)
 
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.thermometer )}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 
 TEMP=$(sensors -u | grep -Po 'temp1_input: \K\d*' | head -n 1)
 
@@ -16,4 +18,4 @@ else
   COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 fi
 
-echo "<span font_desc=\"${VALUE_FONT}\" color=\"${COLOR}\">${TEMP}℃</span>"
+echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON} </span><span font_desc=\"${VALUE_FONT}\" color=\"${COLOR}\">${TEMP}℃</span>"
