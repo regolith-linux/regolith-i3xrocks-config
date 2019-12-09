@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (2.1.1-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Package thermometer2 blocket by @bdzzz. 
+  * Tweak spacing of thermometer2.
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Sun, 08 Dec 2019 20:55:35 -0800
+
 regolith-i3xrocks-config (2.1.0-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Package @priestoferis blocklet in new binary package due to
