@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# get player status (Playing / Paused / Stopped / ...)
+STATUS=$(playerctl status)
+
+# use given values or fall back to parameters from xresources
+PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
+PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+
+# assign the appropriate icon
+#
+# paused/stopped uses the same icon for simplicity
+# exit with an empty blocklet if nothing is playing
+case $STATUS in
+  'Playing') ICON=${PLAYING_ICON} ;;
+  'Paused') ICON=${PAUSED_ICON} ;;
+  'Stopped') ICON=${PAUSED_ICON} ;;
+  *) echo "" ; echo "" ; exit 0 ;;
+esac
+
+# get artist and title information
+ARTIST="$(playerctl metadata artist)"
+TITLE="$(playerctl metadata title)"
+
+# print resulting information (fulltext)
+echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
+<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
+${ARTIST} - ${TITLE}</span>"
+
+# for shorttext, only print the appropriate glyph
+echo $ICON
+
+# rudimentary controls via mouse clicks
+#
+# left click: send previous title signal
+# middle click: send play/pause signal
+# right click: send next title signal
+case $BLOCK_BUTTON in
+  1) playerctl previous ;;
+  2) playerctl play-pause ;;
+  3) playerctl next ;;
+esac
+
+exit 0
