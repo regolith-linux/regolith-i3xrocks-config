@@ -31,7 +31,7 @@ label_color=xresource:i3xrocks.label.color
 # Help
 [help]
 full_text=xresource:i3xrocks.label.help
-command=/usr/bin/conky-toggle
+command=/usr/bin/remontoire-toggle
 
 # Network manager VPN
 #

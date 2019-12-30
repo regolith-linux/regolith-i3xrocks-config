@@ -2,7 +2,7 @@ regolith-i3xrocks-config (2.1.2-1ubuntu1~ppa1) bionic; urgency=medium
 
   * Remove acpi dependency for arm64 support. 
 
- -- Ken Gilmer <kgilmer@gmail.com>  Sat, 09 Nov 2019 21:50:57 -0800
+ -- Ken Gilmer <kgilmer@gmail.com>  Sun, 29 Dec 2019 22:44:15 -0800
 
 regolith-i3xrocks-config (2.1.1-1ubuntu1~ppa1) eoan; urgency=medium
 
