@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# set -x
+
 # get player status (Playing / Paused / Stopped / ...)
-STATUS=$(playerctl status)
+STATUS=$(playerctl status) 
 
 # use given values or fall back to parameters from xresources
 PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}

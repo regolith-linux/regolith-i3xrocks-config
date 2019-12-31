@@ -1,3 +1,14 @@
+regolith-i3xrocks-config (2.2.0-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Fix volume blocklet UI
+  * Fix memory blocklet UI
+  * Make mediaplayer2 blocklet use xresources.
+  * Make keyindicator2 use xresources.
+  * Remove other visually inconsistent blockets.
+  * Fix info/help toggle click event.
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Tue, 31 Dec 2019 15:23:54 -0800
+
 regolith-i3xrocks-config (2.1.2-1ubuntu1~ppa1) bionic; urgency=medium
 
   * Remove acpi dependency for arm64 support. 

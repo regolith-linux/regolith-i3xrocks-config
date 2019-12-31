@@ -28,10 +28,10 @@ markup=pango
 color=xresource:i3xrocks.value.color
 label_color=xresource:i3xrocks.label.color
 
-# Help
-[help]
+# Link to execute shortcuts.
+[info]
 full_text=xresource:i3xrocks.label.help
-command=/usr/bin/remontoire-toggle
+command=i3-msg -q exec /usr/bin/remontoire-toggle
 
 # Network manager VPN
 #
