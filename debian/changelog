@@ -1,3 +1,14 @@
+regolith-i3xrocks-config (2.2.2-1ubuntu1~ppa1) eoan; urgency=medium
+
+  *  Add battery script based on
+     https://github.com/hastinbe/i3blocks-battery-plus that uses upower over
+     acpi.
+  * Update config to default to new battery script
+  * nettraffic layout tweak.
+  * nettraffic loads wifi or network panel based on connection type
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 26 Jan 2020 09:59:29 -0800
+
 regolith-i3xrocks-config (2.2.1-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Migrate to new PPA. 

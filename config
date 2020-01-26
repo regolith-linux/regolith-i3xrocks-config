@@ -53,7 +53,7 @@ command=i3-msg -q exec /usr/bin/remontoire-toggle
 #
 # Displays network load
 [nettraffic]
-interval=5
+interval=10
 
 # Keyboard layout
 #
@@ -68,23 +68,13 @@ interval=5
 [cpu_usage]
 interval=5
 min_width=100%
-#separator=false
 
 # Battery indicator
 #
-# Displays total percentage charge left across all batteries.
-#
-# To display colored text (or icon, if "icon_only" is enabled)
-# depending on charge remaining, uncomment "percent_color".
-#
-# To display est. time remaining, uncomment "display_time_left".
-#
-# To display the battery icon only, uncomment "icon_only".
-[battery2]
+# Displays total percentage charge left of specified battery.
+[battery3]
 interval=30
-#display_time_left=true
-percent_color=true
-#icon_only=true
+instance=BAT0
 
 # Rofication
 #
@@ -95,7 +85,7 @@ interval=10
 
 # Date Time
 [time]
-interval=60
+interval=10
 
 # Show title of focused window
 #[focused-window-name]

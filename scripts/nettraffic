@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # span for text
 fspan() {
-    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1} </span>"
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
 }
 
 # span for label/icon
@@ -20,8 +20,8 @@ GET="cat /proc/net/dev"
 
 # some default values for arguments"
 LABEL=true
-UPL=${label_icon:-$(xrescat i3xrocks.label.up )}
-DNL=${label_icon:-$(xrescat i3xrocks.label.dn )}
+UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
+DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
 ULEV=2
 
 # determine the net interface name
@@ -32,8 +32,14 @@ IF="${BLOCK_INSTANCE:-${IF}}"
 
 # set net icon based on wire or wireless connection
 case "$IF" in
-    e*) NIC=${label_icon:-$(xrescat i3xrocks.label.wired )};;
-    w*) NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
+    e*) 
+      NIC=${label_icon:-$(xrescat i3xrocks.label.wired )}
+      INT_TYPE="C"
+      ;;
+    w*) 
+      NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
+      INT_TYPE="W"
+      ;;
 esac
 
 # get arguments
@@ -67,7 +73,7 @@ do
       echo "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
       echo "  -v\t\t\t Prints version number."
       echo "  -h\t\t\t Prints this help."
-      echo "For full help, visit http://github.com/ma-santoso/nettrafic/"
+      echo "Script adapted from http://github.com/ma-santoso/nettrafic/"
       exit;;
     v)
       echo "$NAME, version $VERSION";
@@ -76,23 +82,6 @@ do
       exit;;
   esac
 done
-
-# set up/download icons
-if [ "$LABEL" = true ]; then
-  if [ "$UPL" = "" ]; then
-    UP=" up"
-  else
-    UP=$UPL
-  fi
-  if [ "$DNL" = "" ]; then
-    DN=" dn"
-  else
-    DN=$DNL
-  fi
-else
-  UP=""
-  DN=""
-fi
 
 # set units
 if [ "$UNIT" = "MB" -o "$UNIT" = "M" ]; then
@@ -195,5 +184,9 @@ else
 fi
 
 if [ ! -z "$button" ]; then
-    /usr/bin/gnome-control-center network
+    if [ "$INT_TYPE" == "W" ]; then
+      /usr/bin/gnome-control-center wifi
+    else
+      /usr/bin/gnome-control-center network
+    fi
 fi

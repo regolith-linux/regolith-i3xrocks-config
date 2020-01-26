@@ -25,7 +25,9 @@ __UPOWER_INFO=$(upower --show-info "/org/freedesktop/UPower/devices/battery_${BL
 
 BATT_PERCENT=$(get_battery_percent)
 
-if [ "$BATT_PERCENT" -ge 0 ] && [ "$BATT_PERCENT" -le 20 ]; then
+if [ -z "$BATT_PERCENT" ]; then
+  exit 0
+elif [ "$BATT_PERCENT" -ge 0 ] && [ "$BATT_PERCENT" -le 20 ]; then
   LABEL_ICON=$(xrescat i3xrocks.label.battery0 E)
   VALUE_COLOR=$(xrescat i3xrocks.critical.color red)
 elif [ "$BATT_PERCENT" -ge 20 ] && [ "$BATT_PERCENT" -le 50 ]; then
