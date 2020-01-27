@@ -9,11 +9,13 @@ Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
 
 Package: regolith-i3xrocks-config
 Architecture: any
-Depends: ${misc:Depends}, 
-    sysstat, 
+Depends: ${misc:Depends},
+    gnome-control-center,
+    gnome-system-monitor,
     network-manager,
-    xrescat,
-    regolith-rofication
+    regolith-rofication,
+    sysstat, 
+    xrescat
 Description: Regolith configuration for i3xrocks launcher
 
 Package: regolith-i3xrocks-focused-window-name
