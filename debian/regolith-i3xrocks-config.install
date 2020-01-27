@@ -1,5 +1,5 @@
 config /etc/regolith/i3xrocks
-scripts/battery2 /usr/share/i3xrocks
+scripts/battery3 /usr/share/i3xrocks
 scripts/cpu_usage /usr/share/i3xrocks
 scripts/keyboard_layout /usr/share/i3xrocks
 scripts/keyindicator2 /usr/share/i3xrocks

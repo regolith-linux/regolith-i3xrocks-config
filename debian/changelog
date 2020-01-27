@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.3-1ubuntu1~ppa2) eoan; urgency=medium
+
+  * Fix packaging file mapping 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 26 Jan 2020 18:21:13 -0800
+
 regolith-i3xrocks-config (2.2.3-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Add required dependencies for blocket launched apps. 
