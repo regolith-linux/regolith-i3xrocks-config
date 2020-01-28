@@ -24,6 +24,7 @@ get_battery_percent() {
 __UPOWER_INFO=$(upower --show-info "/org/freedesktop/UPower/devices/battery_${BLOCK_INSTANCE:-BAT0}")
 
 BATT_PERCENT=$(get_battery_percent)
+CHARGE_STATE=$(get_battery_status)
 
 if [ -z "$BATT_PERCENT" ]; then
   exit 0
@@ -44,7 +45,17 @@ else
   VALUE_COLOR=$(xrescat i3xrocks.nominal white)
 fi
 
-echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $BATT_PERCENT% </span>"
+if [ -z "$CHARGE_STATE" ]; then
+  exit 0
+elif [ "$CHARGE_STATE" == "discharging" ]; then
+  CHARGE_ICON=$(xrescat i3xrocks.label.dn D)
+elif [ "$CHARGE_STATE" == "charging" ]; then
+  CHARGE_ICON=$(xrescat i3xrocks.label.up C)
+else
+  CHARGE_ICON=$(echo -e '\u2003')
+fi
+
+echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $BATT_PERCENT%</span><span color=\"${LABEL_COLOR}\">$CHARGE_ICON</span>"
 
 if [ ! -z "$button" ]; then
     /usr/bin/gnome-control-center power
