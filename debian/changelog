@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.6-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Add @cheginit's fix for detecting battery. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 28 Jan 2020 21:25:36 -0800
+
 regolith-i3xrocks-config (2.2.5-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Add discharge/recharge status to battery3. 
