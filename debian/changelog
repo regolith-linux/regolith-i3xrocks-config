@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.6-1ubuntu1~ppa2) eoan; urgency=medium
+
+  * Add @baldrailers's fix for battery3 bug. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Jan 2020 08:13:31 -0800
+
 regolith-i3xrocks-config (2.2.6-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Add @cheginit's fix for detecting battery. 
