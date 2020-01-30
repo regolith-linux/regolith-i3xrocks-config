@@ -21,7 +21,7 @@ get_battery_percent() {
     echo "$__UPOWER_INFO" | awk -W posix '$1 == "percentage:" { gsub("%","",$2); print $2}'
 }
 
-BATT_DEVICE=$(upower -e | grep -o 'BAT[0-9]' | HEAD -n 1)
+BATT_DEVICE=$(upower -e | grep -o 'BAT[0-9]' | head -n 1)
 __UPOWER_INFO=$(upower --show-info "/org/freedesktop/UPower/devices/battery_${BLOCK_INSTANCE:-$BATT_DEVICE}")
 
 BATT_PERCENT=$(get_battery_percent)
