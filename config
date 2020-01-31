@@ -61,6 +61,11 @@ interval=10
 #[keyboard_layout]
 #interval=persist
 
+# Memory
+#
+#[memory]
+#interval=10
+
 # CPU usage
 #
 # The script may be called with -w and -c switches to specify thresholds,
