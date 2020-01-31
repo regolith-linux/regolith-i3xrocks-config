@@ -42,8 +42,8 @@ awk -v type=$TYPE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" 
 END {
 	# full text
 	if (type == "swap")
-		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>", lc, li, vf, vc, (swap_total-swap_free)/1024/1024)
+		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, (swap_total-swap_free)/1024/1024)
 	else
-		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>", lc, li, vf, vc, mem_free/1024/1024)
+		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, mem_free/1024/1024)
 }
 ' /proc/meminfo
