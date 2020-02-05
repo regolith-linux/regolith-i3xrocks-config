@@ -77,9 +77,10 @@ min_width=100%
 # Battery indicator
 #
 # Displays total percentage charge left of specified battery.
+# You can specify the instance by adding:
+# instance=BAT0
 [battery3]
 interval=30
-instance=BAT0
 
 # Rofication
 #
