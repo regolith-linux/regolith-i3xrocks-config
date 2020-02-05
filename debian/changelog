@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.9-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Package @baldrailer's fix for not setting BAT0. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 04 Feb 2020 20:46:18 -0800
+
 regolith-i3xrocks-config (2.2.8-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Add @baldrailer's fix for memory bug.
