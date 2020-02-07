@@ -185,8 +185,8 @@ fi
 
 if [ ! -z "$button" ]; then
     if [ "$INT_TYPE" == "W" ]; then
-      /usr/bin/gnome-control-center wifi
+      /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
     else
-      /usr/bin/gnome-control-center network
+      /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center network
     fi
 fi

@@ -53,7 +53,7 @@ printf "<span color='%s'>%s</span><span font_desc='%s' color='%s'> %02d%%</span>
 printf "<span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $value_color, $cpu_usage;
 
 if (defined $ENV{'button'}) {
-    system('/usr/bin/gnome-system-monitor &')
+    system('/usr/bin/i3-msg -q exec /usr/bin/gnome-system-monitor')
 }
 
 exit 0;

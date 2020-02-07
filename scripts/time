@@ -7,5 +7,5 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$(date "$DATE_FORMAT") </span>"
 
 if [ ! -z "$button" ]; then
-    /usr/bin/gnome-control-center datetime
+    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center datetime
 fi
