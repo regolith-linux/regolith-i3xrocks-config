@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.11-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Package @cheginit's fix for negative bandwidth values. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 12 Feb 2020 07:59:08 -0800
+
 regolith-i3xrocks-config (2.2.10-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Fix refresh issue reported by @michionlion by delegating program execution
