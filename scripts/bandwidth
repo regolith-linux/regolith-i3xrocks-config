@@ -18,9 +18,9 @@
 
 # Use the provided interface, otherwise the device used for the default route.
 if [[ -n $BLOCK_INSTANCE ]]; then
-  INTERFACE=$BLOCK_INSTANCE
+    INTERFACE=$BLOCK_INSTANCE
 else
-  INTERFACE=$(ip route | awk '/^default/ { print $5 ; exit }')
+    INTERFACE=$(ip route | awk '/^default/ { print $5 ; exit }')
 fi
 
 # Issue #36 compliant.
@@ -45,8 +45,8 @@ time=$(date +%s)
 # write current data if file does not exist. Do not exit, this will cause
 # problems if this file is sourced instead of executed as another process.
 if ! [[ -f "${path}" ]]; then
-  echo "${time} ${rx} ${tx}" > "${path}"
-  chmod 0666 "${path}"
+    echo "${time} ${rx} ${tx}" > "${path}"
+    chmod 0666 "${path}"
 fi
 
 # read previous state and update data storage
@@ -73,9 +73,9 @@ tx_rate=$(( $tx_diff / $time_diff ))
 echo -n "IN "
 rx_kib=$(( $rx_rate >> 10 ))
 if [[ "$rx_rate" -gt 1048576 ]]; then
-  printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
+    printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
 else
-  echo -n "${rx_kib}K"
+    echo -n "${rx_kib}K"
 fi
 
 echo -n " "
@@ -84,7 +84,7 @@ echo -n " "
 echo -n "OUT "
 tx_kib=$(( $tx_rate >> 10 ))
 if [[ "$tx_rate" -gt 1048576 ]]; then
-  printf '%sM' "`echo "scale=1; $tx_kib / 1024" | bc`"
+    printf '%sM' "`echo "scale=1; $tx_kib / 1024" | bc`"
 else
-  echo -n "${tx_kib}K"
+    echo -n "${tx_kib}K"
 fi

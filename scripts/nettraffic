@@ -32,87 +32,87 @@ IF="${BLOCK_INSTANCE:-${IF}}"
 # set net icon based on wire or wireless connection
 case "$IF" in
     e*)
-      NIC=${label_icon:-$(xrescat i3xrocks.label.wired )}
-      INT_TYPE="C"
-      ;;
+        NIC=${label_icon:-$(xrescat i3xrocks.label.wired )}
+        INT_TYPE="C"
+    ;;
     w*)
-      NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
-      INT_TYPE="W"
-      ;;
+        NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
+        INT_TYPE="W"
+    ;;
 esac
 
 # get arguments
 while getopts i:a:u:e:t:U:D:lhv option
 do
-  case "${option}"
-  in
-    i)
-      IF=${OPTARG};;
-    a)
-      RT=${OPTARG};;
-    u)
-      UNIT=${OPTARG};;
-    e)
-      ULEV=${OPTARG};;
-    t)
-      DLY=${OPTARG};;
-    h)
-      echo "Usage: nettraffic [OPTION]"
-      echo "Options:"
-      echo -e "  -i  (%ifname%)\t Specify which network interface to monitor. By"
-      echo -e "    \t\t\t default it is detected automatically."
-      echo -e "  -a  (up|dn|total)\t Shows which data to display. Default is both."
-      echo -e "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
-      echo -e "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
-      echo -e "    \t\t\t 4 for KB/s). Default if 2."
-      echo -e "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
-      echo -e "  -v\t\t\t Prints version number."
-      echo -e "  -h\t\t\t Prints this help."
-      echo "Script adapted from http://github.com/ma-santoso/nettrafic/"
-      exit;;
-    v)
-      echo "$NAME, version $VERSION";
-      exit;;
-    *)
-      exit;;
-  esac
+    case "${option}"
+        in
+        i)
+        IF=${OPTARG};;
+        a)
+        RT=${OPTARG};;
+        u)
+        UNIT=${OPTARG};;
+        e)
+        ULEV=${OPTARG};;
+        t)
+        DLY=${OPTARG};;
+        h)
+            echo "Usage: nettraffic [OPTION]"
+            echo "Options:"
+            echo -e "  -i  (%ifname%)\t Specify which network interface to monitor. By"
+            echo -e "    \t\t\t default it is detected automatically."
+            echo -e "  -a  (up|dn|total)\t Shows which data to display. Default is both."
+            echo -e "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
+            echo -e "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
+            echo -e "    \t\t\t 4 for KB/s). Default if 2."
+            echo -e "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
+            echo -e "  -v\t\t\t Prints version number."
+            echo -e "  -h\t\t\t Prints this help."
+            echo "Script adapted from http://github.com/ma-santoso/nettrafic/"
+        exit;;
+        v)
+            echo "$NAME, version $VERSION";
+        exit;;
+        *)
+        exit;;
+    esac
 done
 
 # set units
 if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
-  FAC=1048576
-  case "$ULEV"
-  in
-    0) SUF="";;
-    1) SUF=" M";;
-    2) SUF="MB";;
-    3) SUF="M/s";;
-    *) SUF="MB/s";;
-  esac
-elif [ "$UNIT" = "KB" ] || [ "$UNIT" = "K" ]; then
-  FAC=1024
-  case "$ULEV"
-  in
-    0) SUF="";;
-    1) SUF=" K";;
-    2) SUF="KB";;
-    3) SUF="K/s";;
-    *) SUF="KB/s";;
-  esac
-elif [ "$UNIT" = "B" ]; then
-  FAC=1
-  case "$ULEV"
-  in
-    0) SUF="";;
-    1) SUF=" B";;
-    2) SUF=" B";;
-    *) SUF="B/s";;
-  esac
+    FAC=1048576
+    case "$ULEV"
+        in
+        0) SUF="";;
+        1) SUF=" M";;
+        2) SUF="MB";;
+        3) SUF="M/s";;
+        *) SUF="MB/s";;
+    esac
+    elif [ "$UNIT" = "KB" ] || [ "$UNIT" = "K" ]; then
+    FAC=1024
+    case "$ULEV"
+        in
+        0) SUF="";;
+        1) SUF=" K";;
+        2) SUF="KB";;
+        3) SUF="K/s";;
+        *) SUF="KB/s";;
+    esac
+    elif [ "$UNIT" = "B" ]; then
+    FAC=1
+    case "$ULEV"
+        in
+        0) SUF="";;
+        1) SUF=" B";;
+        2) SUF=" B";;
+        *) SUF="B/s";;
+    esac
 fi
 
 # set sleep time between reading the net usage from dev file
 if [ "$DLY" = "" ]; then
-  DLY=1;
+    DLY=1;
 fi
 
 RN="0.0"
@@ -134,36 +134,36 @@ AX=$(echo "scale = 0; $RX+$TX" | bc -l)
 
 # set net unit automatically
 if [ "$UNIT" = "" ]; then
-  if [ "$RX" -ge 102400 ] || [ "$TX" -ge 102400 ]; then
-    FAC=1048576
-    case "$ULEV"
-    in
-      0) SUF="";;
-      1) SUF=" M";;
-      2) SUF="MB";;
-      3) SUF="M/s";;
-      *) SUF="MB/s";;
-    esac
-  elif [ "$RX" -ge 100 ] || [ "$TX" -ge 100 ]; then
-    FAC=1024
-    case "$ULEV"
-    in
-      0) SUF="";;
-      1) SUF=" K";;
-      2) SUF="KB";;
-      3) SUF="K/s";;
-      *) SUF="KB/s";;
-    esac
-  else
-    FAC=1
-    case "$ULEV"
-    in
-      0) SUF="";;
-      1) SUF=" B";;
-      2) SUF=" B";;
-      *) SUF="B/s";;
-    esac
-  fi
+    if [ "$RX" -ge 102400 ] || [ "$TX" -ge 102400 ]; then
+        FAC=1048576
+        case "$ULEV"
+            in
+            0) SUF="";;
+            1) SUF=" M";;
+            2) SUF="MB";;
+            3) SUF="M/s";;
+            *) SUF="MB/s";;
+        esac
+        elif [ "$RX" -ge 100 ] || [ "$TX" -ge 100 ]; then
+        FAC=1024
+        case "$ULEV"
+            in
+            0) SUF="";;
+            1) SUF=" K";;
+            2) SUF="KB";;
+            3) SUF="K/s";;
+            *) SUF="KB/s";;
+        esac
+    else
+        FAC=1
+        case "$ULEV"
+            in
+            0) SUF="";;
+            1) SUF=" B";;
+            2) SUF=" B";;
+            *) SUF="B/s";;
+        esac
+    fi
 fi
 
 # format net usage output with fixed width
@@ -178,9 +178,9 @@ done
 # output net usage using pango markup
 if [ "$RT" = "up" ]; then
     echo "$(lspan "${NIC}")$(fspan "$TN$SUF")$(lspan "${UP}")"
-elif [ "$RT" = "down" ] || [ "$RT" = "dn" ]; then
+    elif [ "$RT" = "down" ] || [ "$RT" = "dn" ]; then
     echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")"
-elif [ "$RT" = "total" ]; then
+    elif [ "$RT" = "total" ]; then
     echo "$(lspan "${NIC}")$(fspan "$AN$SUF")"
 else
     echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")$(fspan "$TN$SUF")$(lspan "${UP}")"
@@ -188,8 +188,8 @@ fi
 
 if [ ! -z "$button" ]; then
     if [ "$INT_TYPE" == "W" ]; then
-      /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
+        /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
     else
-      /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center network
+        /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center network
     fi
 fi

@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.12-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Add new time blocklet to use system locale instead of hardcode format. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 13 Feb 2020 20:20:04 -0800
+
 regolith-i3xrocks-config (2.2.11-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Package @cheginit's fix for negative bandwidth values. 

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2019 MerlinElMago 
+# Copyright 2019 MerlinElMago
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,14 +34,14 @@ KB_MASK=`xset -q | grep -o "mask:[\ 0-9]*$" | cut -d" " -f 3`
 #Print the lines
 #Check the first bit of the mask (caps)
 if [[ $((KB_MASK & 1)) == 1 ]];then
-	echo -n "<span color=\"${LABEL_COLOR}\">${CAPS_ICON} </span> <span color=\"${COLOR_ON}\">${TOGGLE_ON} </span> "
+    echo -n "<span color=\"${LABEL_COLOR}\">${CAPS_ICON} </span> <span color=\"${COLOR_ON}\">${TOGGLE_ON} </span> "
 else
-	echo -n "<span color=\"${LABEL_COLOR}\">${CAPS_ICON} </span> <span color=\"${COLOR_OFF}\">${TOGGLE_OFF} </span> "
+    echo -n "<span color=\"${LABEL_COLOR}\">${CAPS_ICON} </span> <span color=\"${COLOR_OFF}\">${TOGGLE_OFF} </span> "
 fi
 
 #Now check the second bit of the mask (num)
 if [[ $(((KB_MASK & 2) >> 1)) == 1 ]];then
-	echo "<span color=\"${LABEL_COLOR}\">${NUM_ICON} </span> <span color=\"${COLOR_ON}\">${TOGGLE_ON} </span>"
+    echo "<span color=\"${LABEL_COLOR}\">${NUM_ICON} </span> <span color=\"${COLOR_ON}\">${TOGGLE_ON} </span>"
 else
-	echo "<span color=\"${LABEL_COLOR}\">${NUM_ICON} </span> <span color=\"${COLOR_OFF}\">${TOGGLE_OFF} </span>"
+    echo "<span color=\"${LABEL_COLOR}\">${NUM_ICON} </span> <span color=\"${COLOR_OFF}\">${TOGGLE_OFF} </span>"
 fi

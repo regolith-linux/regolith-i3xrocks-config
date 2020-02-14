@@ -12,5 +12,5 @@ if [ ! -z "$ESSID" ]; then
 fi
 
 if [ ! -z "$button" ]; then
-    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi    
+    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
 fi

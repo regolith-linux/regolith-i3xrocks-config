@@ -28,36 +28,36 @@ BATT_PERCENT=$(get_battery_percent)
 CHARGE_STATE=$(get_battery_status)
 
 if [ -z "$BATT_PERCENT" ]; then
-  exit 0
-elif [ "$BATT_PERCENT" -ge 0 ] && [ "$BATT_PERCENT" -le 20 ]; then
-  LABEL_ICON=$(xrescat i3xrocks.label.battery0 E)
-  VALUE_COLOR=$(xrescat i3xrocks.critical.color red)
-elif [ "$BATT_PERCENT" -ge 20 ] && [ "$BATT_PERCENT" -le 50 ]; then
-  LABEL_ICON=$(xrescat i3xrocks.label.battery20 L)
-  VALUE_COLOR=$(xrescat i3xrocks.error.color orange)
-elif [ "$BATT_PERCENT" -ge 50 ] && [ "$BATT_PERCENT" -le 80 ]; then
-  LABEL_ICON=$(xrescat i3xrocks.label.battery50 M)
-  VALUE_COLOR=$(xrescat i3xrocks.nominal white)
-elif [ "$BATT_PERCENT" -ge 80 ] && [ "$BATT_PERCENT" -le 98 ]; then
-  LABEL_ICON=$(xrescat i3xrocks.label.battery80 F)
-  VALUE_COLOR=$(xrescat i3xrocks.nominal white)
-else 
-  LABEL_ICON=$(xrescat i3xrocks.label.battery100 C)
-  VALUE_COLOR=$(xrescat i3xrocks.nominal white)
+    exit 0
+    elif [ "$BATT_PERCENT" -ge 0 ] && [ "$BATT_PERCENT" -le 20 ]; then
+    LABEL_ICON=$(xrescat i3xrocks.label.battery0 E)
+    VALUE_COLOR=$(xrescat i3xrocks.critical.color red)
+    elif [ "$BATT_PERCENT" -ge 20 ] && [ "$BATT_PERCENT" -le 50 ]; then
+    LABEL_ICON=$(xrescat i3xrocks.label.battery20 L)
+    VALUE_COLOR=$(xrescat i3xrocks.error.color orange)
+    elif [ "$BATT_PERCENT" -ge 50 ] && [ "$BATT_PERCENT" -le 80 ]; then
+    LABEL_ICON=$(xrescat i3xrocks.label.battery50 M)
+    VALUE_COLOR=$(xrescat i3xrocks.nominal white)
+    elif [ "$BATT_PERCENT" -ge 80 ] && [ "$BATT_PERCENT" -le 98 ]; then
+    LABEL_ICON=$(xrescat i3xrocks.label.battery80 F)
+    VALUE_COLOR=$(xrescat i3xrocks.nominal white)
+else
+    LABEL_ICON=$(xrescat i3xrocks.label.battery100 C)
+    VALUE_COLOR=$(xrescat i3xrocks.nominal white)
 fi
 
 if [ -z "$CHARGE_STATE" ]; then
-  exit 0
-elif [ "$CHARGE_STATE" == "discharging" ]; then
-  CHARGE_ICON=$(xrescat i3xrocks.label.dn D)
-elif [ "$CHARGE_STATE" == "charging" ]; then
-  CHARGE_ICON=$(xrescat i3xrocks.label.up C)
+    exit 0
+    elif [ "$CHARGE_STATE" == "discharging" ]; then
+    CHARGE_ICON=$(xrescat i3xrocks.label.dn D)
+    elif [ "$CHARGE_STATE" == "charging" ]; then
+    CHARGE_ICON=$(xrescat i3xrocks.label.up C)
 else
-  CHARGE_ICON=$(echo -e '\u2003')
+    CHARGE_ICON=$(echo -e '\u2003')
 fi
 
 echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $BATT_PERCENT%</span><span color=\"${LABEL_COLOR}\">$CHARGE_ICON</span>"
 
 if [ ! -z "$button" ]; then
-  /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center power
+    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center power
 fi

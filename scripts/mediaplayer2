@@ -3,7 +3,7 @@
 # set -x
 
 # get player status (Playing / Paused / Stopped / ...)
-STATUS=$(playerctl status) 
+STATUS=$(playerctl status)
 
 # use given values or fall back to parameters from xresources
 PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
@@ -17,10 +17,10 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 # paused/stopped uses the same icon for simplicity
 # exit with an empty blocklet if nothing is playing
 case $STATUS in
-  'Playing') ICON=${PLAYING_ICON} ;;
-  'Paused') ICON=${PAUSED_ICON} ;;
-  'Stopped') ICON=${PAUSED_ICON} ;;
-  *) echo "" ; echo "" ; exit 0 ;;
+    'Playing') ICON=${PLAYING_ICON} ;;
+    'Paused') ICON=${PAUSED_ICON} ;;
+    'Stopped') ICON=${PAUSED_ICON} ;;
+    *) echo "" ; echo "" ; exit 0 ;;
 esac
 
 # get artist and title information
@@ -41,9 +41,9 @@ echo $ICON
 # middle click: send play/pause signal
 # right click: send next title signal
 case $BLOCK_BUTTON in
-  1) playerctl previous ;;
-  2) playerctl play-pause ;;
-  3) playerctl next ;;
+    1) playerctl previous ;;
+    2) playerctl play-pause ;;
+    3) playerctl next ;;
 esac
 
 exit 0
