@@ -9,5 +9,6 @@ scripts/nettraffic /usr/share/i3xrocks
 scripts/openvpn /usr/share/i3xrocks
 scripts/temperature2 /usr/share/i3xrocks
 scripts/time /usr/share/i3xrocks
+scripts/time2 /usr/share/i3xrocks
 scripts/volume /usr/share/i3xrocks
 scripts/wifi2 /usr/share/i3xrocks

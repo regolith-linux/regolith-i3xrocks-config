@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (2.2.12-1ubuntu1~ppa2) eoan; urgency=medium
+
+  * Fix package file issue. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Fri, 14 Feb 2020 22:05:42 -0800
+
 regolith-i3xrocks-config (2.2.12-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Add new time blocklet to use system locale instead of hardcode format. 
