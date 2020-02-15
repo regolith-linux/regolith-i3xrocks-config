@@ -27,7 +27,7 @@ if [ -z "$DATE_FORMAT" ]; then # No custom format defined, use system defaults
         TIME_SPEC="%H:%M"
     fi
     
-    DATE_VALUE="$DATE_SPEC $TIME_SPEC"
+    DATE_VALUE=$(date "+$DATE_SPEC $TIME_SPEC")
 else
     DATE_VALUE=$(date "$DATE_FORMAT")
 fi
