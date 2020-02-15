@@ -51,9 +51,9 @@ if [ -z "$CHARGE_STATE" ]; then
     elif [ "$CHARGE_STATE" == "discharging" ]; then
     CHARGE_ICON=$(xrescat i3xrocks.label.dn D)
     elif [ "$CHARGE_STATE" == "charging" ]; then
-    CHARGE_ICON=$(xrescat i3xrocks.label.batterycharging C)
+    CHARGE_ICON=$(xrescat i3xrocks.label.battery_charging C)
     elif [ "$CHARGE_STATE" == "fully-charged" ]; then
-    CHARGE_ICON=$(xrescat i3xrocks.label.batteryac F)
+    CHARGE_ICON=$(xrescat i3xrocks.label.battery_ac F)
 else
     CHARGE_ICON=$(echo -e '\u2003')
 fi
