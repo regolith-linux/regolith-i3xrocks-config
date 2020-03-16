@@ -1,0 +1,7 @@
+#!/bin/bash
+LABEL_ICON=${icon:-$(xrescat i3xrocks.label.weather)}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+
+echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $(curl -Ss 'wttr.in/?format=1') </span>"
