@@ -90,7 +90,7 @@ case $BLOCK_BUTTON in
 esac
 
 ICON_ON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
-ICON_MUTE=${icon_nute:-$(xrescat i3xrocks.label.mute M)}
+ICON_MUTE=${icon_mute:-$(xrescat i3xrocks.label.mute M)}
 ICON=$(icon)
 
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
