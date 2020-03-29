@@ -1,0 +1,5 @@
+# temp
+#
+# Displays temp data
+[temp]
+interval=30

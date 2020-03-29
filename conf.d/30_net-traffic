@@ -1,0 +1,4 @@
+# Displays network load
+[nettraffic]
+interval=10
+
