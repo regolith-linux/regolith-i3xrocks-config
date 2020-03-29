@@ -1,23 +1,36 @@
 #!/bin/bash
-# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
-# Copyright (C) 2014 Alexander Keller <github@nycroth.com>
 
+# Copyright (c) 2020 Guillaume Deflaux
+#
+# Based on the work of:
+#   2014 Julien Bonjean <julien@bonjean.info>
+#   2014 Alexander Keller <github@nycroth.com>
+#
+# GNU GENERAL PUBLIC LICENSE
+#    Version 3, 29 June 2007
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#------------------------------------------------------------------------
 
-# The second parameter overrides the mixer selection
+# The first parameter sets the step to change the volume by (and units to display)
+# This may be in in % or dB (eg. 5% or 3dB)
+STEP="${1:-5}"
+
+# The second parameter sets the unit. It can be '%' or 'dB' only.
+UNIT="${2:-%}"
+
+# The third parameter overrides the mixer selection
 # For PulseAudio users, use "pulse"
 # For Jack/Jack2 users, use "jackplug"
 # For ALSA users, you may use "default" for your primary card
@@ -25,7 +38,7 @@
 MIXER="default"
 [ -n "$(lsmod | grep pulse)" ] && MIXER="pulse"
 [ -n "$(lsmod | grep jack)" ] && MIXER="jackplug"
-MIXER="${2:-$MIXER}"
+MIXER="${3:-$MIXER}"
 
 # The instance option sets the control to report and configure
 # This defaults to the first control of your selected mixer
@@ -35,45 +48,54 @@ SCONTROL="${BLOCK_INSTANCE:-$(amixer -D $MIXER scontrols |
         head -n1
 )}"
 
-# The first parameter sets the step to change the volume by (and units to display)
-# This may be in in % or dB (eg. 5% or 3dB)
-STEP="${1:-5%}"
-
-#------------------------------------------------------------------------
-
 capability() { # Return "Capture" if the device is a capture device
     amixer -D $MIXER get $SCONTROL |
     sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
 }
 
-volume() {
+mixer_info() {
     amixer -D $MIXER get $SCONTROL $(capability)
 }
 
-format() {
-    perl_filter='if (/.*\[(\d+%)\] (\[(-?\d+.\d+dB)\] )?\[(on|off)\]/)'
-    perl_filter+='{CORE::say $4 eq "off" ? "$MUTE_ICON" : "'
-    # If dB was selected, print that instead
-    perl_filter+=$([[ $STEP = *dB ]] && echo '$3' || echo '$1')
-    perl_filter+='"; exit}'
-    perl -ne "$perl_filter"
+# Returns "on" if not mute, "off" if mute
+status() {
+  mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p"
 }
 
-#------------------------------------------------------------------------
+icon() {
+  STATUS=$(status)
+  if [ $STATUS == "on" ]
+  then
+    echo $ICON_ON
+  else
+    echo $ICON_MUTE
+  fi
+}
+
+value() {
+  STATUS=$(status)
+  if [ $STATUS == "on" ]
+  then
+    VAL=`mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p"`
+    echo "$VAL$UNIT"
+  else
+    echo ""
+  fi
+}
 
 case $BLOCK_BUTTON in
     3) amixer -q -D $MIXER sset $SCONTROL $(capability) toggle ;;  # right click, mute/unmute
-    4) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}+ unmute ;; # scroll up, increase
-    5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}- unmute ;; # scroll down, decrease
+    4) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}+ unmute ;; # scroll up, increase
+    5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
 esac
 
+ICON_ON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
+ICON_MUTE=${icon_mute:-$(xrescat i3xrocks.label.mute M)}
+ICON=$(icon)
+
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
-LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.sound S)}
-MUTE_ICON=${mute_icon:-$(xrescat i3xrocks.label.mute M)}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+VALUE=$(value)
 
-VALUE=$(volume | format)
-
-echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"
+echo "<span color=\"${LABEL_COLOR}\">${ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"
