@@ -1,3 +1,12 @@
+regolith-i3xrocks-config (3.0.0) eoan; urgency=medium
+
+  * Utilize conf.d strategy for blocks
+  * Rename blocklet scripts for consistency
+  * Remove obsolete blocklets
+  * Package optional blockets
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 29 Mar 2020 10:14:30 -0700
+
 regolith-i3xrocks-config (2.2.15-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Fix issue w/ wifi2 and vpn relating to non-English output of nmcli.  See

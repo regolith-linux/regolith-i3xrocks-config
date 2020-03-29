@@ -1,0 +1,2 @@
+scripts/nm-vpn /usr/share/i3xrocks
+conf.d/40_nm-vpn /etc/regolith/i3xrocks/conf.d

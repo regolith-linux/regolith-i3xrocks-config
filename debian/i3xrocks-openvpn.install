@@ -1,0 +1,2 @@
+scripts/openvpn /usr/share/i3xrocks
+conf.d/40_openvpn /etc/regolith/i3xrocks/conf.d

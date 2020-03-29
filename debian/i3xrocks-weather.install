@@ -1,0 +1,2 @@
+scripts/weather /usr/share/i3xrocks
+conf.d/20_weather /etc/regolith/i3xrocks/conf.d

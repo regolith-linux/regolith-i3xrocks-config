@@ -1,0 +1,2 @@
+scripts/battery /usr/share/i3xrocks
+conf.d/80_battery /etc/regolith/i3xrocks/conf.d
