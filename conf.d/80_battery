@@ -3,5 +3,5 @@
 # Displays total percentage charge left of specified battery.
 # You can specify the instance by adding:
 # instance=BAT0
-[battery3]
+[battery]
 interval=10

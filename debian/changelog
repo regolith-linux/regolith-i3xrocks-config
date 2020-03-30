@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.1) eoan; urgency=medium
+
+  * Fix old references to blocklets. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 29 Mar 2020 17:37:11 -0700
+
 regolith-i3xrocks-config (3.0.0) eoan; urgency=medium
 
   * Utilize conf.d strategy for blocks

@@ -1,4 +1,4 @@
 # Displays network load
-[nettraffic]
+[net-traffic]
 interval=10
 
