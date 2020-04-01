@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.3) eoan; urgency=medium
+
+  * Fix and simplify key-indicator. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 08:06:55 -0700
+
 regolith-i3xrocks-config (3.0.2) eoan; urgency=medium
 
   * Fix linefeeds in config modules. 
