@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.6) eoan; urgency=medium
+
+  * Fix media-player script from error when nothing is playing. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 02 Apr 2020 14:45:07 -0700
+
 regolith-i3xrocks-config (3.0.5) eoan; urgency=medium
 
   * Fix install metadata from last version. 
