@@ -10,10 +10,37 @@ Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
 Package: regolith-i3xrocks-config
 Architecture: any
 Depends: ${misc:Depends},
-    gnome-control-center,
-    gnome-system-monitor,
     xrescat
 Description: Regolith configuration for i3xrocks launcher
+
+Package: i3xrocks-time
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    gnome-control-center
+Description: Blocklet to show date and time.
+
+Package: i3xrocks-net-traffic
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    gnome-control-center
+Description: Blocklet to show memory utilization.
+
+Package: i3xrocks-memory
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    gnome-system-monitor
+Description: Blocklet to show memory utilization.
+
+Package: i3xrocks-cpu-usage
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    gnome-system-monitor,
+    sysstat
+Description: Blocklet to show CPU load.
 
 Package: i3xrocks-focused-window-name
 Architecture: any
