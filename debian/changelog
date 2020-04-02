@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.5) eoan; urgency=medium
+
+  * Fix install metadata from last version. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 20:25:53 -0700
+
 regolith-i3xrocks-config (3.0.4) eoan; urgency=medium
 
   * Break up last of blocklets for better user control. 
