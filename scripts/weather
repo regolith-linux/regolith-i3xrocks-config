@@ -16,7 +16,7 @@ WEATHER_DATA_LEN=${#WEATHER_DATA}
 if [ $WEATHER_DATA_LEN -gt 10 ]; then
     echo ""
 else
-    echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${WEATHER_DATA} </span>"
+    echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER_DATA}</span>"
 fi
 
 if [ ! -z "$button" ]; then
