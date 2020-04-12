@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.10) eoan; urgency=medium
+
+  * Fix disk-capacity icon key. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 12 Apr 2020 13:26:55 -0700
+
 regolith-i3xrocks-config (3.0.9) eoan; urgency=medium
 
   * Fix descriptions of some blocklets. 
