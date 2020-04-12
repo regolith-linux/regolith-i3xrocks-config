@@ -1,6 +1,7 @@
-regolith-i3xrocks-config (3.0.8-2) UNRELEASED; urgency=medium
+regolith-i3xrocks-config (3.0.9) eoan; urgency=medium
 
   * Fix descriptions of some blocklets. 
+  * Package disk-capacity block from @lejeunel.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 11 Apr 2020 21:20:27 -0700
 

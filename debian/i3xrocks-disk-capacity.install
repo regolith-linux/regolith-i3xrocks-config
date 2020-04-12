@@ -1,0 +1,2 @@
+scripts/disk-capacity /usr/share/i3xrocks
+conf.d/50_disk-capacity /etc/regolith/i3xrocks/conf.d
