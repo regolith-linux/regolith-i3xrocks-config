@@ -25,7 +25,7 @@ Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-control-center
-Description: Blocklet to show memory utilization.
+Description: Blocklet to show network I/O status.
 
 Package: i3xrocks-memory
 Architecture: any
@@ -54,56 +54,56 @@ Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     upower
-Description: Blocklet to show battery
+Description: Blocklet to show battery status.
 
 Package: i3xrocks-keyboard-layout
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     libglib2.0-bin
-Description: Blocklet to show keyboard layout
+Description: Blocklet to show keyboard layout.
 
 Package: i3xrocks-key-indicator
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     x11-xserver-utils
-Description: Blocklet to keyboard status
+Description: Blocklet for caps and num lock status.
 
 Package: i3xrocks-media-player
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     playerctl
-Description: Media player blocklet
+Description: Blocklet to manage media playback.
 
 Package: i3xrocks-nm-vpn
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     network-manager
-Description: Network manager vpn blocklet
+Description: Network manager VPN blocklet.
 
 Package: i3xrocks-openvpn
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     perl
-Description: Blocklet to show openvpn
+Description: Blocklet to show openvpn status.
 
 Package: i3xrocks-temp
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     lm-sensors
-Description: Blocklet to show temperature
+Description: Blocklet for system temperature.
 
 Package: i3xrocks-volume
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     alsa-utils
-Description: Blocklet to show volume
+Description: Blocklet to show volume.
 
 Package: i3xrocks-weather
 Architecture: any
@@ -111,11 +111,11 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     curl,
     xdg-utils
-Description: Blocklet to show weather
+Description: Blocklet to show local weather.
 
 Package: i3xrocks-wifi
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     network-manager
-Description: Blocklet to show battery
+Description: Blocklet to WiFi router name.
