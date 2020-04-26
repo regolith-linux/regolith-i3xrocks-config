@@ -13,11 +13,7 @@ VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location "
 WEATHER_DATA=`curl -sS wttr.in/${VALUE_WEATHER_LOCATION}?format="${VALUE_WEATHER_FORMAT}"`
 WEATHER_DATA_LEN=${#WEATHER_DATA}
 
-if [ $WEATHER_DATA_LEN -gt 10 ]; then
-    echo ""
-else
-    echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER_DATA}</span>"
-fi
+echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER_DATA}</span>"
 
 if [ ! -z "$button" ]; then
     /usr/bin/i3-msg -q exec xdg-open https://wttr.in/${VALUE_WEATHER_LOCATION}
