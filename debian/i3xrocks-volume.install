@@ -1,0 +1,2 @@
+scripts/volume /usr/share/i3xrocks
+conf.d/80_volume /etc/regolith/i3xrocks/conf.d

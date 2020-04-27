@@ -1,0 +1,2 @@
+scripts/cpu-usage /usr/share/i3xrocks
+conf.d/40_cpu-usage /etc/regolith/i3xrocks/conf.d

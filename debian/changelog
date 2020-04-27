@@ -1,3 +1,80 @@
+regolith-i3xrocks-config (3.0.10) eoan; urgency=medium
+
+  * Fix disk-capacity icon key. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 12 Apr 2020 13:26:55 -0700
+
+regolith-i3xrocks-config (3.0.9) eoan; urgency=medium
+
+  * Fix descriptions of some blocklets. 
+  * Package disk-capacity block from @lejeunel.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 11 Apr 2020 21:20:27 -0700
+
+regolith-i3xrocks-config (3.0.8) eoan; urgency=medium
+
+  * Remove extra padding around weather block, service returns enough.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 08 Apr 2020 21:29:36 -0700
+
+regolith-i3xrocks-config (3.0.7) eoan; urgency=medium
+
+  * If weather service returns large text, ignore it. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 08 Apr 2020 21:20:26 -0700
+
+regolith-i3xrocks-config (3.0.6) eoan; urgency=medium
+
+  * Fix media-player script from error when nothing is playing. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 02 Apr 2020 14:45:07 -0700
+
+regolith-i3xrocks-config (3.0.5) eoan; urgency=medium
+
+  * Fix install metadata from last version. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 20:25:53 -0700
+
+regolith-i3xrocks-config (3.0.4) eoan; urgency=medium
+
+  * Break up last of blocklets for better user control. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 18:57:51 -0700
+
+regolith-i3xrocks-config (3.0.3) eoan; urgency=medium
+
+  * Fix and simplify key-indicator. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 08:06:55 -0700
+
+regolith-i3xrocks-config (3.0.2) eoan; urgency=medium
+
+  * Fix linefeeds in config modules. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Mon, 30 Mar 2020 20:22:20 -0700
+
+regolith-i3xrocks-config (3.0.1) eoan; urgency=medium
+
+  * Fix old references to blocklets. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 29 Mar 2020 17:37:11 -0700
+
+regolith-i3xrocks-config (3.0.0) eoan; urgency=medium
+
+  * Utilize conf.d strategy for blocks
+  * Rename blocklet scripts for consistency
+  * Remove obsolete blocklets
+  * Package optional blockets
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 29 Mar 2020 10:14:30 -0700
+
+regolith-i3xrocks-config (2.2.15-1ubuntu1~ppa1) eoan; urgency=medium
+
+  * Fix issue w/ wifi2 and vpn relating to non-English output of nmcli.  See
+    https://github.com/regolith-linux/regolith-i3xrocks-config/issues/24. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 14 Mar 2020 13:26:10 -0700
+
 regolith-i3xrocks-config (2.2.14-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Tweak spacing of time2. 

@@ -1,0 +1,2 @@
+scripts/key-indicator /usr/share/i3xrocks
+conf.d/20_key-indicator /etc/regolith/i3xrocks/conf.d

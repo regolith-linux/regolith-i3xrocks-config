@@ -49,7 +49,7 @@ MIXER="${3:-$MIXER}"
 # This defaults to the first control of your selected mixer
 # For a list of the available, use `amixer -D $Your_Mixer scontrols`
 SCONTROL="${BLOCK_INSTANCE:-$(amixer -D $MIXER scontrols |
-        sed -n "s/Simple mixer control '\([A-Za-z ]*\)',0/\1/p" |
+        sed -n "s/Simple mixer control '\([A-Za-z0-9 ]*\)',0/\1/p" |
         head -n1
 )}"
 
@@ -69,7 +69,7 @@ status() {
 
 icon() {
   STATUS=$(status)
-  if [ $STATUS == "on" ]
+  if [ "$STATUS" == "on" ]
   then
     echo $ICON_ON
   else

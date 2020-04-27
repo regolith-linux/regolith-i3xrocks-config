@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Copyright 2019 MerlinElMago
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+KB_MASK=`xset -q | grep -o "mask:[\ 0-9]*$" | cut -d" " -f 3`
+
+#Set icon variables (can be overridden from the i3 config file)
+[[ -z "$caps_icon" ]] && CAPS_ICON=$(xrescat i3xrocks.label.capslock C) || CAPS_ICON=$caps_icon
+[[ -z "$num_icon" ]] && NUM_ICON=$(xrescat i3xrocks.label.numlock N) || NUM_ICON=$num_icon
+
+if [[ $((KB_MASK & 1)) == 1 ]]; then
+    CAPS_ICON_COLOR=$(xrescat i3xrocks.label.color "#7B8394")
+else
+    CAPS_ICON_COLOR=$(xrescat i3-wm.bar.background.color "#2E3440")
+fi
+
+if [[ $(((KB_MASK & 2) >> 1)) == 1 ]]; then
+    NUM_ICON_COLOR=$(xrescat i3xrocks.label.color "#7B8394")
+else
+    NUM_ICON_COLOR=$(xrescat i3-wm.bar.background.color "#2E3440")
+fi
+
+echo "<span color=\"${CAPS_ICON_COLOR}\">${CAPS_ICON}</span><span color=\"${NUM_ICON_COLOR}\">${NUM_ICON}</span>"

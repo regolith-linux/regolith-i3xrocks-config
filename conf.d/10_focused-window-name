@@ -1,0 +1,6 @@
+# Show title of focused window
+[focused-window-name]
+label=  # uncomment to show an icon
+interval=1
+#filter_list=evince libreoffice # uncomment to show only for these window instances
+short_length=10

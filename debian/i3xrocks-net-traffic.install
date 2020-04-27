@@ -1,0 +1,2 @@
+scripts/net-traffic /usr/share/i3xrocks
+conf.d/30_net-traffic /etc/regolith/i3xrocks/conf.d
