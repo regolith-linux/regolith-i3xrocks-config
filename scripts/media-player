@@ -31,9 +31,9 @@ length=${#text}
 width=25
 
 if [[ $length > $width ]]; then
-    text="${text:0:$(( width - 4 ))}..."
+    text="${text:0:$(( width - 3 ))}..."
 else
-    text=$(printf "%-${width}s\n" "$text")
+    text=$(printf "%-${width}s" "$text")
 fi
 
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
