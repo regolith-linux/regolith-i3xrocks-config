@@ -26,12 +26,22 @@ ARTIST="$(playerctl metadata artist)"
 TITLE="$(playerctl metadata title)"
 
 # print resulting information (fulltext)
+text="${ARTIST} - ${TITLE}"
+length=${#text}
+width=25
+
+if [[ $length > $width ]]; then
+    text="${text:0:$(( width - 4 ))}..."
+else
+    text=$(printf "%-${width}s\n" "$text")
+fi
+
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
 <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
-${ARTIST} - ${TITLE}</span>"
+${text}</span>"
 
 # for shorttext, only print the appropriate glyph
-echo $ICON
+echo "$ICON"
 
 # rudimentary controls via mouse clicks
 #
