@@ -4,11 +4,12 @@
 STATUS=$(playerctl status 2> /dev/null)
 
 # use given values or fall back to parameters from xresources
+FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 25)}
 PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
 PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
-VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "JetBrains Mono Medium 13")}
 
 # assign the appropriate icon
 #
@@ -26,12 +27,22 @@ ARTIST="$(playerctl metadata artist)"
 TITLE="$(playerctl metadata title)"
 
 # print resulting information (fulltext)
+text="${ARTIST} - ${TITLE}"
+length=${#text}
+width=$FIELD_WIDTH
+
+if [[ $length > $width ]]; then
+    TEXT="${text:0:$(( width - 3 ))}..."
+else
+    TEXT=$(printf "%-${width}s" "$text")
+fi
+
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
 <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
-${ARTIST} - ${TITLE}</span>"
+${TEXT}</span>"
 
 # for shorttext, only print the appropriate glyph
-echo $ICON
+echo "$ICON"
 
 # rudimentary controls via mouse clicks
 #
