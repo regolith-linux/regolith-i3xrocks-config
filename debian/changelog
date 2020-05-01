@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.0.14-1) focal; urgency=medium
+
+  * Fix typo in weather URL
+  * Package @farsil's clean up of battery script.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Apr 2020 19:42:56 -0700
+
 regolith-i3xrocks-config (3.0.13-1) focal; urgency=medium
 
   * Package Guillaume's fix for weather block. 
