@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.15-1) focal; urgency=medium
+
+  * Actually fix the typo from the previous entry. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Apr 2020 22:42:57 -0700
+
 regolith-i3xrocks-config (3.0.14-1) focal; urgency=medium
 
   * Fix typo in weather URL
