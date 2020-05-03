@@ -18,21 +18,21 @@ Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-control-center
-Description: Blocklet to show date and time.
+Description: Indicator to show date and time.
 
 Package: i3xrocks-net-traffic
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-control-center
-Description: Blocklet to show network I/O status.
+Description: Indicator to show network I/O status.
 
 Package: i3xrocks-memory
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-system-monitor
-Description: Blocklet to show memory utilization.
+Description: Indicator to show memory utilization.
 
 Package: i3xrocks-cpu-usage
 Architecture: any
@@ -40,82 +40,83 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-system-monitor,
     sysstat
-Description: Blocklet to show CPU load.
+Description: Indicator to show CPU load.
 
 Package: i3xrocks-focused-window-name
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     i3ipc-python
-Description: Blocklet to show focused window name.
+Description: Indicator to show focused window name.
 
 Package: i3xrocks-battery
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     upower
-Description: Blocklet to show battery status.
+Description: Indicator to show battery status.
 
 Package: i3xrocks-keyboard-layout
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     libglib2.0-bin
-Description: Blocklet to show keyboard layout.
+Description: Indicator to show keyboard layout.
 
 Package: i3xrocks-key-indicator
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     x11-xserver-utils
-Description: Blocklet for caps and num lock status.
+Description: Indicator for caps and num lock status.
 
 Package: i3xrocks-media-player
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     playerctl
-Description: Blocklet to manage media playback.
+Description: Indicator to manage media playback.
 
 Package: i3xrocks-nm-vpn
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     network-manager
-Description: Network manager VPN blocklet.
+Description: Network manager VPN indicator.
 
 Package: i3xrocks-openvpn
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     perl
-Description: Blocklet to show openvpn status.
+Description: Indicator to show openvpn status.
 
 Package: i3xrocks-temp
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     lm-sensors
-Description: Blocklet for system temperature.
+Description: Indicator for system temperature.
 
 Package: i3xrocks-volume
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     alsa-utils
-Description: Blocklet to show volume.
+Description: Indicator to show volume.
 
 Package: i3xrocks-weather
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     curl,
+    fonts-noto-color-emoji,
     xdg-utils
-Description: Blocklet to show local weather.
+Description: Indicator to show local weather.
 
 Package: i3xrocks-wifi
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     network-manager
-Description: Blocklet to WiFi router name.
+Description: Indicator to display wifi router name.

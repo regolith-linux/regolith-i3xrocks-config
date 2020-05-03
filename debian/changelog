@@ -1,3 +1,41 @@
+regolith-i3xrocks-config (3.0.17-1) focal; urgency=medium
+
+  * Add lf to disk-capacity block to fix potential issue w/ i3xrocks. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 02 May 2020 13:12:02 -0700
+
+regolith-i3xrocks-config (3.0.16-1) focal; urgency=medium
+
+  * Take @gdeflaux's fix for keyboard indicator. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 02 May 2020 12:06:21 -0700
+
+regolith-i3xrocks-config (3.0.15-1) focal; urgency=medium
+
+  * Actually fix the typo from the previous entry. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Apr 2020 22:42:57 -0700
+
+regolith-i3xrocks-config (3.0.14-1) focal; urgency=medium
+
+  * Fix typo in weather URL
+  * Package @farsil's clean up of battery script.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Apr 2020 19:42:56 -0700
+
+regolith-i3xrocks-config (3.0.13-1) focal; urgency=medium
+
+  * Package Guillaume's fix for weather block. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 29 Apr 2020 19:43:03 -0700
+
+regolith-i3xrocks-config (3.0.12-1) focal; urgency=medium
+
+  * Add missing font dependency on weather blocklet (fix by @cheginit).
+  * Use 'indicator' over 'blocklet' for simplicity in package desc. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 28 Apr 2020 21:44:21 -0700
+
 regolith-i3xrocks-config (3.0.11-1) focal; urgency=medium
 
   * Fixes to volume block by @agoose77
