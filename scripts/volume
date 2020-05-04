@@ -48,34 +48,34 @@ SCONTROL="${BLOCK_INSTANCE:-$(
         head -n1
 )}"
 
-capability() { # Return "Capture" if the device is a capture device
+mixer_capability() { # Return "Capture" if the device is a capture device
     amixer -D $MIXER get $SCONTROL |
         sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
 }
 
 mixer_info() {
-    amixer -D $MIXER get $SCONTROL $(capability)
+    amixer -D $MIXER get $SCONTROL $(mixer_capability)
 }
 
 # Returns "on" if not mute, "off" if mute
-status() {
+mixer_status() {
     mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p" | head -n 1
 }
 
-value() {
+mixer_value() {
     VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
     echo "$VAL$UNIT"
 }
 
 case $BLOCK_BUTTON in
-3) amixer -q -D $MIXER sset $SCONTROL $(capability) toggle ;; # right click, mute/unmute
-4) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}+ unmute ;; # scroll up, increase
-5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
+3) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle ;; # right click, mute/unmute
+4) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+ unmute ;; # scroll up, increase
+5) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
 esac
 
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#E6E1CF")}
 
-if [ "$(status)" == "on" ]; then
+if [ "$(mixer_status)" == "on" ]; then
     ICON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
     VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#E6E1CF")}
 else
@@ -84,6 +84,6 @@ else
 fi
 
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
-VALUE=$(value)
+VALUE=$(mixer_value)
 
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"
