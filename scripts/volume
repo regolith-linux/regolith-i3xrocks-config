@@ -62,15 +62,6 @@ status() {
     mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p" | head -n 1
 }
 
-icon() {
-    STATUS=$(status)
-    if [ "$STATUS" == "on" ]; then
-        echo $ICON_ON
-    else
-        echo $ICON_MUTE
-    fi
-}
-
 value() {
     VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
     echo "$VAL$UNIT"
@@ -82,12 +73,16 @@ case $BLOCK_BUTTON in
 5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
 esac
 
-ICON_ON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
-ICON_MUTE=${icon_mute:-$(xrescat i3xrocks.label.mute M)}
-ICON=$(icon)
-
-VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+
+if [ "$(status)" == "on" ]; then
+    ICON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
+    VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+else
+    ICON=${icon_mute:-$(xrescat i3xrocks.label.mute M)}
+    VALUE_COLOR=${warn_color:-$(xrescat i3xrocks.warning "#FFD580")}
+fi
+
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 VALUE=$(value)
 
