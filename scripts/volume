@@ -22,7 +22,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 # The first parameter sets the step to change the volume by (and units to display)
 # This may be in in % or dB (eg. 5% or 3dB)
 STEP="${1:-5}"
@@ -43,14 +42,15 @@ MIXER="${3:-$MIXER}"
 # The instance option sets the control to report and configure
 # This defaults to the first control of your selected mixer
 # For a list of the available, use `amixer -D $Your_Mixer scontrols`
-SCONTROL="${BLOCK_INSTANCE:-$(amixer -D $MIXER scontrols |
+SCONTROL="${BLOCK_INSTANCE:-$(
+    amixer -D $MIXER scontrols |
         sed -n "s/Simple mixer control '\([A-Za-z0-9 ]*\)',0/\1/p" |
         head -n1
 )}"
 
 capability() { # Return "Capture" if the device is a capture device
     amixer -D $MIXER get $SCONTROL |
-    sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
+        sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
 }
 
 mixer_info() {
@@ -59,34 +59,32 @@ mixer_info() {
 
 # Returns "on" if not mute, "off" if mute
 status() {
-  mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p" | head -n 1
+    mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p" | head -n 1
 }
 
 icon() {
-  STATUS=$(status)
-  if [ "$STATUS" == "on" ]
-  then
-    echo $ICON_ON
-  else
-    echo $ICON_MUTE
-  fi
+    STATUS=$(status)
+    if [ "$STATUS" == "on" ]; then
+        echo $ICON_ON
+    else
+        echo $ICON_MUTE
+    fi
 }
 
 value() {
-  STATUS=$(status)
-  if [ "$STATUS" == "on" ]
-  then
-    VAL=`mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1`
-    echo "$VAL$UNIT"
-  else
-    echo ""
-  fi
+    STATUS=$(status)
+    if [ "$STATUS" == "on" ]; then
+        VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
+        echo "$VAL$UNIT"
+    else
+        echo ""
+    fi
 }
 
 case $BLOCK_BUTTON in
-    3) amixer -q -D $MIXER sset $SCONTROL $(capability) toggle ;;  # right click, mute/unmute
-    4) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}+ unmute ;; # scroll up, increase
-    5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
+3) amixer -q -D $MIXER sset $SCONTROL $(capability) toggle ;; # right click, mute/unmute
+4) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}+ unmute ;; # scroll up, increase
+5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
 esac
 
 ICON_ON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
