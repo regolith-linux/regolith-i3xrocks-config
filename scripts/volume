@@ -69,8 +69,8 @@ mixer_value() {
 
 case $BLOCK_BUTTON in
 3) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle ;; # right click, mute/unmute
-4) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+ unmute ;; # scroll up, increase
-5) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
+4) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+ ;; # scroll up, increase
+5) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}- ;; # scroll down, decrease
 esac
 
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#E6E1CF")}
