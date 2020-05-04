@@ -72,13 +72,8 @@ icon() {
 }
 
 value() {
-    STATUS=$(status)
-    if [ "$STATUS" == "on" ]; then
-        VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
-        echo "$VAL$UNIT"
-    else
-        echo ""
-    fi
+    VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
+    echo "$VAL$UNIT"
 }
 
 case $BLOCK_BUTTON in
