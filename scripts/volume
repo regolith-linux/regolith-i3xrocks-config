@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2020 Guillaume Deflaux
+# Copyright (c) 2020 Guillaume Deflaux, Marco Buzzanca
 #
 # Based on the work of:
 #   2014 Julien Bonjean <julien@bonjean.info>
@@ -24,10 +24,10 @@
 
 # The first parameter sets the step to change the volume by (and units to display)
 # This may be in in % or dB (eg. 5% or 3dB)
-STEP="${1:-5}"
+STEP="${1:-$(xrescat i3xrocks.volume.step 5)}"
 
 # The second parameter sets the unit. It can be '%' or 'dB' only.
-UNIT="${2:-%}"
+UNIT="${2:-$(xrescat i3xrocks.volume.unit %)}"
 
 # The third parameter overrides the mixer selection
 # For PulseAudio users, use "pulse"
@@ -37,7 +37,7 @@ UNIT="${2:-%}"
 MIXER="default"
 pactl list 1>/dev/null && MIXER="pulse"
 lsmod | grep -q jack && MIXER="jackplug"
-MIXER="${3:-$MIXER}"
+MIXER="${3:-$(xrescat i3xrocks.volume.mixer $MIXER)}"
 
 # The instance option sets the control to report and configure
 # This defaults to the first control of your selected mixer
