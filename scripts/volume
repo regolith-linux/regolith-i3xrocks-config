@@ -73,11 +73,11 @@ case $BLOCK_BUTTON in
 5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}${UNIT}- unmute ;; # scroll down, decrease
 esac
 
-LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#E6E1CF")}
 
 if [ "$(status)" == "on" ]; then
     ICON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
-    VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+    VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#E6E1CF")}
 else
     ICON=${icon_mute:-$(xrescat i3xrocks.label.mute M)}
     VALUE_COLOR=${warn_color:-$(xrescat i3xrocks.warning "#FFD580")}
