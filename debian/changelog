@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.18-1) focal; urgency=medium
+
+  * Update version for launchpad.  No change from previous version. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 03 May 2020 20:27:26 -0700
+
 regolith-i3xrocks-config (3.0.17-1) focal; urgency=medium
 
   * Add lf to disk-capacity block to fix potential issue w/ i3xrocks. 
