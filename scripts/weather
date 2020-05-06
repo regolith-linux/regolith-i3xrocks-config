@@ -8,7 +8,9 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 VALUE_WEATHER_FORMAT=${weather_format:-$(xrescat i3xrocks.weather.format "1")}
 
 # Defaults to IP address location
-VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location "")}
+IP_ADDRESS="$( dig @resolver1.opendns.com ANY myip.opendns.com +short )"
+IP_LOCATION="$( curl -s https://ipapi.co/$ip/city/ )"
+VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location $IP_LOCATION)}
 VALUE_WEATHER_ERROR_MESSAGE=${error_message:-$(xrescat i3xrocks.weather.error_message "")}
 
 WEATHER_DATA=$(curl -sS wttr.in/${VALUE_WEATHER_LOCATION}?format="${VALUE_WEATHER_FORMAT}" || echo "${VALUE_WEATHER_ERROR_MESSAGE}")
