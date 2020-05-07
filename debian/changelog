@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (3.0.19-1) focal; urgency=medium
+
+  * Fixes to volume by @farsil.
+  * Fixes to keyboard layout by @kirushik.
+  * Fixes to weather block by @nachovizzo. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 07 May 2020 08:33:50 -0700
+
 regolith-i3xrocks-config (3.0.18-1) focal; urgency=medium
 
   * Update version for launchpad.  No change from previous version. 
