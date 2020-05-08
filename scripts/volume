@@ -64,7 +64,12 @@ mixer_status() {
 
 mixer_value() {
     VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
-    echo "$VAL$UNIT"
+    if [ -z "$VAL" ]; then
+        # return empty string of same width to prevent bar shift.
+        echo "   "
+    else
+        echo "$VAL$UNIT"
+    fi
 }
 
 case $BLOCK_BUTTON in
