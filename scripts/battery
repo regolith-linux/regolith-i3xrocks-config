@@ -40,10 +40,10 @@ elif [ "$BATT_PERCENT" -ge 50 ] && [ "$BATT_PERCENT" -le 80 ]; then
     VALUE_COLOR=$(xrescat i3xrocks.nominal white)
 elif [ "$BATT_PERCENT" -ge 80 ] && [ "$BATT_PERCENT" -le 98 ]; then
     LABEL_ICON=$(xrescat i3xrocks.label.battery80 F)
-    VALUE_COLOR=$(xrescat i3xrocks.nominal white)
+    VALUE_COLOR=$(xrescat i3xrocks.label.color white)
 else
     LABEL_ICON=$(xrescat i3xrocks.label.battery100 C)
-    VALUE_COLOR=$(xrescat i3xrocks.nominal white)
+    VALUE_COLOR=$(xrescat i3xrocks.label.color white)
 fi
 
 if [ -z "$CHARGE_STATE" ]; then
