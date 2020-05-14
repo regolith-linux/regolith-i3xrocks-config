@@ -42,7 +42,7 @@ case "$IF" in
 esac
 
 # get arguments
-while getopts i:a:u:e:t:U:D:lhv option
+while getopts i:a:u:e:t:U:D:lhvb option
 do
     case "${option}"
         in
@@ -52,6 +52,8 @@ do
         RT=${OPTARG};;
         u)
         UNIT=${OPTARG};;
+        b)
+        BPS=true;;
         e)
         ULEV=${OPTARG};;
         t)
@@ -63,8 +65,9 @@ do
             echo -e "    \t\t\t default it is detected automatically."
             echo -e "  -a  (up|dn|total)\t Shows which data to display. Default is both."
             echo -e "  -u  (K|KB|M|MB)\t Units to show the data in. Automatic if not specified."
-            echo -e "  -e  (0|1|2|3|4)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
-            echo -e "    \t\t\t 4 for KB/s). Default if 2."
+            echo -e "  -b  \t Show in bits per second (Kbps, Mbps - small b)."
+            echo -e "  -e  (0|1|2|3|4|5)\t Level of units displayed. (0 for none, 1 for K, 2 for KB, 3 for K/s,"
+            echo -e "    \t\t\t 4 for Kb/s, 5 for KB/s). Default of 2."
             echo -e "  -t  (%integer%)\t Set the interval for the data update. Default is 1."
             echo -e "  -v\t\t\t Prints version number."
             echo -e "  -h\t\t\t Prints this help."
@@ -78,6 +81,10 @@ do
     esac
 done
 
+if [[ "$BPS" = true ]]; then
+    ULEV=4
+fi
+
 # set units
 if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
     FAC=1048576
@@ -87,6 +94,7 @@ if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
         1) SUF=" M";;
         2) SUF="MB";;
         3) SUF="M/s";;
+        4) SUF="Mb/s";;
         *) SUF="MB/s";;
     esac
     elif [ "$UNIT" = "KB" ] || [ "$UNIT" = "K" ]; then
@@ -97,6 +105,7 @@ if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
         1) SUF=" K";;
         2) SUF="KB";;
         3) SUF="K/s";;
+        4) SUF="Kb/s";;
         *) SUF="KB/s";;
     esac
     elif [ "$UNIT" = "B" ]; then
@@ -106,6 +115,8 @@ if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
         0) SUF="";;
         1) SUF=" B";;
         2) SUF=" B";;
+        3) SUF="b/s";;
+        4) SUF="b/s";;
         *) SUF="B/s";;
     esac
 fi
@@ -142,6 +153,7 @@ if [ "$UNIT" = "" ]; then
             1) SUF=" M";;
             2) SUF="MB";;
             3) SUF="M/s";;
+            4) SUF="Mb/s";;
             *) SUF="MB/s";;
         esac
         elif [ "$RX" -ge 100 ] || [ "$TX" -ge 100 ]; then
@@ -152,6 +164,7 @@ if [ "$UNIT" = "" ]; then
             1) SUF=" K";;
             2) SUF="KB";;
             3) SUF="K/s";;
+            4) SUF="Kb/s";;
             *) SUF="KB/s";;
         esac
     else
@@ -161,15 +174,23 @@ if [ "$UNIT" = "" ]; then
             0) SUF="";;
             1) SUF=" B";;
             2) SUF=" B";;
+            3) SUF="b/s";;
+            4) SUF="b/s";;
             *) SUF="B/s";;
         esac
     fi
 fi
 
 # format net usage output with fixed width
-RN="$(echo "$RX"/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
-TN="$(echo "$TX"/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
-AN="$(echo "$AX"/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+if [[ "$BPS" = true ]] ; then
+  RN="$(echo \("$RX"\)*8/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+  TN="$(echo \("$TX"\)*8/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+  AN="$(echo \("$AX"\)*8/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+else
+  RN="$(echo "$RX"/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+  TN="$(echo "$TX"/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+  AN="$(echo "$AX"/"$FAC" | bc -l | awk '{ printf("%4.1f", $1)}')"
+fi
 
 for s in $RN $TN $AN; do
     [[ "$s" = "$(printf "%s\n-0.0001\n" "$s" | sort -g | head -1)" ]] && exit

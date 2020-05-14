@@ -1,3 +1,5 @@
 # Displays network load
 [net-traffic]
+# Uncomment the next line to display in bits
+# command=/usr/share/i3xrocks/net-traffic-new -b
 interval=10
