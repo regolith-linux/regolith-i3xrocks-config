@@ -1,4 +1,4 @@
-regolith-i3xrocks-config (3.0.21-1ubuntu1) focal; urgency=medium
+regolith-i3xrocks-config (3.0.22-2) bionic; urgency=medium
 
   * Fixes to weather status for ambiguous city names and cities of multiple
     words.
