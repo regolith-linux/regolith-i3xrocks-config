@@ -20,6 +20,14 @@ Depends: ${misc:Depends},
     gnome-control-center
 Description: Indicator to show date and time.
 
+Package: i3xrocks-info
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    remontoire,
+    regolith-ftue
+Description: Indicator launch Remontoire.
+
 Package: i3xrocks-net-traffic
 Architecture: any
 Depends: ${misc:Depends},

@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (3.0.23-1) bionic; urgency=medium
+
+  * Add info indicator missed when moving to conf.d config. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 13 May 2020 20:58:02 -0700
+
 regolith-i3xrocks-config (3.0.22-2) bionic; urgency=medium
 
   * Fixes to weather status for ambiguous city names and cities of multiple
