@@ -1,4 +1,23 @@
 #!/bin/bash
+
+# Taken from https://gist.github.com/cdown/1163649
+urlencode() {
+    # urlencode <string>
+    old_lc_collate=$LC_COLLATE
+    LC_COLLATE=C
+
+    local length="${#1}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${1:i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf "$c" ;;
+            *) printf '%%%02X' "'$c" ;;
+        esac
+    done
+
+    LC_COLLATE=$old_lc_collate
+}
+
 LABEL_ICON=${icon:-$(xrescat i3xrocks.label.weather)}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
@@ -8,15 +27,15 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 VALUE_WEATHER_FORMAT=${weather_format:-$(xrescat i3xrocks.weather.format "1")}
 
 # Defaults to IP address location
-IP_ADDRESS="$( dig @resolver1.opendns.com ANY myip.opendns.com +short )"
-IP_LOCATION="$( curl -s https://ipapi.co/$ip/city/ )"
-VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location $IP_LOCATION)}
+IP_LOCATION="$(curl -s https://ipapi.co/city/),$(curl -s https://ipapi.co/region/)"
+VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location "$IP_LOCATION")}
+ENCODED_VALUE_WEATHER_LOCATION=$(urlencode "$VALUE_WEATHER_LOCATION")
 VALUE_WEATHER_ERROR_MESSAGE=${error_message:-$(xrescat i3xrocks.weather.error_message "")}
 
-WEATHER_DATA=$(curl -sS wttr.in/${VALUE_WEATHER_LOCATION}?format="${VALUE_WEATHER_FORMAT}" || echo "${VALUE_WEATHER_ERROR_MESSAGE}")
+WEATHER_DATA=$(curl -sS wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}?format="${VALUE_WEATHER_FORMAT}" || echo "${VALUE_WEATHER_ERROR_MESSAGE}")
 
 echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER_DATA}</span>"
 
 if [ ! -z "$button" ]; then
-    /usr/bin/i3-msg -q exec xdg-open https://wttr.in/${VALUE_WEATHER_LOCATION}
+    /usr/bin/i3-msg -q exec xdg-open https://wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}
 fi
