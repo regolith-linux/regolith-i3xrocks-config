@@ -1,0 +1,5 @@
+# td-cli
+#
+# Displays td-cli number of tasks
+[td-cli]
+interval=100
