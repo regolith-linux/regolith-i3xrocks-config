@@ -1,0 +1,5 @@
+# todo
+#
+# Displays number of tasks in the todo list
+[todo]
+interval=100
