@@ -17,8 +17,12 @@
 #
 # Returns:
 #   The disk's available space in GB
+
+LABEL="${MNT:-/}"
+export LABEL
+
 get_disk_avail_gb() {
-    AVAIL_GB=$(df -hP "${MNT:-/}" |grep -vE '^Filesystem' | awk '{print $4}')
+    AVAIL_GB=$(df -hP "${LABEL}" |grep -vE '^Filesystem' | awk '{print $4}')
 }
 
 get_disk_avail_gb
@@ -28,4 +32,4 @@ LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.disk D)}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
-echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"> $LABEL: $AVAIL_GB</span>"
+echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"> $LABEL:</span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$AVAIL_GB</span>"
