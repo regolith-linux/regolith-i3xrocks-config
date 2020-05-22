@@ -1,6 +1,6 @@
 regolith-i3xrocks-config (3.0.23-1) bionic; urgency=medium
 
-  * Add info indicator missed when moving to conf.d config. 
+  * Add info indicator missed when moving to conf.d config.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 13 May 2020 20:58:02 -0700
 
@@ -13,13 +13,13 @@ regolith-i3xrocks-config (3.0.22-2) bionic; urgency=medium
 
 regolith-i3xrocks-config (3.0.21-1) focal; urgency=medium
 
-  * Minor visual tweaks to volume block. 
+  * Minor visual tweaks to volume block.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 07 May 2020 22:15:21 -0700
 
 regolith-i3xrocks-config (3.0.20-1) focal; urgency=medium
 
-  * Use default label for color rather than nominal for high battery state. 
+  * Use default label for color rather than nominal for high battery state.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 07 May 2020 21:48:58 -0700
 
@@ -27,31 +27,31 @@ regolith-i3xrocks-config (3.0.19-1) focal; urgency=medium
 
   * Fixes to volume by @farsil.
   * Fixes to keyboard layout by @kirushik.
-  * Fixes to weather block by @nachovizzo. 
+  * Fixes to weather block by @nachovizzo.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 07 May 2020 08:33:50 -0700
 
 regolith-i3xrocks-config (3.0.18-1) focal; urgency=medium
 
-  * Update version for launchpad.  No change from previous version. 
+  * Update version for launchpad.  No change from previous version.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sun, 03 May 2020 20:27:26 -0700
 
 regolith-i3xrocks-config (3.0.17-1) focal; urgency=medium
 
-  * Add lf to disk-capacity block to fix potential issue w/ i3xrocks. 
+  * Add lf to disk-capacity block to fix potential issue w/ i3xrocks.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 02 May 2020 13:12:02 -0700
 
 regolith-i3xrocks-config (3.0.16-1) focal; urgency=medium
 
-  * Take @gdeflaux's fix for keyboard indicator. 
+  * Take @gdeflaux's fix for keyboard indicator.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 02 May 2020 12:06:21 -0700
 
 regolith-i3xrocks-config (3.0.15-1) focal; urgency=medium
 
-  * Actually fix the typo from the previous entry. 
+  * Actually fix the typo from the previous entry.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Apr 2020 22:42:57 -0700
 
@@ -64,33 +64,33 @@ regolith-i3xrocks-config (3.0.14-1) focal; urgency=medium
 
 regolith-i3xrocks-config (3.0.13-1) focal; urgency=medium
 
-  * Package Guillaume's fix for weather block. 
+  * Package Guillaume's fix for weather block.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 29 Apr 2020 19:43:03 -0700
 
 regolith-i3xrocks-config (3.0.12-1) focal; urgency=medium
 
   * Add missing font dependency on weather blocklet (fix by @cheginit).
-  * Use 'indicator' over 'blocklet' for simplicity in package desc. 
+  * Use 'indicator' over 'blocklet' for simplicity in package desc.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Tue, 28 Apr 2020 21:44:21 -0700
 
 regolith-i3xrocks-config (3.0.11-1) focal; urgency=medium
 
   * Fixes to volume block by @agoose77
-  * Fixes to nm-vpn block by @dennis-reiter 
+  * Fixes to nm-vpn block by @dennis-reiter
 
  -- Regolith Linux <regolith.linux@gmail.com>  Mon, 27 Apr 2020 22:18:09 -0700
 
 regolith-i3xrocks-config (3.0.10) eoan; urgency=medium
 
-  * Fix disk-capacity icon key. 
+  * Fix disk-capacity icon key.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sun, 12 Apr 2020 13:26:55 -0700
 
 regolith-i3xrocks-config (3.0.9) eoan; urgency=medium
 
-  * Fix descriptions of some blocklets. 
+  * Fix descriptions of some blocklets.
   * Package disk-capacity block from @lejeunel.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 11 Apr 2020 21:20:27 -0700
@@ -103,43 +103,43 @@ regolith-i3xrocks-config (3.0.8) eoan; urgency=medium
 
 regolith-i3xrocks-config (3.0.7) eoan; urgency=medium
 
-  * If weather service returns large text, ignore it. 
+  * If weather service returns large text, ignore it.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 08 Apr 2020 21:20:26 -0700
 
 regolith-i3xrocks-config (3.0.6) eoan; urgency=medium
 
-  * Fix media-player script from error when nothing is playing. 
+  * Fix media-player script from error when nothing is playing.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 02 Apr 2020 14:45:07 -0700
 
 regolith-i3xrocks-config (3.0.5) eoan; urgency=medium
 
-  * Fix install metadata from last version. 
+  * Fix install metadata from last version.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 20:25:53 -0700
 
 regolith-i3xrocks-config (3.0.4) eoan; urgency=medium
 
-  * Break up last of blocklets for better user control. 
+  * Break up last of blocklets for better user control.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 18:57:51 -0700
 
 regolith-i3xrocks-config (3.0.3) eoan; urgency=medium
 
-  * Fix and simplify key-indicator. 
+  * Fix and simplify key-indicator.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 01 Apr 2020 08:06:55 -0700
 
 regolith-i3xrocks-config (3.0.2) eoan; urgency=medium
 
-  * Fix linefeeds in config modules. 
+  * Fix linefeeds in config modules.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Mon, 30 Mar 2020 20:22:20 -0700
 
 regolith-i3xrocks-config (3.0.1) eoan; urgency=medium
 
-  * Fix old references to blocklets. 
+  * Fix old references to blocklets.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sun, 29 Mar 2020 17:37:11 -0700
 
@@ -155,37 +155,37 @@ regolith-i3xrocks-config (3.0.0) eoan; urgency=medium
 regolith-i3xrocks-config (2.2.15-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Fix issue w/ wifi2 and vpn relating to non-English output of nmcli.  See
-    https://github.com/regolith-linux/regolith-i3xrocks-config/issues/24. 
+    https://github.com/regolith-linux/regolith-i3xrocks-config/issues/24.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 14 Mar 2020 13:26:10 -0700
 
 regolith-i3xrocks-config (2.2.14-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Tweak spacing of time2. 
+  * Tweak spacing of time2.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 15 Feb 2020 08:41:10 -0800
 
 regolith-i3xrocks-config (2.2.13-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Another fix to the time2 script. 
+  * Another fix to the time2 script.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sat, 15 Feb 2020 08:14:31 -0800
 
 regolith-i3xrocks-config (2.2.12-1ubuntu1~ppa2) eoan; urgency=medium
 
-  * Fix package file issue. 
+  * Fix package file issue.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Fri, 14 Feb 2020 22:05:42 -0800
 
 regolith-i3xrocks-config (2.2.12-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Add new time blocklet to use system locale instead of hardcode format. 
+  * Add new time blocklet to use system locale instead of hardcode format.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 13 Feb 2020 20:20:04 -0800
 
 regolith-i3xrocks-config (2.2.11-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Package @cheginit's fix for negative bandwidth values. 
+  * Package @cheginit's fix for negative bandwidth values.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Wed, 12 Feb 2020 07:59:08 -0800
 
@@ -198,45 +198,45 @@ regolith-i3xrocks-config (2.2.10-1ubuntu1~ppa1) eoan; urgency=medium
 
 regolith-i3xrocks-config (2.2.9-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Package @baldrailer's fix for not setting BAT0. 
+  * Package @baldrailer's fix for not setting BAT0.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Tue, 04 Feb 2020 20:46:18 -0800
 
 regolith-i3xrocks-config (2.2.8-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Add @baldrailer's fix for memory bug.
-  * Add example memory stanza to config. 
+  * Add example memory stanza to config.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Fri, 31 Jan 2020 08:14:56 -0800
 
 regolith-i3xrocks-config (2.2.7-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Add @baldrailers's fix for battery3 bug. 
+  * Add @baldrailers's fix for battery3 bug.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Thu, 30 Jan 2020 08:13:31 -0800
 
 regolith-i3xrocks-config (2.2.6-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Add @cheginit's fix for detecting battery. 
+  * Add @cheginit's fix for detecting battery.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Tue, 28 Jan 2020 21:25:36 -0800
 
 regolith-i3xrocks-config (2.2.5-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Add discharge/recharge status to battery3. 
+  * Add discharge/recharge status to battery3.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Mon, 27 Jan 2020 19:50:52 -0800
 
 regolith-i3xrocks-config (2.2.4-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Fix packaging file mapping 
+  * Fix packaging file mapping
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sun, 26 Jan 2020 18:21:13 -0800
 
 regolith-i3xrocks-config (2.2.3-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Add required dependencies for blocket launched apps. 
-  * Remove acpi-based battery blocklet. 
+  * Add required dependencies for blocket launched apps.
+  * Remove acpi-based battery blocklet.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sun, 26 Jan 2020 18:07:53 -0800
 
@@ -253,7 +253,7 @@ regolith-i3xrocks-config (2.2.2-1ubuntu1~ppa1) eoan; urgency=medium
 
 regolith-i3xrocks-config (2.2.1-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Migrate to new PPA. 
+  * Migrate to new PPA.
 
  -- Regolith Linux <regolith.linux@gmail.com>  Sun, 12 Jan 2020 19:16:19 -0800
 
@@ -270,13 +270,13 @@ regolith-i3xrocks-config (2.2.0-1ubuntu1~ppa1) eoan; urgency=medium
 
 regolith-i3xrocks-config (2.1.2-1ubuntu1~ppa1) bionic; urgency=medium
 
-  * Remove acpi dependency for arm64 support. 
+  * Remove acpi dependency for arm64 support.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sun, 29 Dec 2019 22:44:15 -0800
 
 regolith-i3xrocks-config (2.1.1-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Package thermometer2 blocket by @bdzzz. 
+  * Package thermometer2 blocket by @bdzzz.
   * Tweak spacing of thermometer2.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sun, 08 Dec 2019 20:55:35 -0800
@@ -284,14 +284,14 @@ regolith-i3xrocks-config (2.1.1-1ubuntu1~ppa1) eoan; urgency=medium
 regolith-i3xrocks-config (2.1.0-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Package @priestoferis blocklet in new binary package due to
-    additional dependency. 
+    additional dependency.
   * Move from makefile to Debian install files.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sat, 07 Dec 2019 13:08:40 -0800
 
 regolith-i3xrocks-config (2.0.1-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Move position of help blocklet. 
+  * Move position of help blocklet.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sat, 30 Nov 2019 09:20:54 -0800
 
@@ -299,65 +299,65 @@ regolith-i3xrocks-config (2.0.0-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Make battery2, nettraffic, cpu_usage, time clickable.
   * Add help blocket that toggles conky.
-  * Misc cleanup 
+  * Misc cleanup
 
  -- Ken Gilmer <kgilmer@gmail.com>  Fri, 29 Nov 2019 22:58:06 -0800
 
 regolith-i3xrocks-config (1.25-1ubuntu1~ppa1) eoan; urgency=medium
 
   * Make package install nettraffic script
-  * Add default configuration for Rofication 
+  * Add default configuration for Rofication
 
  -- Ken Gilmer <kgilmer@gmail.com>  Fri, 29 Nov 2019 15:40:37 -0800
 
 regolith-i3xrocks-config (1.23-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Package fixes and enhancements to nettraffic by @cheginit. 
+  * Package fixes and enhancements to nettraffic by @cheginit.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 26 Nov 2019 21:21:37 -0800
 
 regolith-i3xrocks-config (1.22-1ubuntu1~ppa1) eoan; urgency=medium
 
-  * Package new nettraffic script by @cheginit. 
+  * Package new nettraffic script by @cheginit.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Mon, 18 Nov 2019 20:12:42 -0800
 
 regolith-i3xrocks-config (1.21-1ubuntu1~ppa1) disco; urgency=medium
 
-  * Add defaults to Xresources so blocklets dont crash if a key 
+  * Add defaults to Xresources so blocklets dont crash if a key
     is undefined.
-  * Misc minor cleanup. 
+  * Misc minor cleanup.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Mon, 21 Oct 2019 19:34:51 -0700
 
 regolith-i3xrocks-config (1.20-1ubuntu1~ppa1) disco; urgency=medium
 
-  * Add some padding after time blocklet. 
+  * Add some padding after time blocklet.
   * Add padding between battery icon and quantity.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sat, 19 Oct 2019 15:54:12 -0700
 
 regolith-i3xrocks-config (1.19-1ubuntu1~ppa1) disco; urgency=medium
 
-  * add wireguard support and fancy icon by @gigglearrows  
+  * add wireguard support and fancy icon by @gigglearrows
 
  -- Ken Gilmer <kgilmer@gmail.com>  Thu, 17 Oct 2019 21:20:06 -0700
 
 regolith-i3xrocks-config (1.18-1ubuntu1~ppa1) disco; urgency=medium
 
-  * Fix invalid Xresource keys for color definitions. 
+  * Fix invalid Xresource keys for color definitions.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Thu, 17 Oct 2019 08:10:26 -0700
 
 regolith-i3xrocks-config (1.17-1ubuntu1~ppa1) disco; urgency=medium
 
-  * Fix wifi icon rendering w/ material design. 
+  * Fix wifi icon rendering w/ material design.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Wed, 16 Oct 2019 21:12:50 -0700
 
 regolith-i3xrocks-config (1.16-1ubuntu1~ppa1) disco; urgency=medium
 
-  * Fix makefile after removing battery script. 
+  * Fix makefile after removing battery script.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sun, 13 Oct 2019 19:54:06 -0700
 
@@ -370,19 +370,19 @@ regolith-i3xrocks-config (1.15-1ubuntu1~ppa1) disco; urgency=medium
 
 regolith-i3xrocks-config (1.14-1ubuntu1~ppa1) disco; urgency=medium
 
-  * Source version bump to appease package builder. 
+  * Source version bump to appease package builder.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 17 Sep 2019 08:03:35 -0700
 
 regolith-i3xrocks-config (1.13-1ubuntu1~ppa4) disco; urgency=medium
 
-  * Add network-manager dependency for wifi blocklet. 
+  * Add network-manager dependency for wifi blocklet.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 17 Sep 2019 07:14:08 -0700
 
 regolith-i3xrocks-config (1.13-1ubuntu1~ppa3) disco; urgency=medium
 
-  * Package @leosunmo's fix in previous commit. 
+  * Package @leosunmo's fix in previous commit.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 17 Sep 2019 07:09:57 -0700
 
@@ -407,77 +407,77 @@ regolith-i3xrocks-config (1.12-1ubuntu1~ppa2) disco; urgency=medium
 regolith-i3xrocks-config (1.12-1ubuntu1~ppa1) disco; urgency=medium
 
   * Add @MerlinElMago's enhancements to blockets for configurable
-    labels. 
+    labels.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 27 Aug 2019 18:52:44 -0700
 
 regolith-i3xrocks-config (1.11-1ubuntu1ppa1) disco; urgency=medium
 
-  * Add missing battery2 and wifi2 blocklets. 
+  * Add missing battery2 and wifi2 blocklets.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Fri, 23 Aug 2019 20:54:50 -0700
 
 regolith-i3xrocks-config (1.9-1ubuntu1ppa1) disco; urgency=medium
 
-  * i3xrocks conf needs to terminate with linefeed. 
+  * i3xrocks conf needs to terminate with linefeed.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Thu, 15 Aug 2019 08:07:20 -0700
 
 regolith-i3xrocks-config (1.8-1ubuntu1ppa1) disco; urgency=medium
 
   * Stage scripts in /usr/share (thanks @leosunmo)
-  * Fix path of blocks 
+  * Fix path of blocks
 
  -- Ken Gilmer <kgilmer@gmail.com>  Wed, 14 Aug 2019 23:40:34 -0700
 
 regolith-i3xrocks-config (1.7-1ubuntu1ppa1) disco; urgency=medium
 
   * Move from /usr/share to /etc/regolith/i3xrocks for consistency
-  * Rename config file from i3xrocks.conf to config. 
+  * Rename config file from i3xrocks.conf to config.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Wed, 14 Aug 2019 21:48:48 -0700
 
 regolith-i3xrocks-config (1.6-1ubuntu1ppa2) bionic; urgency=medium
 
-  * Add acpi as dependency for default battery blocklet. 
+  * Add acpi as dependency for default battery blocklet.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sun, 28 Jul 2019 19:58:36 -0700
 
 regolith-i3xrocks-config (1.6-1ubuntu1ppa1) bionic; urgency=medium
 
-  * Fix battery font. 
+  * Fix battery font.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Sun, 28 Jul 2019 14:34:56 -0700
 
 regolith-i3xrocks-config (1.5-1ubuntu1ppa1) bionic; urgency=medium
 
   * Add necessary dependencies for blocklets.
-  * Fix issue w/ xresources. 
+  * Fix issue w/ xresources.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Thu, 25 Jul 2019 19:05:12 -0700
 
 regolith-i3xrocks-config (1.4-1ubuntu1ppa1) bionic; urgency=medium
 
-  * i3xrocks blocklets are hosted in user dir. 
+  * i3xrocks blocklets are hosted in user dir.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Wed, 24 Jul 2019 21:13:11 -0700
 
 regolith-i3xrocks-config (1.3-1ubuntu1ppa1) bionic; urgency=medium
 
-  * Fix exe permission issue w/ blocklets. 
+  * Fix exe permission issue w/ blocklets.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Wed, 24 Jul 2019 21:00:03 -0700
 
 regolith-i3xrocks-config (1.2-1ubuntu1ppa1) bionic; urgency=medium
 
-  * Fix time block. 
+  * Fix time block.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 23 Jul 2019 21:00:22 -0700
 
 regolith-i3xrocks-config (1.1-1ubuntu1ppa1) bionic; urgency=medium
 
-  * Fix cpu_usage script.  
-  * Update battery with Xresource colors. 
+  * Fix cpu_usage script.
+  * Update battery with Xresource colors.
 
  -- Ken Gilmer <kgilmer@gmail.com>  Tue, 23 Jul 2019 20:54:08 -0700
 
