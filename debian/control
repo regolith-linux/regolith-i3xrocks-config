@@ -2,16 +2,19 @@ Source: regolith-i3xrocks-config
 Section: x11
 Priority: optional
 Maintainer: Ken Gilmer <kgilmer@gmail.com>
-Build-Depends: debhelper (>= 10)
+Build-Depends: debhelper (>= 12)
 Standards-Version: 4.1.2
 Homepage: https://github.com/regolith-linux/regolith-desktop
 Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
+Vcs-Browser: https://github.com/regolith-linux/regolith-i3xrocks-config
+Rules-Requires-Root: no
 
 Package: regolith-i3xrocks-config
 Architecture: any
 Depends: ${misc:Depends},
     xrescat
 Description: Regolith configuration for i3xrocks launcher
+ A Regolith configuration for the i3xrocks launcher
 
 Package: i3xrocks-time
 Architecture: any
@@ -19,6 +22,16 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-control-center
 Description: Indicator to show date and time.
+ An i3xrocks indicator to show date and time.
+
+Package: i3xrocks-disk-capacity
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    bash (>= 3),
+    coreutils (>= 8)
+Description: Indicator for disk capacity.
+ An i3xrocks indicator for disk capacity.
 
 Package: i3xrocks-info
 Architecture: any
@@ -27,6 +40,7 @@ Depends: ${misc:Depends},
     remontoire,
     regolith-ftue
 Description: Indicator launch Remontoire.
+ An i3xrocks indicator to launch Remontoire.
 
 Package: i3xrocks-net-traffic
 Architecture: any
@@ -34,6 +48,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-control-center
 Description: Indicator to show network I/O status.
+ An i3xrocks indicator to show network I/O status.
 
 Package: i3xrocks-memory
 Architecture: any
@@ -41,6 +56,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-system-monitor
 Description: Indicator to show memory utilization.
+ An i3xrocks indicator to show memory utilization.
 
 Package: i3xrocks-cpu-usage
 Architecture: any
@@ -49,13 +65,16 @@ Depends: ${misc:Depends},
     gnome-system-monitor,
     sysstat
 Description: Indicator to show CPU load.
+ An i3xrocks indicator to show CPU load.
 
 Package: i3xrocks-focused-window-name
 Architecture: any
 Depends: ${misc:Depends},
+    python3 (>= 3.5),
     regolith-i3xrocks-config,
     i3ipc-python
 Description: Indicator to show focused window name.
+ An i3xrocks indicator to show the name of the focused window.
 
 Package: i3xrocks-battery
 Architecture: any
@@ -63,6 +82,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     upower
 Description: Indicator to show battery status.
+ An i3xrocks indicator to show the current battery status.
 
 Package: i3xrocks-keyboard-layout
 Architecture: any
@@ -70,6 +90,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     libglib2.0-bin
 Description: Indicator to show keyboard layout.
+ An i3xrocks indicator to show the current keyboard layout.
 
 Package: i3xrocks-key-indicator
 Architecture: any
@@ -77,20 +98,23 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     x11-xserver-utils
 Description: Indicator for caps and num lock status.
+ An i3xrocks indicator for showing the current caps- and num-lock status.
 
 Package: i3xrocks-media-player
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     playerctl
-Description: Indicator to manage media playback.
+Description: Indicator for managing media playback.
+ An i3xrocks indicator for managing media playback.
 
 Package: i3xrocks-nm-vpn
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     network-manager
-Description: Network manager VPN indicator.
+Description: Network-Manager VPN indicator.
+ A i3xrocks indicator for showing the Network-Manager VPN status.
 
 Package: i3xrocks-openvpn
 Architecture: any
@@ -98,6 +122,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     perl
 Description: Indicator to show openvpn status.
+ A i3xrocks indicator for showing the current OpenVPN status.
 
 Package: i3xrocks-temp
 Architecture: any
@@ -105,6 +130,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     lm-sensors
 Description: Indicator for system temperature.
+ An i3xrocks indicator for displaying the system temperature.
 
 Package: i3xrocks-volume
 Architecture: any
@@ -112,6 +138,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     alsa-utils
 Description: Indicator to show volume.
+ An i3xrocks indicator for showing the current sound volume.
 
 Package: i3xrocks-weather
 Architecture: any
@@ -121,10 +148,13 @@ Depends: ${misc:Depends},
     fonts-noto-color-emoji,
     xdg-utils
 Description: Indicator to show local weather.
+ An i3xrocks indicator for showing the local weather.
 
 Package: i3xrocks-wifi
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     network-manager
-Description: Indicator to display wifi router name.
+Description: Indicator to display the current Wi-Fi network name.
+ An i3xrocks indicator for displaying the name of the
+ currently connect Wi-Fi network.

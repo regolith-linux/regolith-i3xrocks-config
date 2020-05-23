@@ -6,41 +6,32 @@ Files: *
 Copyright: 2018-2019 Ken Gilmer <kgilmer@gmail.com>
 License: GPL-3.0+
 
-Files: scripts/bandwidth
-Copyright: Copyright (C) 2012 Stefan Breunig <stefan+measure-net-speed@mathphys.fsk.uni-heidelberg.de>
-           Copyright (C) 2014 kaueraal
-           Copyright (C) 2015 Thiago Perrotta <perrotta.thiago@poli.ufrj.br>
-License: GPL-3+
-
 Files: scripts/battery
 Copyright: Copyright © 2014 Pierre Mavro <deimos@deimos.fr>
            Copyright © 2014 Vivien Didelot <vivien@didelot.org>
 License: GPL-3+
 
-
-Files: scripts/cpu_usage
+Files: scripts/cpu-usage
 Copyright: Copyright © 2014 Pierre Mavro <deimos@deimos.fr>
            Copyright © 2014 Vivien Didelot <vivien@didelot.org>
            Copyright © 2014 Andreas Guldstrand <andreas.guldstrand@gmail.com>
 License: GPL-3+
 
-Files: scripts/disk
-       scripts/load_average
-       scripts/memory
+Files: scripts/disk-capacity
 Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
+           Copyright © 2020 Moritz Heiber <hello@heiber.im>
 License: GPL-3+
 
-Files: scripts/iface
+Files: scripts/memory
 Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
-           Copyright (C) 2014 Alexander Keller <github@nycroth.com>
 License: GPL-3+
 
 Files: scripts/focused-window-name
 Copyright: Copyright © 2019 Bence Ferdinandy <bence@ferdinandy.com>
 License: GPL-3+
 
-Files: scripts/keyindicator
-Copyright: Copyright 2014 Marcelo Cerri <mhcerri at gmail dot com>
+Files: scripts/key-indicator
+Copyright: Copyright 2019 MerlinElMago
 License: GPL-3+
 
 Files: scripts/mediaplayer
@@ -51,7 +42,7 @@ Files: scripts/openvpn
 Copyright: Copyright © Pierre Mavro/Deimosfr <deimos@deimos.fr>
 License: GPL-3+
 
-Files: scripts/temperature
+Files: scripts/temp
 Copyright: Copyright © 2014 Pierre Mavro <deimos@deimos.fr>
            Copyright © 2014 Vivien Didelot <vivien@didelot.org>
            Copyright © 2014 Andreas Guldstrand <andreas.guldstrand@gmail.com>
@@ -70,10 +61,6 @@ License: GPL-3+
 Files: scripts/wifi2
        scripts/battery2
 Copyright: Copyright (C) 2019 leo palmer sunmo <leo.sunmo@gmail.com>
-License: GPL-3+
-
-Files: scripts/keyindicator2 
-Copyright: Copyright 2019 MerlinElMago 
 License: GPL-3+
 
 Files: debian/*
@@ -96,4 +83,3 @@ License: GPL-3.0+
  .
  On Debian systems, the complete text of the GNU General
  Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
-
