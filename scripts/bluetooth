@@ -9,15 +9,12 @@ no_el=int(len(bluetooth.get_connected_devices()))
 fs_len=len(str(bluetooth.get_connected_devices()))
 
 place=fs_s.find('name') 
-#print(place)
-#print(fs_s[place+8])
 
 res = [i for i in range(len(fs_s)) if fs_s.startswith("name", i)]
 #print(res)
 l_r=len(res)
 d_name=""
 for x in range(0, l_r):
-	#print(fs_s[res[x]+8])
 	start=res[x]+8
 	end=res[x]+8
 	for y in range(start,fs_len):
@@ -26,13 +23,11 @@ for x in range(0, l_r):
 			break
 	for z in range(start,end):
 		d_name+=fs_s[z]
-	#d_name+=" "
+	d_name+=" "
 
 
 cmd='bluetooth | grep -wo \'on\' | tr \'\\n\' \'\\0\' || true'
 result = subprocess.check_output(cmd, shell=True)
-#print(result)
-#print(len(d_name))
 len_dname=len(d_name)
 if result=='on\0':
 	if len_dname!=0:
@@ -40,5 +35,3 @@ if result=='on\0':
 
 cmd_button="if [ ! -z \"$button\" ]; then /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth; fi"
 result = subprocess.check_output(cmd_button, shell=True)
-
-
