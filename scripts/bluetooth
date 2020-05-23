@@ -11,7 +11,7 @@ fs_len=len(str(bluetooth.get_connected_devices()))
 place=fs_s.find('name') 
 
 res = [i for i in range(len(fs_s)) if fs_s.startswith("name", i)]
-#print(res)
+
 l_r=len(res)
 d_name=""
 for x in range(0, l_r):
