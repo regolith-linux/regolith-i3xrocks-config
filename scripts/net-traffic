@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -Eeu -o pipefail
+
 # span for text
 fspan() {
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
@@ -21,7 +23,21 @@ GET="cat /proc/net/dev"
 # some default values for arguments"
 UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
 DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
+BUTTON=${button:-}
+DLY=${DLY:-1}
+RT=${RT:-}
+BPS=false
+UNIT=KB
 ULEV=2
+
+# Handle button event
+if [ "x${BUTTON}" == "x1" ] ; then
+    if [ "$INT_TYPE" == "W" ]; then
+        /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
+    else
+        /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center network
+    fi
+fi
 
 # determine the net interface name
 IF=$(ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' ')
@@ -97,7 +113,7 @@ if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
         4) SUF="Mb/s";;
         *) SUF="MB/s";;
     esac
-    elif [ "$UNIT" = "KB" ] || [ "$UNIT" = "K" ]; then
+elif [ "$UNIT" = "KB" ] || [ "$UNIT" = "K" ]; then
     FAC=1024
     case "$ULEV"
         in
@@ -108,7 +124,7 @@ if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
         4) SUF="Kb/s";;
         *) SUF="KB/s";;
     esac
-    elif [ "$UNIT" = "B" ]; then
+elif [ "$UNIT" = "B" ]; then
     FAC=1
     case "$ULEV"
         in
@@ -121,11 +137,6 @@ if [ "$UNIT" = "MB" ] || [ "$UNIT" = "M" ]; then
     esac
 fi
 
-# set sleep time between reading the net usage from dev file
-if [ "$DLY" = "" ]; then
-    DLY=1;
-fi
-
 RN="0.0"
 TN="0.0"
 AN="0.0"
@@ -134,7 +145,7 @@ AN="0.0"
 RX1=$($GET | grep "$IF" | awk '{print $2}')
 TX1=$($GET | grep "$IF" | awk '{print $10}')
 
-sleep $DLY
+sleep "${DLY}"
 
 RX2=$($GET | grep "$IF" | awk '{print $2}')
 TX2=$($GET | grep "$IF" | awk '{print $10}')
@@ -142,44 +153,6 @@ TX2=$($GET | grep "$IF" | awk '{print $10}')
 RX=$(echo "scale = 0; ($RX2-$RX1)/$DLY" | bc -l)
 TX=$(echo "scale = 0; ($TX2-$TX1)/$DLY" | bc -l)
 AX=$(echo "scale = 0; $RX+$TX" | bc -l)
-
-# set net unit automatically
-if [ "$UNIT" = "" ]; then
-    if [ "$RX" -ge 102400 ] || [ "$TX" -ge 102400 ]; then
-        FAC=1048576
-        case "$ULEV"
-            in
-            0) SUF="";;
-            1) SUF=" M";;
-            2) SUF="MB";;
-            3) SUF="M/s";;
-            4) SUF="Mb/s";;
-            *) SUF="MB/s";;
-        esac
-        elif [ "$RX" -ge 100 ] || [ "$TX" -ge 100 ]; then
-        FAC=1024
-        case "$ULEV"
-            in
-            0) SUF="";;
-            1) SUF=" K";;
-            2) SUF="KB";;
-            3) SUF="K/s";;
-            4) SUF="Kb/s";;
-            *) SUF="KB/s";;
-        esac
-    else
-        FAC=1
-        case "$ULEV"
-            in
-            0) SUF="";;
-            1) SUF=" B";;
-            2) SUF=" B";;
-            3) SUF="b/s";;
-            4) SUF="b/s";;
-            *) SUF="B/s";;
-        esac
-    fi
-fi
 
 # format net usage output with fixed width
 if [[ "$BPS" = true ]] ; then
@@ -193,24 +166,16 @@ else
 fi
 
 for s in $RN $TN $AN; do
-    [[ "$s" = "$(printf "%s\n-0.0001\n" "$s" | sort -g | head -1)" ]] && exit
+    [[ "$s" == "$(printf "%s\n-0.0001\n" "$s" | sort -g | head -1)" ]] && exit
 done
 
 # output net usage using pango markup
 if [ "$RT" = "up" ]; then
     echo "$(lspan "${NIC}")$(fspan "$TN$SUF")$(lspan "${UP}")"
-    elif [ "$RT" = "down" ] || [ "$RT" = "dn" ]; then
+elif [ "$RT" = "down" ] || [ "$RT" = "dn" ]; then
     echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")"
-    elif [ "$RT" = "total" ]; then
+elif [ "$RT" = "total" ]; then
     echo "$(lspan "${NIC}")$(fspan "$AN$SUF")"
 else
     echo "$(lspan "${NIC}")$(fspan "$RN$SUF")$(lspan "${DN}")$(fspan "$TN$SUF")$(lspan "${UP}")"
-fi
-
-if [ ! -z "$button" ]; then
-    if [ "$INT_TYPE" == "W" ]; then
-        /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
-    else
-        /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center network
-    fi
 fi

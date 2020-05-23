@@ -4,6 +4,7 @@
 
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+BUTTON=${button:-}
 
 # Get battery status.
 #
@@ -62,6 +63,6 @@ CHARGE_SPAN="<span color=\"${LABEL_COLOR}\">$CHARGE_ICON</span>"
 
 echo "${ICON_SPAN}${VALUE_SPAN}${CHARGE_SPAN}"
 
-if [ ! -z "$button" ]; then
+if [ "x${BUTTON}" == "x1" ]; then
     /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center power
 fi
