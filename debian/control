@@ -158,3 +158,12 @@ Depends: ${misc:Depends},
 Description: Indicator to display the current Wi-Fi network name.
  An i3xrocks indicator for displaying the name of the
  currently connect Wi-Fi network.
+
+Package: i3xrocks-todo
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    td-cli
+Description: Indicator to mange and show to-do list.
+ An i3xrocks indicator for managing the to-do list that
+ shows number of active tasks.
