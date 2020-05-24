@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (3.0.25-1) bionic; urgency=medium
+
+  * Package changes by @moritzheiber:
+  ** Fix button clicks blocklets
+  ** Also fix network bandwidth calculation/shellcheck errors in net-traffic script
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 24 May 2020 13:06:23 -0700
+
 regolith-i3xrocks-config (3.0.24-1) bionic; urgency=medium
 
   * Package @moritzheiber's fixes for disk-capacity and other blocks.
