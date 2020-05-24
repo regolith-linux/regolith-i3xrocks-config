@@ -153,14 +153,9 @@ no_el = int(len(bluetooth.get_connected_devices()))
 fs_len = len(str(bluetooth.get_connected_devices()))
 
 place = fs_s.find('\'name\': b')
-# print(place)
-# print(no_el)
-# print(fs_len)
 
 res = [i for i in range(len(fs_s)) if fs_s.startswith("\'name\': b", i)]
-# print(res)
-# print(fs_s)
-# print(len(fs_s))
+
 l_r = len(res)
 d_name = ""
 for x in range(0, l_r):
@@ -174,17 +169,9 @@ for x in range(0, l_r):
         d_name += fs_s[z]
     d_name += " "
 
-# print(d_name)
-# [{'mac_address': b'20:A6:0C:36:60:D0', 'name': b'akss13'}]
 len_dname = len(d_name)
 if len_dname != 0:
     print("  "+d_name)
-
-# cmd_button="if [ ! -z \"$button\" ]; then /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth; fi"
-# result = subprocess.check_output(cmd_button, shell=True)
-# if 'button' in os.environ:
-#     result = subprocess.check_output(
-#         "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth", shell=True)
 
 env_button = os.environ.get('button')
 
