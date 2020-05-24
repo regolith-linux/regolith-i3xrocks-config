@@ -1,16 +1,17 @@
 #!/bin/bash
 
+BUTTON=${button:-}
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
 ESSID=$(LC_ALL=C nmcli -t -f active,ssid dev wifi |  perl -n -e '/yes:(.*)/ && print $1')
-if [ ! -z "$ESSID" ]; then
+if [ -n "$ESSID" ]; then
     echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>" # full text
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>" # short text
 fi
 
-if [ ! -z "$button" ]; then
-    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center wifi
+if [ "x${BUTTON}" == "x1" ]; then
+    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center --class=floating_window wifi
 fi
