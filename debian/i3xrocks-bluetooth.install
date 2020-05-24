@@ -1,0 +1,2 @@
+scripts/bluetooth /usr/share/i3xrocks
+conf.d/30_bluetooth /etc/regolith/i3xrocks/conf.d

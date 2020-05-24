@@ -158,3 +158,12 @@ Depends: ${misc:Depends},
 Description: Indicator to display the current Wi-Fi network name.
  An i3xrocks indicator for displaying the name of the
  currently connect Wi-Fi network.
+
+Package: i3xrocks-bluetooth
+Architecture: any
+Depends: ${misc:Depends},
+    python3 (>= 3.5),
+    python3-dbus,
+    regolith-i3xrocks-config,
+Description: Indicator to show currently connected Bluetooth devices.
+ An i3xrocks indicator to show the currently connected Bluetooth devices.
