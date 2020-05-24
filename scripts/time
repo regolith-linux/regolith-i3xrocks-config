@@ -2,7 +2,8 @@
 # This time blocklet will use Xresources date format if defined
 # or try to determine most appropriate format based on locale and GNOME settings.
 
-DATE_FORMAT=`xrescat i3xrocks.date.format2`
+DATE_FORMAT=$(xrescat i3xrocks.date.format2)
+BUTTON=${button:-}
 
 if [ -z "$DATE_FORMAT" ]; then # No custom format defined, use system defaults
     COUNTRY=$(locale | grep LC_TIME | head -n1 | cut -d "=" -f 2 | cut -d "_" -f 2 | cut -d "." -f 1)
@@ -18,15 +19,15 @@ if [ -z "$DATE_FORMAT" ]; then # No custom format defined, use system defaults
             ;;
         esac
     fi
-    
+
     TIME_FORMAT=$(gsettings get org.gnome.desktop.interface clock-format)
-    
+
     if [ "$TIME_FORMAT" == "'12h'" ]; then
         TIME_SPEC="%I:%M"
     else
         TIME_SPEC="%H:%M"
     fi
-    
+
     DATE_VALUE=$(date "+ $DATE_SPEC $TIME_SPEC")
 else
     DATE_VALUE=$(date "$DATE_FORMAT")
@@ -39,6 +40,6 @@ VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$DATE_VALUE </span>"
 
-if [ ! -z "$button" ]; then
-    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center datetime
+if [ "x${BUTTON}" == "x1" ]; then
+    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center --class=floating_window datetime
 fi

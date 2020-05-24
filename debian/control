@@ -165,5 +165,14 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     td-cli
 Description: Indicator to mange and show to-do list.
- An i3xrocks indicator for managing the to-do list that
+ An i3xrocks indicator for managing td-cli, a to-do app, that
  shows number of active tasks.
+
+Package: i3xrocks-bluetooth
+Architecture: any
+Depends: ${misc:Depends},
+    python3 (>= 3.5),
+    python3-dbus,
+    regolith-i3xrocks-config,
+Description: Indicator to show currently connected Bluetooth devices.
+ An i3xrocks indicator to show the currently connected Bluetooth devices.
