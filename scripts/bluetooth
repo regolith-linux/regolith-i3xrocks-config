@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*
 import dbus
 import dbus.mainloop.glib
-import threading
-import time
 import sys
 import subprocess
 import os
@@ -68,18 +66,16 @@ class Bluetooth(object):
 
         return devices
 
-
 ########################################
-bluetooth = Bluetooth()
 
+
+bluetooth = Bluetooth()
 fs_s = str(bluetooth.get_connected_devices())
 no_el = int(len(bluetooth.get_connected_devices()))
 fs_len = len(str(bluetooth.get_connected_devices()))
 
 place = fs_s.find('\'name\': b')
-
 res = [i for i in range(len(fs_s)) if fs_s.startswith("\'name\': b", i)]
-
 l_r = len(res)
 d_name = ""
 for x in range(0, l_r):
@@ -98,7 +94,6 @@ if len_dname != 0:
     print("  "+d_name)
 
 env_button = os.environ.get('button')
-
+cmd_open = "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth"
 if(env_button == "1"):
-    result = subprocess.check_output(
-        "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth", shell=True)
+    result = subprocess.check_output(cmd_open, shell=True)
