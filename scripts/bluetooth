@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*
+import dbus
+import dbus.mainloop.glib
+import sys
+import subprocess
+import os
+
+
+def print_error(*objs):
+    objs = [str(obj) for obj in objs]
+    sys.stderr.write(", ".join(objs))
+    sys.stderr.flush()
+
+
+class Bluetooth(object):
+
+    def __init__(self):
+        dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+        self._bus = dbus.SystemBus()
+        self._scan_thread = None
+
+    def get_connected_devices(self):
+        return self._get_devices("Connected")
+
+    def _get_devices(self, condition):
+        devices = []
+        conditions = ("Connected")
+
+        if condition not in conditions:
+            print_error("_get_devices: unknown condition - {}\n".format(
+                condition))
+            return devices
+
+        try:
+            man = dbus.Interface(
+                self._bus.get_object("org.bluez", "/"),
+                "org.freedesktop.DBus.ObjectManager")
+            objects = man.GetManagedObjects()
+
+            for path, interfaces in objects.items():
+                if "org.bluez.Device1" in interfaces:
+                    dev = interfaces["org.bluez.Device1"]
+
+                    if condition == "Connected":
+                        props = dbus.Interface(
+                            self._bus.get_object("org.bluez", path),
+                            "org.freedesktop.DBus.Properties")
+
+                        if props.Get("org.bluez.Device1", condition):
+                            if "Address" not in dev:
+                                continue
+
+                            if "Name" not in dev:
+                                dev["Name"] = "<unknown>"
+
+                            device = {
+                                "mac_address": dev["Address"].encode("utf-8"),
+                                "name": dev["Name"].encode("utf-8")
+                            }
+
+                            devices.append(device)
+
+        except dbus.exceptions.DBusException as error:
+            print_error(str(error) + "\n")
+
+        return devices
+
+########################################
+
+
+bluetooth = Bluetooth()
+fs_s = str(bluetooth.get_connected_devices())
+no_el = int(len(bluetooth.get_connected_devices()))
+fs_len = len(str(bluetooth.get_connected_devices()))
+
+place = fs_s.find('\'name\': b')
+res = [i for i in range(len(fs_s)) if fs_s.startswith("\'name\': b", i)]
+l_r = len(res)
+d_name = ""
+for x in range(0, l_r):
+    start = res[x]+10
+    end = res[x]+10
+    for y in range(start, fs_len):
+        if fs_s[y] == "\'":
+            end = y
+            break
+    for z in range(start, end):
+        d_name += fs_s[z]
+    d_name += " "
+
+len_dname = len(d_name)
+if len_dname != 0:
+    print("  "+d_name)
+
+env_button = os.environ.get('button')
+cmd_open = "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth"
+if(env_button == "1"):
+    result = subprocess.check_output(cmd_open, shell=True)

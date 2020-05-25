@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# get player status (Playing / Paused / Stopped / ...)
+STATUS=$(playerctl status 2> /dev/null)
+
+# use given values or fall back to parameters from xresources
+FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 25)}
+PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
+PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "JetBrains Mono Medium 13")}
+
+# assign the appropriate icon
+#
+# paused/stopped uses the same icon for simplicity
+# exit with an empty blocklet if nothing is playing
+case $STATUS in
+    'Playing') ICON=${PLAYING_ICON} ;;
+    'Paused') ICON=${PAUSED_ICON} ;;
+    'Stopped') ICON=${PAUSED_ICON} ;;
+    *) echo "" ; echo "" ; exit 0 ;;
+esac
+
+# get artist and title information
+ARTIST="$(playerctl metadata artist)"
+TITLE="$(playerctl metadata title)"
+
+# print resulting information (fulltext)
+text="${ARTIST} - ${TITLE}"
+length=${#text}
+width=$FIELD_WIDTH
+
+if [[ $length > $width ]]; then
+    TEXT="${text:0:$(( width - 3 ))}..."
+else
+    TEXT=$(printf "%-${width}s" "$text")
+fi
+
+echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
+<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
+${TEXT}</span>"
+
+# for shorttext, only print the appropriate glyph
+echo "$ICON"
+
+# rudimentary controls via mouse clicks
+#
+# left click: send previous title signal
+# middle click: send play/pause signal
+# right click: send next title signal
+case $BLOCK_BUTTON in
+    1) playerctl previous ;;
+    2) playerctl play-pause ;;
+    3) playerctl next ;;
+esac
+
+exit 0

@@ -1,0 +1,5 @@
+# Keyboard layout
+#
+# Displays current keyboard layout.
+[key-indicator]
+interval=5

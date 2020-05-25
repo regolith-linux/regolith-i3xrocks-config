@@ -1,0 +1,49 @@
+#!/bin/sh
+# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+TYPE="${BLOCK_INSTANCE:-mem}"
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.memory M)}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+
+awk -v type=$TYPE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" -v vf="$VALUE_FONT" '
+/^MemTotal:/ {
+	mem_total=$2
+}
+/^MemFree:/ {
+	mem_free=$2
+}
+/^Buffers:/ {
+	mem_free+=$2
+}
+/^Cached:/ {
+	mem_free+=$2
+}
+/^SwapTotal:/ {
+	swap_total=$2
+}
+/^SwapFree:/ {
+	swap_free=$2
+}
+END {
+	# full text
+	if (type == "swap")
+		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, (swap_total-swap_free)/1024/1024)
+	else
+		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, mem_free/1024/1024)
+}
+' /proc/meminfo

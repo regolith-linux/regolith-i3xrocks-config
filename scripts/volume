@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# Copyright (c) 2020 Guillaume Deflaux, Marco Buzzanca
+#
+# Based on the work of:
+#   2014 Julien Bonjean <julien@bonjean.info>
+#   2014 Alexander Keller <github@nycroth.com>
+#
+# GNU GENERAL PUBLIC LICENSE
+#    Version 3, 29 June 2007
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# The first parameter sets the step to change the volume by (and units to display)
+# This may be in in % or dB (eg. 5% or 3dB)
+STEP="${1:-$(xrescat i3xrocks.volume.step 5)}"
+
+# The second parameter sets the unit. It can be '%' or 'dB' only.
+UNIT="${2:-$(xrescat i3xrocks.volume.unit %)}"
+
+# The third parameter overrides the mixer selection
+# For PulseAudio users, use "pulse"
+# For Jack/Jack2 users, use "jackplug"
+# For ALSA users, you may use "default" for your primary card
+# or you may use hw:# where # is the number of the card desired
+MIXER="default"
+pactl list 1>/dev/null && MIXER="pulse"
+lsmod | grep -q jack && MIXER="jackplug"
+MIXER="${3:-$(xrescat i3xrocks.volume.mixer $MIXER)}"
+
+# The instance option sets the control to report and configure
+# This defaults to the first control of your selected mixer
+# For a list of the available, use `amixer -D $Your_Mixer scontrols`
+SCONTROL="${BLOCK_INSTANCE:-$(
+    amixer -D $MIXER scontrols |
+        sed -n "s/Simple mixer control '\([A-Za-z0-9 ]*\)',0/\1/p" |
+        head -n1
+)}"
+
+mixer_capability() { # Return "Capture" if the device is a capture device
+    amixer -D $MIXER get $SCONTROL |
+        sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
+}
+
+mixer_info() {
+    amixer -D $MIXER get $SCONTROL $(mixer_capability)
+}
+
+# Returns "on" if not mute, "off" if mute
+mixer_status() {
+    mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p" | head -n 1
+}
+
+mixer_value() {
+    VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+.?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
+    if [ -z "$VAL" ]; then
+        # return empty string of same width to prevent bar shift.
+        echo "   "
+    else
+        echo "$VAL$UNIT"
+    fi
+}
+
+case $BLOCK_BUTTON in
+3) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle ;; # right click, mute/unmute
+4) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+ ;; # scroll up, increase
+5) amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}- ;; # scroll down, decrease
+esac
+
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#E6E1CF")}
+
+if [ "$(mixer_status)" == "on" ]; then
+    ICON=${icon_on:-$(xrescat i3xrocks.label.sound S)}
+    VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#E6E1CF")}
+else
+    ICON=${icon_mute:-$(xrescat i3xrocks.label.mute M)}
+    VALUE_COLOR=${warn_color:-$(xrescat i3xrocks.warning "#FFD580")}
+fi
+
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+VALUE=$(mixer_value)
+
+echo "<span color=\"${LABEL_COLOR}\">${ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"

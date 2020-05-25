@@ -1,0 +1,87 @@
+#!/usr/bin/python3
+
+#
+# Copyright 2019 Bence Ferdinandy <bence@ferdinandy.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# USAGE:
+#
+# Can read from environment variables (filter_list and short_length) or
+# from command line arguments, but the latter takes precendence.
+#
+#
+import sys
+import argparse
+import os
+import subprocess
+
+from i3ipc import Connection, Event
+
+
+def value_span(value):
+    return f'<span font_desc="{value_font}" color = "{value_color}" > {value} </span>'
+
+
+parser = argparse.ArgumentParser(
+    description="Returns the title of the currently focused window")
+parser.add_argument("-f", "--filter_list", nargs='+',
+                    help="only return window title if the window instance is in the provided list, eg. specifying libreoffice will result in only instance of libreoffice being returned")
+parser.add_argument("-s", "--short_length", type=int,
+                    help="max number of characters to print for short version")
+args = parser.parse_args()
+
+filter_list_env = os.environ.get('filter_list')
+short_length_env = os.environ.get("short_length")
+
+value_color, err = subprocess.Popen(
+    ['xrescat', 'i3xrocks.value.color', '#D8DEE9'], stdout=subprocess.PIPE).communicate()
+value_color = value_color.decode("utf-8")
+label_color, err = subprocess.Popen(
+    ['xrescat', 'i3xrocks.label.color', '#7B8394'], stdout=subprocess.PIPE).communicate()
+label_color = label_color.decode("utf-8")
+value_font, err = subprocess.Popen(
+    ['xrescat', 'i3xrocks.value.font', 'Source Code Pro Medium 13'], stdout=subprocess.PIPE).communicate()
+value_font = value_font.decode("utf-8")
+
+
+if filter_list_env is None and args.filter_list is None:
+    filter_list = []
+elif args.filter_list is None:
+    filter_list = filter_list_env.split()
+else:
+    filter_list = args.filter_list
+
+if short_length_env is None and args.short_length is None:
+    short_length = 10
+elif args.short_length is None:
+    short_length = int(short_length_env)
+else:
+    short_length = args.short_length
+i3 = Connection()
+focused = i3.get_tree().find_focused()
+
+name = focused.name
+
+# LibreOffice adds it's own name at the end so we need to remove that
+if "LibreOffice" in name.split("-")[-1] and focused.window_instance == "libreoffice":
+    name = "-".join(name.split("-")[:-1])
+
+if len(filter_list) == 0:
+    print(value_span(name))
+    print(value_span(name[:short_length]))
+else:
+    if focused.window_instance in filter_list:
+        print(value_span(name))
+        print(value_span(name[:short_length]))

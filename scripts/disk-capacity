@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Get available disk space in mount point
+#
+# Returns:
+#   The disk's available space in GB
+
+LABEL="${MNT:-/}"
+export LABEL
+
+get_disk_avail_gb() {
+    AVAIL_GB=$(df -hP "${LABEL}" |grep -vE '^Filesystem' | awk '{print $4}')
+}
+
+get_disk_avail_gb
+
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.disk D)}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+
+echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"> $LABEL:</span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$AVAIL_GB</span>"

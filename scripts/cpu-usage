@@ -1,0 +1,59 @@
+#!/usr/bin/perl
+#
+# Copyright 2014 Pierre Mavro <deimos@deimos.fr>
+# Copyright 2014 Vivien Didelot <vivien@didelot.org>
+# Copyright 2014 Andreas Guldstrand <andreas.guldstrand@gmail.com>
+#
+# Licensed under the terms of the GNU GPL v3, or any later version.
+
+use strict;
+use warnings;
+use utf8;
+use Getopt::Long;
+use open IO => ':encoding(UTF-8)';
+
+# default values
+my $t_warn = 50;
+my $t_crit = 80;
+my $cpu_usage = -1;
+
+sub help {
+    print "Usage: cpu_usage [-w <warning>] [-c <critical>]\n";
+    print "-w <percent>: warning threshold to become yellow\n";
+    print "-c <percent>: critical threshold to become red\n";
+    exit 0;
+}
+
+GetOptions("help|h" => \&help,
+           "w=i"    => \$t_warn,
+           "c=i"    => \$t_crit);
+
+# Get CPU usage
+$ENV{LC_ALL}="en_US"; # if mpstat is not run under en_US locale, things may break, so make sure it is
+open (MPSTAT, 'mpstat 1 1 |') or die;
+while (<MPSTAT>) {
+    if (/^Average.*\s+(\d+\.\d+)/) {
+        $cpu_usage = 100 - $1; # 100% - %idle
+        last;
+    }
+}
+close(MPSTAT);
+
+$cpu_usage eq -1 and die 'Can\'t find CPU information';
+
+# Get color values
+my $label_color = $ENV{'label_color'} || `xrescat i3xrocks.label.color #7B8394`;
+my $value_color = $ENV{'color'} || `xrescat i3xrocks.value.color #D8DEE9`;
+my $value_font = $ENV{'font'} || `xrescat i3xrocks.value.font "Source Code Pro Medium 13"`;
+my $value_icon = $ENV{'icon'} || `xrescat i3xrocks.label.cpu `;
+
+# Print short_text, full_text
+binmode STDOUT, ":utf8";
+printf "<span color='%s'>%s</span><span font_desc='%s' color='%s'> %02d%%</span>\n", $label_color, $value_icon, $value_font, $value_color, $cpu_usage;
+printf "<span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $value_color, $cpu_usage;
+
+if (defined $ENV{'button'}) {
+    system('/usr/bin/i3-msg -q exec /usr/bin/gnome-system-monitor')
+}
+
+exit 0;
