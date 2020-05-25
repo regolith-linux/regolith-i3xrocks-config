@@ -1,3 +1,21 @@
+regolith-i3xrocks-config (3.0.26-2) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Update i3xrocks-focused-window-name to use consistent python library name. 
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Mon, 25 May 2020 13:00:43 -0700
+
+regolith-i3xrocks-config (3.0.26-1) bionic; urgency=medium
+
+  [ Taher Chegini ]
+  * Add todo blocklet (#54)
+
+  [ Ken Gilmer ]
+  * Initial upstream branch.
+  * New upstream version 3.0.25
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 24 May 2020 20:54:03 -0700
+
 regolith-i3xrocks-config (3.0.25-2) bionic; urgency=medium
 
   * Trying w/ debhelper v11 based on build error. 
