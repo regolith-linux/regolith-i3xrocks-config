@@ -1,0 +1,2 @@
+scripts/todo /usr/share/i3xrocks
+conf.d/80_todo /etc/regolith/i3xrocks/conf.d
