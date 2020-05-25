@@ -176,4 +176,3 @@ Depends: ${misc:Depends},
 Description: Indicator to mange and show to-do list.
  An i3xrocks indicator for managing the to-do list that
  shows number of active tasks.
-
