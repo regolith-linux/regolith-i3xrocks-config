@@ -1,7 +1,15 @@
 #!/bin/bash
+# for storing possible user defined options
+PLAYER_ARGS=""
+
+# get the media player if one is defined in Xresources
+MEDIA_PLAYER=$(xrescat i3xrocks.media-player)
+if [ -n "$MEDIA_PLAYER" ]; then
+    PLAYER_ARGS="--player=$MEDIA_PLAYER"
+fi
 
 # get player status (Playing / Paused / Stopped / ...)
-STATUS=$(playerctl status 2> /dev/null)
+STATUS=$(playerctl $PLAYER_ARGS status 2> /dev/null)
 
 # use given values or fall back to parameters from xresources
 FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 25)}
@@ -23,8 +31,8 @@ case $STATUS in
 esac
 
 # get artist and title information
-ARTIST="$(playerctl metadata artist)"
-TITLE="$(playerctl metadata title)"
+ARTIST="$(playerctl $PLAYER_ARGS metadata artist)"
+TITLE="$(playerctl $PLAYER_ARGS metadata title)"
 
 # print resulting information (fulltext)
 text="${ARTIST} - ${TITLE}"
@@ -50,9 +58,9 @@ echo "$ICON"
 # middle click: send play/pause signal
 # right click: send next title signal
 case $BLOCK_BUTTON in
-    1) playerctl previous ;;
-    2) playerctl play-pause ;;
-    3) playerctl next ;;
+    1) playerctl $PLAYER_ARGS previous ;;
+    2) playerctl $PLAYER_ARGS play-pause ;;
+    3) playerctl $PLAYER_ARGS next ;;
 esac
 
 exit 0
