@@ -1,10 +1,53 @@
 #!/bin/bash
 
+BUTTON=${button:-}
+
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color)}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
 
 PANGO_START="<span color=\"${VALUE_COLOR}\" font_desc=\"${VALUE_FONT}\">"
 PANGO_END="</span>"
 
-gsettings get org.gnome.desktop.input-sources mru-sources | sed -r "s,\S*\s'([^']+).*,$PANGO_START\1$PANGO_END,"
-gsettings monitor org.gnome.desktop.input-sources mru-sources | sed -u -r "s,\S*\s\S*\s'([^']+).*,$PANGO_START\1$PANGO_END,"
+# use org.gnome.desktop.input-sources sources as it holds the list of available
+# keyboard layouts and is what is referenced by the current keyboard index.
+# The string from gsettings is in the form [('xkb', 'layoutname'), .....
+# Parse the string into an array for further processing.
+SOURCES=($(gsettings get org.gnome.desktop.input-sources sources | tr ' ' '\n'))
+
+# org.gnome.desktop.input-sources current -  holds index of currently active layout
+# The name of the keyboard layout is the second element of each index.
+(( KBD_INDEX = `gsettings get org.gnome.desktop.input-sources current | cut -d' ' -f2` * 2 + 1 ))
+
+# get the keyboard layout name, discarding surrounding text
+KBD=`echo ${SOURCES[KBD_INDEX]} | sed -u -r "s,'([^']+).*,\1,"`
+
+echo "${PANGO_START}${KBD}${PANGO_END}"
+
+case "x${BUTTON}" in
+"x1")
+    # Handle left click, default to launch region settings
+    LEFT_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.left_click_action "$(which gnome-control-center) --class=floatingwindow region")
+    [[ ! -z $LEFT_CLICK_ACTION ]] && $(which i3-msg) -q exec "$LEFT_CLICK_ACTION"
+    ;;
+"x2")
+    # Handle middle click, default to display keyboard layout
+    # if variant present in keyboard layout, replace '+' with tab as expected by gkbd-keyboard-display
+    KBD_LANG="$(echo $KBD | sed 's,+,\t,')"
+    MIDDLE_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.middle_click_action "$(which gkbd-keyboard-display) --class=floatingwindow -l '$KBD_LANG'")
+    [[ ! -z $MIDDLE_CLICK_ACTION ]] && $(which i3-msg) -q exec "$MIDDLE_CLICK_ACTION"
+    ;;
+"x3")
+    # Handle right click, default to no action
+    RIGHT_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.right_click_action "")
+    [[ ! -z $RIGHT_CLICK_ACTION ]] && $(which i3-msg) -q exec "$RIGHT_CLICK_ACTION"
+    ;;
+"x4")
+    # Handle scroll up, default to no action
+    SCROLL_UP_ACTION=$(xrescat i3xrocks.keyboard_layout.scroll_up_action "")
+    [[ ! -z $SCROLL_UP_ACTION ]] && $(which i3-msg) -q exec "$SCROLL_UP_ACTION"
+    ;;
+"x5") # Handle scroll down, default to no action
+    SCROLL_DOWN_ACTION=$(xrescat i3xrocks.keyboard_layout.scroll_down_action "")
+    [[ ! -z $SCROLL_DOWN_ACTION ]] && $(which i3-msg) -q exec "$SCROLL_DOWN_ACTION"
+    ;;
+esac
