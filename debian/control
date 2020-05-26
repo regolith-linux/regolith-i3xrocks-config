@@ -72,7 +72,7 @@ Architecture: any
 Depends: ${misc:Depends},
     python3 (>= 3.5),
     regolith-i3xrocks-config,
-    i3ipc-python
+    python3-i3ipc
 Description: Indicator to show focused window name.
  An i3xrocks indicator to show the name of the focused window.
 
