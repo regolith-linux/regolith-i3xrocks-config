@@ -72,7 +72,7 @@ Architecture: any
 Depends: ${misc:Depends},
     python3 (>= 3.5),
     regolith-i3xrocks-config,
-    i3ipc-python
+    python3-i3ipc
 Description: Indicator to show focused window name.
  An i3xrocks indicator to show the name of the focused window.
 
@@ -172,7 +172,7 @@ Package: i3xrocks-todo
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
-    td-cli
+    python3-td-cli
 Description: Indicator to mange and show to-do list.
  An i3xrocks indicator for managing the to-do list that
  shows number of active tasks.

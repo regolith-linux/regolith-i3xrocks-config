@@ -72,16 +72,19 @@ else:
 i3 = Connection()
 focused = i3.get_tree().find_focused()
 
-name = focused.name
+try:
+    name = focused.name
 
-# LibreOffice adds it's own name at the end so we need to remove that
-if "LibreOffice" in name.split("-")[-1] and focused.window_instance == "libreoffice":
-    name = "-".join(name.split("-")[:-1])
+    # LibreOffice adds it's own name at the end so we need to remove that
+    if "LibreOffice" in name.split("-")[-1] and focused.window_instance == "libreoffice":
+        name = "-".join(name.split("-")[:-1])
 
-if len(filter_list) == 0:
-    print(value_span(name))
-    print(value_span(name[:short_length]))
-else:
-    if focused.window_instance in filter_list:
+    if len(filter_list) == 0:
         print(value_span(name))
         print(value_span(name[:short_length]))
+    else:
+        if focused.window_instance in filter_list:
+            print(value_span(name))
+            print(value_span(name[:short_length]))
+except AttributeError as e:
+    pass

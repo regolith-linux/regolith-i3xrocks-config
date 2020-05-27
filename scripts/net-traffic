@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -Eeux -o pipefail
+set -Eeu -o pipefail
 
 # span for text
 fspan() {
