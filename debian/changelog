@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.0.28-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Package: @buck10's major rework of keyboard-layout.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 26 May 2020 20:25:09 -0700
+
 regolith-i3xrocks-config (3.0.27-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
