@@ -26,14 +26,14 @@ echo "${PANGO_START}${KBD}${PANGO_END}"
 case "x${BUTTON}" in
 "x1")
     # Handle left click, default to launch region settings
-    LEFT_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.left_click_action "$(which gnome-control-center) --class=floatingwindow region")
+    LEFT_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.left_click_action "$(which gnome-control-center) --class=floating_window region")
     [[ ! -z $LEFT_CLICK_ACTION ]] && $(which i3-msg) -q exec "$LEFT_CLICK_ACTION"
     ;;
 "x2")
     # Handle middle click, default to display keyboard layout
     # if variant present in keyboard layout, replace '+' with tab as expected by gkbd-keyboard-display
     KBD_LANG="$(echo $KBD | sed 's,+,\t,')"
-    MIDDLE_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.middle_click_action "$(which gkbd-keyboard-display) --class=floatingwindow -l '$KBD_LANG'")
+    MIDDLE_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.middle_click_action "$(which gkbd-keyboard-display) --class=floating_window -l '$KBD_LANG'")
     [[ ! -z $MIDDLE_CLICK_ACTION ]] && $(which i3-msg) -q exec "$MIDDLE_CLICK_ACTION"
     ;;
 "x3")
