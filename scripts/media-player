@@ -1,12 +1,6 @@
 #!/bin/bash
-# for storing possible user defined options
-PLAYER_ARGS=""
-
-# get the media player if one is defined in Xresources
-MEDIA_PLAYER=$(xrescat i3xrocks.media-player)
-if [ -n "$MEDIA_PLAYER" ]; then
-    PLAYER_ARGS="--player=$MEDIA_PLAYER"
-fi
+# for storing possible user defined arguments for playerctl
+PLAYER_ARGS=$(xrescat i3xrocks.media_player.player_args)
 
 # get player status (Playing / Paused / Stopped / ...)
 STATUS=$(playerctl $PLAYER_ARGS status 2> /dev/null)
