@@ -13,5 +13,5 @@ if [ -n "$ESSID" ]; then
 fi
 
 if [ "x${BUTTON}" == "x1" ]; then
-    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center --class=floating_window wifi
+    /usr/bin/i3-msg -q exec "/usr/bin/gnome-control-center --class=floating_window wifi"
 fi
