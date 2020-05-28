@@ -172,7 +172,7 @@ Package: i3xrocks-todo
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
-    python3-td-cli
+    td-cli
 Description: Indicator to mange and show to-do list.
  An i3xrocks indicator for managing the to-do list that
  shows number of active tasks.
