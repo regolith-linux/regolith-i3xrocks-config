@@ -64,5 +64,5 @@ CHARGE_SPAN="<span color=\"${LABEL_COLOR}\">$CHARGE_ICON</span>"
 echo "${ICON_SPAN}${VALUE_SPAN}${CHARGE_SPAN}"
 
 if [ "x${BUTTON}" == "x1" ]; then
-    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center --class=floating_window power
+    /usr/bin/i3-msg -q exec "/usr/bin/gnome-control-center --class=floating_window power"
 fi
