@@ -9,59 +9,59 @@ License: GPL-3.0+
 Files: scripts/battery
 Copyright: Copyright © 2014 Pierre Mavro <deimos@deimos.fr>
            Copyright © 2014 Vivien Didelot <vivien@didelot.org>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/cpu-usage
 Copyright: Copyright © 2014 Pierre Mavro <deimos@deimos.fr>
            Copyright © 2014 Vivien Didelot <vivien@didelot.org>
            Copyright © 2014 Andreas Guldstrand <andreas.guldstrand@gmail.com>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/disk-capacity
 Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
            Copyright © 2020 Moritz Heiber <hello@heiber.im>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/memory
 Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/focused-window-name
 Copyright: Copyright © 2019 Bence Ferdinandy <bence@ferdinandy.com>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/key-indicator
 Copyright: Copyright 2019 MerlinElMago
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/mediaplayer
 Copyright: Copyright © 2014 Tony Crisci <tony@dubstepdish.com>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/openvpn
 Copyright: Copyright © Pierre Mavro/Deimosfr <deimos@deimos.fr>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/temp
 Copyright: Copyright © 2014 Pierre Mavro <deimos@deimos.fr>
            Copyright © 2014 Vivien Didelot <vivien@didelot.org>
            Copyright © 2014 Andreas Guldstrand <andreas.guldstrand@gmail.com>
            Copyright © 2014 Benjamin Chretien <chretien at lirmm dot fr>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/volume
 Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
            Copyright © 2014 Alexander Keller <github@nycroth.com>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/wifi
 Copyright: Copyright (C) 2014 Alexander Keller <github@nycroth.com>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: scripts/wifi2
        scripts/battery2
 Copyright: Copyright (C) 2019 leo palmer sunmo <leo.sunmo@gmail.com>
-License: GPL-3+
+License: GPL-3.0+
 
 Files: debian/*
 Copyright: 2019 Ken Gilmer <kgilmer@gmail.com>
