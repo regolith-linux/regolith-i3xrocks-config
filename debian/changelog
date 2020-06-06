@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.0.31-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Downgrade debhelper version to appease launchpad.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 06 Jun 2020 14:11:34 -0700
+
 regolith-i3xrocks-config (3.0.30-1) bionic; urgency=medium
 
   [ Ken Gilmer ]

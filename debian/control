@@ -2,7 +2,7 @@ Source: regolith-i3xrocks-config
 Section: x11
 Priority: optional
 Maintainer: Ken Gilmer <kgilmer@gmail.com>
-Build-Depends: debhelper (>= 12)
+Build-Depends: debhelper-compat
 Standards-Version: 4.1.2
 Homepage: https://github.com/regolith-linux/regolith-desktop
 Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
