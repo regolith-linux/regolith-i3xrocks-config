@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (3.0.32-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Downgrade debhelper version to appease launchpad.
+  * Remove compat file in attempt to appease debuild.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 06 Jun 2020 14:15:22 -0700
+
 regolith-i3xrocks-config (3.0.31-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
