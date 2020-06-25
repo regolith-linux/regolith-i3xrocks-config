@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.0.34-1) bionic; urgency=medium
+
+  [ Marten Lienen ]
+  * Exit gracefully if the focused window does not have a name (#68)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 25 Jun 2020 07:29:06 -0700
+
 regolith-i3xrocks-config (3.0.33-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
