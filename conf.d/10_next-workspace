@@ -1,0 +1,5 @@
+# next workspace
+#
+# Open next available workspace
+[next-workspace-widget]
+interval=60
