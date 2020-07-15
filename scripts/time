@@ -30,7 +30,7 @@ if [ -z "$DATE_FORMAT" ]; then # No custom format defined, use system defaults
 
     DATE_VALUE=$(date "+ $DATE_SPEC $TIME_SPEC")
 else
-    DATE_VALUE=$(date "$DATE_FORMAT")
+    DATE_VALUE=$(date "+ $DATE_FORMAT")
 fi
 
 
@@ -41,5 +41,5 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$DATE_VALUE </span>"
 
 if [ "x${BUTTON}" == "x1" ]; then
-    /usr/bin/i3-msg -q exec /usr/bin/gnome-control-center --class=floating_window datetime
+    /usr/bin/i3-msg -q exec "/usr/bin/gnome-control-center --class=floating_window datetime"
 fi
