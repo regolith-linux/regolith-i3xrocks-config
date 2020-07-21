@@ -27,6 +27,8 @@ Copyright: Copyright © 2014 Julien Bonjean <julien@bonjean.info>
 License: GPL-3.0+
 
 Files: scripts/focused-window-name
+       scripts/next-workspace
+       scripts/next-workspace-widget
 Copyright: Copyright © 2019 Bence Ferdinandy <bence@ferdinandy.com>
 License: GPL-3.0+
 

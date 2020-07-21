@@ -176,3 +176,13 @@ Depends: ${misc:Depends},
 Description: Indicator to mange and show to-do list.
  An i3xrocks indicator for managing the to-do list that
  shows number of active tasks.
+
+Package: i3xrocks-next-workspace
+Architecture: any
+Depends: ${misc:Depends},
+    python3 (>= 3.5),
+    regolith-i3xrocks-config,
+    python3-i3ipc
+Description: Button and script to open next workspace.
+ An i3xrocks widget and an i3 script intended to be called by keycombo
+ to open next available empty workspace.
