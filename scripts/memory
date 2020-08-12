@@ -33,6 +33,9 @@ awk -v type=$TYPE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" 
 /^Cached:/ {
 	mem_free+=$2
 }
+/^MemAvailable:/ {
+	mem_available=$2
+}
 /^SwapTotal:/ {
 	swap_total=$2
 }
@@ -40,10 +43,13 @@ awk -v type=$TYPE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" 
 	swap_free=$2
 }
 END {
+	# fallback for mem_available
+	if (mem_available == "")
+		mem_available=mem_free
 	# full text
 	if (type == "swap")
 		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, (swap_total-swap_free)/1024/1024)
 	else
-		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, mem_free/1024/1024)
+		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, mem_available/1024/1024)
 }
 ' /proc/meminfo
