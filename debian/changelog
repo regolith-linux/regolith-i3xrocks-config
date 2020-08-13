@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.1.1-1) bionic; urgency=medium
+
+  [ Vipul Mathur ]
+  * Use `MemAvailable` to indicate memory usage (#70)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 13 Aug 2020 20:46:05 -0700
+
 regolith-i3xrocks-config (3.1.0-1) bionic; urgency=medium
 
   [ Bence Ferdinandy ]
