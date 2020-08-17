@@ -37,6 +37,11 @@ else
     TEXT=$(printf "%-${width}s" "$text")
 fi
 
+# sanitize text for Pango parsing
+TEXT=${TEXT//&/&amp;}
+TEXT=${TEXT//>/&gt;}
+TEXT=${TEXT//</&lt;}
+
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
 <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
 ${TEXT}</span>"
