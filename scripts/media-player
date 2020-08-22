@@ -4,7 +4,7 @@
 STATUS=$(playerctl status 2> /dev/null)
 
 # use given values or fall back to parameters from xresources
-FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 25)}
+FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 30)}
 PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
 PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
