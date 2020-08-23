@@ -4,7 +4,7 @@
 STATUS=$(playerctl status 2> /dev/null)
 
 # use given values or fall back to parameters from xresources
-FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 25)}
+FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 30)}
 PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
 PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
@@ -26,16 +26,26 @@ esac
 ARTIST="$(playerctl metadata artist)"
 TITLE="$(playerctl metadata title)"
 
-# print resulting information (fulltext)
-text="${ARTIST} - ${TITLE}"
-length=${#text}
-width=$FIELD_WIDTH
+# get half of the total allowed field width
+HALF_FIELD_WIDTH=$(( FIELD_WIDTH / 2 ))
 
-if [[ $length > $width ]]; then
-    TEXT="${text:0:$(( width - 3 ))}..."
-else
-    TEXT=$(printf "%-${width}s" "$text")
+# trim artist length, remove an extra 4 to allow for spaces and "..."
+if [[ ${#ARTIST} -gt ${HALF_FIELD_WIDTH} ]]; then
+    ARTIST="${ARTIST:0:$(( HALF_FIELD_WIDTH -4 ))}..."
 fi
+
+# trim song title length, remove an extra 5 to allow for the separator and "..."
+if [[ ${#TITLE} -gt ${HALF_FIELD_WIDTH} ]]; then
+    TITLE="${TITLE:0:$(( HALF_FIELD_WIDTH -5 ))}..."
+fi
+
+# print resulting information (fulltext)
+TEXT="${ARTIST} - ${TITLE}"
+
+# sanitize text for Pango parsing
+TEXT=${TEXT//&/&amp;}
+TEXT=${TEXT//>/&gt;}
+TEXT=${TEXT//</&lt;}
 
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
 <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
