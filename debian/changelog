@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.1.2-1) bionic; urgency=medium
+
+  [ Leo Palmer Sunmo ]
+  * Polish up media-player text splitting and pango formatting (#71)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 22 Aug 2020 19:18:00 -0700
+
 regolith-i3xrocks-config (3.1.1-1) bionic; urgency=medium
 
   [ Vipul Mathur ]
