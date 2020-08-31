@@ -33,9 +33,11 @@ ULEV=2
 # Handle button event
 if [ "x${BUTTON}" == "x1" ] ; then
   if [ "$INT_TYPE" == "W" ]; then
-    /usr/bin/i3-msg -q exec "/usr/bin/gnome-control-center --class=floating_window wifi"
+    ACTION=$(xrescat i3xrocks.action.net-traffic.left "/usr/bin/gnome-control-center --class=floating_window wifi")
+    /usr/bin/i3-msg -q exec "$ACTION"
   else
-    /usr/bin/i3-msg -q exec "/usr/bin/gnome-control-center --class=floating_window network"
+    ACTION=$(xrescat i3xrocks.action.net-traffic.right "/usr/bin/gnome-control-center --class=floating_window network")
+    /usr/bin/i3-msg -q exec "$ACTION"
   fi
 fi
 

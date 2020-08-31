@@ -37,5 +37,6 @@ WEATHER_DATA=$(curl -sS wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}?format="${VALU
 echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER_DATA}</span>"
 
 if [ ! -z "$button" ]; then
-    /usr/bin/i3-msg -q exec xdg-open https://wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}
+    ACTION=$(xrescat i3xrocks.action.weather "xdg-open https://wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}")
+    /usr/bin/i3-msg -q exec "$ACTION"
 fi

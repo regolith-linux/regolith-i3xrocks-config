@@ -33,3 +33,8 @@ LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
 echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"> $LABEL:</span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$AVAIL_GB</span>"
+
+if [ "x${BUTTON}" == "x1" ]; then
+    ACTION=$(xrescat i3xrocks.action.disk-capacity "/usr/bin/gnome-disks --class=floating_window power")
+    /usr/bin/i3-msg -q exec "$ACTION"
+fi

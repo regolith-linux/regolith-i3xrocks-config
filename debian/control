@@ -27,6 +27,7 @@ Description: Indicator to show date and time.
 Package: i3xrocks-disk-capacity
 Architecture: any
 Depends: ${misc:Depends},
+    gnome-disk-utility,
     regolith-i3xrocks-config,
     bash (>= 3),
     coreutils (>= 8)

@@ -53,3 +53,8 @@ END {
 		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, mem_available/1024/1024)
 }
 ' /proc/meminfo
+
+if [ "x${BUTTON}" == "x1" ]; then
+    ACTION=$(xrescat i3xrocks.action.memory "/usr/bin/gnome-system-monitor --class=floating_window --show-resources-tab")
+    /usr/bin/i3-msg -q exec "$ACTION"
+fi
