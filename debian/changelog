@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.1.3-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Add ability to override click commands via Xresources. Fixes https://github.com/regolith-linux/regolith-desktop/issues/352.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 30 Aug 2020 17:13:24 -0700
+
 regolith-i3xrocks-config (3.1.2-1) bionic; urgency=medium
 
   [ Leo Palmer Sunmo ]
