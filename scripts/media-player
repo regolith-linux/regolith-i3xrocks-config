@@ -61,9 +61,9 @@ echo "$ICON"
 # left click: send previous title signal
 # middle click: send play/pause signal
 # right click: send next title signal
-ACTION_1=$(xrescat i3xrocks.action.media-player.left "playerctl previous")
-ACTION_2=$(xrescat i3xrocks.action.media-player.middle "playerctl play-pause")
-ACTION_3=$(xrescat i3xrocks.action.media-player.right "playerctl next")
+ACTION_1=$(xrescat i3xrocks.action.media-player.left "playerctl $PLAYER_ARGS previous")
+ACTION_2=$(xrescat i3xrocks.action.media-player.middle "playerctl $PLAYER_ARGS play-pause")
+ACTION_3=$(xrescat i3xrocks.action.media-player.right "playerctl $PLAYER_ARGS next")
 case $BLOCK_BUTTON in
     1) eval $ACTION_1 ;;
     2) eval $ACTION_2 ;;
