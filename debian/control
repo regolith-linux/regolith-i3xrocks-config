@@ -2,7 +2,7 @@ Source: regolith-i3xrocks-config
 Section: x11
 Priority: optional
 Maintainer: Ken Gilmer <kgilmer@gmail.com>
-Build-Depends: debhelper (>= 11)
+Build-Depends: debhelper-compat (= 11)
 Standards-Version: 4.1.2
 Homepage: https://github.com/regolith-linux/regolith-desktop
 Vcs-Git: https://github.com/regolith-linux/regolith-i3xrocks-config.git
@@ -27,6 +27,7 @@ Description: Indicator to show date and time.
 Package: i3xrocks-disk-capacity
 Architecture: any
 Depends: ${misc:Depends},
+    gnome-disk-utility,
     regolith-i3xrocks-config,
     bash (>= 3),
     coreutils (>= 8)
@@ -72,7 +73,7 @@ Architecture: any
 Depends: ${misc:Depends},
     python3 (>= 3.5),
     regolith-i3xrocks-config,
-    i3ipc-python
+    python3-i3ipc
 Description: Indicator to show focused window name.
  An i3xrocks indicator to show the name of the focused window.
 
@@ -176,3 +177,13 @@ Depends: ${misc:Depends},
 Description: Indicator to mange and show to-do list.
  An i3xrocks indicator for managing the to-do list that
  shows number of active tasks.
+
+Package: i3xrocks-next-workspace
+Architecture: any
+Depends: ${misc:Depends},
+    python3 (>= 3.5),
+    regolith-i3xrocks-config,
+    python3-i3ipc
+Description: Button and script to open next workspace.
+ An i3xrocks widget and an i3 script intended to be called by keycombo
+ to open next available empty workspace.

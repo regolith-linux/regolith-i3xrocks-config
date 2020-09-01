@@ -1,12 +1,12 @@
 #!/bin/bash
 # for storing possible user defined arguments for playerctl
-PLAYER_ARGS=$(xrescat i3xrocks.media_player.player_args)
+PLAYER_ARGS=$(xrescat i3xrocks.media-player.player-args)
 
 # get player status (Playing / Paused / Stopped / ...)
 STATUS=$(playerctl $PLAYER_ARGS status 2> /dev/null)
 
 # use given values or fall back to parameters from xresources
-FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 25)}
+FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 30)}
 PLAYING_ICON=${icon:-$(xrescat i3xrocks.label.mediaplaying "")}
 PAUSED_ICON=${icon:-$(xrescat i3xrocks.label.mediapaused "")}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
@@ -28,16 +28,26 @@ esac
 ARTIST="$(playerctl $PLAYER_ARGS metadata artist)"
 TITLE="$(playerctl $PLAYER_ARGS metadata title)"
 
-# print resulting information (fulltext)
-text="${ARTIST} - ${TITLE}"
-length=${#text}
-width=$FIELD_WIDTH
+# get half of the total allowed field width
+HALF_FIELD_WIDTH=$(( FIELD_WIDTH / 2 ))
 
-if [[ $length > $width ]]; then
-    TEXT="${text:0:$(( width - 3 ))}..."
-else
-    TEXT=$(printf "%-${width}s" "$text")
+# trim artist length, remove an extra 4 to allow for spaces and "..."
+if [[ ${#ARTIST} -gt ${HALF_FIELD_WIDTH} ]]; then
+    ARTIST="${ARTIST:0:$(( HALF_FIELD_WIDTH -4 ))}..."
 fi
+
+# trim song title length, remove an extra 5 to allow for the separator and "..."
+if [[ ${#TITLE} -gt ${HALF_FIELD_WIDTH} ]]; then
+    TITLE="${TITLE:0:$(( HALF_FIELD_WIDTH -5 ))}..."
+fi
+
+# print resulting information (fulltext)
+TEXT="${ARTIST} - ${TITLE}"
+
+# sanitize text for Pango parsing
+TEXT=${TEXT//&/&amp;}
+TEXT=${TEXT//>/&gt;}
+TEXT=${TEXT//</&lt;}
 
 echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
 <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
@@ -51,10 +61,13 @@ echo "$ICON"
 # left click: send previous title signal
 # middle click: send play/pause signal
 # right click: send next title signal
+ACTION_1=$(xrescat i3xrocks.action.media-player.left "playerctl previous")
+ACTION_2=$(xrescat i3xrocks.action.media-player.middle "playerctl play-pause")
+ACTION_3=$(xrescat i3xrocks.action.media-player.right "playerctl next")
 case $BLOCK_BUTTON in
-    1) playerctl $PLAYER_ARGS previous ;;
-    2) playerctl $PLAYER_ARGS play-pause ;;
-    3) playerctl $PLAYER_ARGS next ;;
+    1) eval $ACTION_1 ;;
+    2) eval $ACTION_2 ;;
+    3) eval $ACTION_3 ;;
 esac
 
 exit 0
