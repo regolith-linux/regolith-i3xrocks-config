@@ -1,3 +1,13 @@
+regolith-i3xrocks-config (3.2.0-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Add ability to specify temperature unit via xres, and fallback to country locale if unspecified. Based on https://github.com/regolith-linux/regolith-desktop/issues/372. (#72)
+
+  [ Joel Hoisko ]
+  * Add option to define a specific media player (#63)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 01 Sep 2020 20:35:39 -0700
+
 regolith-i3xrocks-config (3.1.3-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
