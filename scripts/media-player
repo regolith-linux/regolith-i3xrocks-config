@@ -1,7 +1,9 @@
 #!/bin/bash
+# for storing possible user defined arguments for playerctl
+PLAYER_ARGS=$(xrescat i3xrocks.media-player.player-args)
 
 # get player status (Playing / Paused / Stopped / ...)
-STATUS=$(playerctl status 2> /dev/null)
+STATUS=$(playerctl $PLAYER_ARGS status 2> /dev/null)
 
 # use given values or fall back to parameters from xresources
 FIELD_WIDTH=${icon:-$(xrescat i3xrocks.value.mediaplayerwidth 30)}
@@ -23,8 +25,8 @@ case $STATUS in
 esac
 
 # get artist and title information
-ARTIST="$(playerctl metadata artist)"
-TITLE="$(playerctl metadata title)"
+ARTIST="$(playerctl $PLAYER_ARGS metadata artist)"
+TITLE="$(playerctl $PLAYER_ARGS metadata title)"
 
 # get half of the total allowed field width
 HALF_FIELD_WIDTH=$(( FIELD_WIDTH / 2 ))
@@ -59,9 +61,9 @@ echo "$ICON"
 # left click: send previous title signal
 # middle click: send play/pause signal
 # right click: send next title signal
-ACTION_1=$(xrescat i3xrocks.action.media-player.left "playerctl previous")
-ACTION_2=$(xrescat i3xrocks.action.media-player.middle "playerctl play-pause")
-ACTION_3=$(xrescat i3xrocks.action.media-player.right "playerctl next")
+ACTION_1=$(xrescat i3xrocks.action.media-player.left "playerctl $PLAYER_ARGS previous")
+ACTION_2=$(xrescat i3xrocks.action.media-player.middle "playerctl $PLAYER_ARGS play-pause")
+ACTION_3=$(xrescat i3xrocks.action.media-player.right "playerctl $PLAYER_ARGS next")
 case $BLOCK_BUTTON in
     1) eval $ACTION_1 ;;
     2) eval $ACTION_2 ;;
@@ -69,3 +71,4 @@ case $BLOCK_BUTTON in
 esac
 
 exit 0
+
