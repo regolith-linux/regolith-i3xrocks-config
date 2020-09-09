@@ -53,8 +53,8 @@ printf "<span color='%s'>%s</span><span font_desc='%s' color='%s'> %02d%%</span>
 printf "<span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $value_color, $cpu_usage;
 
 if (defined $ENV{'button'}) {
-    ACTION=$(xrescat i3xrocks.action.cpu-usage "/usr/bin/gnome-system-monitor --class=floating_window")
-    /usr/bin/i3-msg -q exec "$ACTION"
+    my $action = `xrescat i3xrocks.action.cpu-usage "/usr/bin/gnome-system-monitor --class=floating_window"`;
+    system("/usr/bin/i3-msg -q exec '$action'");
 }
 
 exit 0;
