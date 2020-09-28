@@ -6,9 +6,14 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.thermometer )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 
-TEMP_KEY=${temp_key:-$(xrescat i3xrocks.temp.key "temp1_input")}
+TEMP_KEY=${temp_key:-$(xrescat i3xrocks.temp.key "")}
 
-TEMP=$(sensors -u 2>/dev/null | grep -Po "$TEMP_KEY: \K\d*" | head -n 1)
+if [ -z "${TEMP_KEY}" ];
+then
+    TEMP=$(sensors 2>/dev/null | grep -Po "[Core 0|Tdie]:[ ]+\+\K\d*" | head -n 1)
+else
+    TEMP=$(sensors -u 2>/dev/null | grep -Po "$TEMP_KEY: \K\d*" | head -n 1)
+fi
 
 if [[ ${TEMP} -gt 90 ]]
 then
