@@ -1,3 +1,13 @@
+regolith-i3xrocks-config (3.2.2-1) bionic; urgency=medium
+
+  [ Peter Mahnke ]
+  * Make curl work for special characters (#76)
+
+  [ Ken Gilmer ]
+  * Remove debugging line mistakenly added by me in earlier fix.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 06 Oct 2020 07:52:53 -0700
+
 regolith-i3xrocks-config (3.2.1-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
