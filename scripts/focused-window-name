@@ -79,7 +79,7 @@ name = focused.name if hasattr(focused, "name") and focused.name is not None els
 instance = focused.window_instance if hasattr(focused, "window_instance") else None
 
 # LibreOffice adds its own name at the end so we need to remove that
-if "LibreOffice" in name.split("-")[-1] and instance == "libreoffice":
+if name is not None and "LibreOffice" in name.split("-")[-1] and instance == "libreoffice":
     name = "-".join(name.split("-")[:-1])
 
 if len(filter_list) == 0 or instance in filter_list:
