@@ -1,3 +1,13 @@
+regolith-i3xrocks-config (3.2.5-1ubuntu1) bionic; urgency=medium
+
+  [ Rafael Lacerda ]
+  * Fix crash when focused window name is None (#81)
+
+  [ Peter Mahnke ]
+  * Remove decimal places from battery number (#80)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 22 Oct 2020 21:53:49 -0700
+
 regolith-i3xrocks-config (3.2.4-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
