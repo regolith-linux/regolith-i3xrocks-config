@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.2.6-1ubuntu2) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Fix todo icon from updated material design web icons change
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 25 Oct 2020 20:14:36 -0700
+
 regolith-i3xrocks-config (3.2.5-1ubuntu1) bionic; urgency=medium
 
   [ Rafael Lacerda ]
