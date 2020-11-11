@@ -73,12 +73,12 @@ mixer_value() {
 }
 
 ACTION_1=$(xrescat i3xrocks.action.volume.left "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle")
-ACTION_2=$(xrescat i3xrocks.action.volume.middle "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+")
-ACTION_3=$(xrescat i3xrocks.action.volume.right "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-")
+ACTION_4=$(xrescat i3xrocks.action.volume.middle "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+")
+ACTION_5=$(xrescat i3xrocks.action.volume.right "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-")
 case $BLOCK_BUTTON in
     1) eval $ACTION_1 ;;
-    2) eval $ACTION_2 ;;
-    3) eval $ACTION_3 ;;
+    4) eval $ACTION_4 ;;
+    5) eval $ACTION_5 ;;
 esac
 
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#E6E1CF")}
