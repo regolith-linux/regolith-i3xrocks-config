@@ -11,8 +11,8 @@ on:
 
 jobs:
   test:
+    container: ubuntu:focal
     # if: "!contains(github.event.commits[0].message, '[ci skip]')"
-    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Prepare test environment
