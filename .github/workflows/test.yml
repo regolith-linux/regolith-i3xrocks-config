@@ -21,6 +21,8 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          apt update -qq
+          apt install --no-install-recommends -y iproute2 bc
           cp tests/xrescat_mock /usr/bin/xrescat
           cp tests/i3-msg_mock /usr/bin/i3-msg
       - name: Run net-traffic test

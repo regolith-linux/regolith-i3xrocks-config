@@ -2,6 +2,9 @@
 
 set -Eeux -o pipefail
 
-echo "xrescat called with ${@}"
+XRESOURCE="${1}"
+DEFAULT_VALUE="${2}"
+
+echo "${DEFAULT_VALUE}"
 
 exit 0
