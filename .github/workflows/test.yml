@@ -12,6 +12,7 @@ on:
 jobs:
   test:
     container: ubuntu:focal
+    runs-on: ubuntu-latest
     # if: "!contains(github.event.commits[0].message, '[ci skip]')"
     steps:
       - uses: actions/checkout@v2
@@ -20,7 +21,6 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          apt update -qq
           cp tests/xrescat_mock /usr/bin/xrescat
           cp tests/i3-msg_mock /usr/bin/i3-msg
       - name: Run net-traffic test
