@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -Eeux -o pipefail
+
+echo "i3-msg called with ${@}"
+
+exit 0

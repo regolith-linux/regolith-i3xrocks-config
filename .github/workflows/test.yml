@@ -1,0 +1,29 @@
+name: test
+on:
+  pull_request:
+    branches:
+      - "*"
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - "*"
+
+jobs:
+  test:
+    # if: "!contains(github.event.commits[0].message, '[ci skip]')"
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare test environment
+        shell: bash
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt update -qq
+          cp tests/xrescat_mock /usr/bin/xrescat
+          cp tests/i3-msg_mock /usr/bin/i3-msg
+      - name: Run net-traffic test
+        shell: bash
+        run: |
+          tests/net-traffic_test.sh
