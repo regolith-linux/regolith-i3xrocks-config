@@ -1,3 +1,20 @@
+regolith-i3xrocks-config (3.2.7-1) bionic; urgency=medium
+
+  [ Moritz Heiber ]
+  * Added net-traffic tests and GitHub Actions workflow to run tests
+  * Switch to a separate container running to ensure we can run our tests
+  * Make sure we can actually run the job somewhere
+  * Fixed xrescat mock and test execution
+  * Fix for button handling of the net-traffic script (#86)
+
+  [ Will Winder ]
+  * Make time interval configurable with Xresource (#87)
+
+  [ Thomas ]
+  * Restore original behavior of mouse actions on volume (#85)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 12 Nov 2020 20:49:59 -0800
+
 regolith-i3xrocks-config (3.2.6-1ubuntu2) bionic; urgency=medium
 
   [ Ken Gilmer ]
