@@ -29,3 +29,34 @@ jobs:
         shell: bash
         run: |
           tests/net-traffic_test.sh
+  build_bionic:
+    container: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:bionic
+    name: Build package on Bionic
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build package
+        run: |
+          debuild -S -sa
+  build_focal:
+    container: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:focal
+    name: Build package on Bionic
+    runs-on: ubuntu-latest
+    needs: [test]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build package
+        run: |
+          debuild -S -sa
+  build_groovy:
+    container: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:groovy
+    name: Build package on Bionic
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build package
+        run: |
+          debuild -S -sa
