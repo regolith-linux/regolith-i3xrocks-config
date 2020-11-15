@@ -42,9 +42,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build package
         run: |
-          debuild -S -sa
+          gbp buildpackage
   build_focal:
-    container: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:focal
+    container:
+      image: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:focal
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{secrets.GITHUB_TOKEN}}
     name: Build package on Focal
     runs-on: ubuntu-latest
     needs: [test]
@@ -52,9 +56,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build package
         run: |
-          debuild -S -sa
+          gbp buildpackage
   build_groovy:
-    container: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:groovy
+    container:
+      image: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:groovy
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{secrets.GITHUB_TOKEN}}
     name: Build package on Groovy
     runs-on: ubuntu-latest
     needs: [test]
@@ -62,4 +70,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build package
         run: |
-          debuild -S -sa
+          gbp buildpackage
