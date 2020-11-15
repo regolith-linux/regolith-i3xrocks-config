@@ -30,7 +30,11 @@ jobs:
         run: |
           tests/net-traffic_test.sh
   build_bionic:
-    container: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:bionic
+    container:
+      image: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:bionic
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{secrets.GITHUB_TOKEN}}
     name: Build package on Bionic
     runs-on: ubuntu-latest
     needs: [test]
