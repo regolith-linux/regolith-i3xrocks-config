@@ -41,8 +41,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build package
+        shell: bash
         run: |
-          gbp buildpackage
+          gbp buildpackage --no-sign
+          [ $(ls ../*.deb | wc -l) == "21" ]
   build_focal:
     container:
       image: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:focal
@@ -55,8 +57,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build package
+        shell: bash
         run: |
-          gbp buildpackage
+          gbp buildpackage --no-sign
+          [ $(ls ../*.deb | wc -l) == "21" ]
   build_groovy:
     container:
       image: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:groovy
@@ -69,5 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build package
+        shell: bash
         run: |
-          gbp buildpackage
+          gbp buildpackage --no-sign
+          [ $(ls ../*.deb | wc -l) == "21" ]
