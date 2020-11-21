@@ -1,0 +1,26 @@
+name: test
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build_packages:
+    runs-on: ubuntu-latest
+    container:
+      image: docker.pkg.github.com/regolith-linux/regolith-deb-builder/regolith-deb-builder:${{ matrix. release }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{secrets.GITHUB_TOKEN}}
+    strategy:
+      matrix:
+        release: [bionic, focal, groovy]
+    name: Build packages on ${{ matrix.release }}
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build package
+        shell: bash
+        run: |
+          gbp buildpackage --no-sign
+          [ $(ls ../*.deb | wc -l) == "21" ]
