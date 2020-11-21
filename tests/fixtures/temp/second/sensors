@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -Eeu -o pipefail
+
+echo "iwlwifi_1-virtual-0
+Adapter: Virtual device
+temp1:        +38.0°C  
+
+thinkpad-isa-0000
+Adapter: ISA adapter
+fan1:           0 RPM
+temp1:        +45.0°C  
+temp2:            N/A  
+temp3:         +0.0°C  
+temp4:         +0.0°C  
+temp5:         +0.0°C  
+temp6:         +0.0°C  
+temp7:         +0.0°C  
+temp8:         +0.0°C  
+temp9:         +0.0°C  
+temp10:        +0.0°C  
+temp11:        +0.0°C  
+temp12:        +0.0°C  
+temp13:        +0.0°C  
+temp14:        +0.0°C  
+temp15:        +0.0°C  
+temp16:        +0.0°C  
+
+BAT0-acpi-0
+Adapter: ACPI interface
+in0:          11.38 V  
+
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +46.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 0:        +42.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 1:        +41.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 2:        +39.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 3:        +38.0°C  (high = +100.0°C, crit = +100.0°C)
+
+pch_skylake-virtual-0
+Adapter: Virtual device
+temp1:        +41.0°C  
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +45.0°C  (crit = +128.0°C)
+"

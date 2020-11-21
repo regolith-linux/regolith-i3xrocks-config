@@ -26,3 +26,7 @@ jobs:
         shell: bash
         run: |
           tests/net-traffic_test.sh
+      - name: Run temp test
+        shell: bash
+        run: |
+          tests/temp_test.sh
