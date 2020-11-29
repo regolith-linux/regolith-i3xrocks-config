@@ -68,6 +68,11 @@ class Bluetooth(object):
 
 ########################################
 
+typeface = subprocess.check_output(
+                        "/usr/bin/xrescat i3xrocks.value.font",
+                        shell=True,
+                        universal_newlines=True
+                        )
 
 bluetooth = Bluetooth()
 fs_s = str(bluetooth.get_connected_devices())
@@ -91,7 +96,7 @@ for x in range(0, l_r):
 
 len_dname = len(d_name)
 if len_dname != 0:
-    print("  "+d_name)
+    print('<span font_desc="'+typeface+'">'+'  '+d_name+'</span>')
 
 env_button = os.environ.get('button')
 cmd_open = "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth"
