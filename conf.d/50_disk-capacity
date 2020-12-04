@@ -1,4 +1,4 @@
 # Disk Capacity
 [disk-capacity]
 interval=240
-#mnt=/home
+#MNT=/home
