@@ -97,12 +97,12 @@ for x in range(0, l_r):
         d_name += fs_s[z]
     d_name += " "
 
-pango_formatted_output="<span color=\"{valueColor}\" font_desc=\"{typeface}\">\
-<span color=\"{labelColor}\">  </span>{deviceName}</span>"
+pango_output="<span color=\"{labelColor}\">  </span>\
+<span color=\"{valueColor}\" font_desc=\"{typeface}\">{deviceName}</span>"
 
 len_dname = len(d_name)
 if len_dname != 0:
-    print(pango_formatted_output.format(
+    print(pango_output.format(
     valueColor = valueColor,
     labelColor = labelColor,
     typeface = typeface,
