@@ -77,6 +77,10 @@ labelColor = subprocess.check_output(
 valueColor = subprocess.check_output(
 "/usr/bin/xrescat i3xrocks.value.color", shell=True, universal_newlines=True)
 
+bluetoothLabel = subprocess.check_output(
+"/usr/bin/xrescat i3xrocks.label.bluetooth  ", shell=True, universal_newlines=True)
+
+
 bluetooth = Bluetooth()
 fs_s = str(bluetooth.get_connected_devices())
 no_el = int(len(bluetooth.get_connected_devices()))
@@ -97,7 +101,7 @@ for x in range(0, l_r):
         d_name += fs_s[z]
     d_name += " "
 
-pango_output="<span color=\"{labelColor}\">  </span>\
+pango_output="<span color=\"{labelColor}\">{label}  </span>\
 <span color=\"{valueColor}\" font_desc=\"{typeface}\">{deviceName}</span>"
 
 len_dname = len(d_name)
@@ -106,7 +110,8 @@ if len_dname != 0:
     valueColor = valueColor,
     labelColor = labelColor,
     typeface = typeface,
-    deviceName = d_name
+    deviceName = d_name,
+    label = bluetoothLabel
     ))
 
 env_button = os.environ.get('button')
