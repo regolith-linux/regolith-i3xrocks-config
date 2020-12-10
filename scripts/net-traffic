@@ -10,7 +10,7 @@ DLY=${DLY:-1}
 RT=${RT:-}
 
 # determine the net interface name
-IF="${BLOCK_INSTANCE:-$(ip route show default | awk '{ print $5 }')}"
+IF="${BLOCK_INSTANCE:-$(ip route show default | awk 'NR==1 { print $5 }')}"
 [ "$IF" = "" ] && exit
 
 IF_PATH="/sys/class/net/${IF}"
