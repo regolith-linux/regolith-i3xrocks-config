@@ -1,3 +1,34 @@
+regolith-i3xrocks-config (3.3.0-1) bionic; urgency=medium
+
+  [ Moritz Heiber ]
+  * Try out building packages on all platforms
+  * Changed around a few release names
+  * Let's try to do this with auth
+  * Use git-buildpackage to build the deb instead of debuild, use auth for all containers
+
+  [ Bence Ferdinandy ]
+  * reading from xresources now (#82)
+
+  [ Moritz Heiber ]
+  * Don't sign packages for now, so the pipeline actually builds
+  * Only run packaging on tag releases for now
+  * Added tests for temp script and reworked temp script routine
+  * Also run the tests on PRs
+
+  [ Gary Ritchie ]
+  * Match example with what the script is looking for (#90)
+
+  [ Moritz Heiber ]
+  * Rewrote net-traffic script, fixes #91 (#92)
+
+  [ Christopher Henderson ]
+  * Add extra location information to weather API request (#88)
+
+  [ Matthew Rossi ]
+  * set BUTTON variable (#93)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 10 Dec 2020 08:20:07 -0800
+
 regolith-i3xrocks-config (3.2.7-1) bionic; urgency=medium
 
   [ Moritz Heiber ]
