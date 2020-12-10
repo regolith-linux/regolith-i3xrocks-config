@@ -6,7 +6,7 @@ set -Eeu -o pipefail
 UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
 DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
 BUTTON=${button:-}
-DLY=${DLY:-1}
+DLY=${DLY:-5}
 RT=${RT:-}
 
 # determine the net interface name
