@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.3.1-1) bionic; urgency=medium
+
+  [ Roshak Zarhoun ]
+  * format the connected device string using pango same as other rocks (#89)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 10 Dec 2020 20:30:47 -0800
+
 regolith-i3xrocks-config (3.3.0-1) bionic; urgency=medium
 
   [ Moritz Heiber ]
