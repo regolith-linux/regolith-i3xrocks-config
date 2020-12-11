@@ -68,6 +68,18 @@ class Bluetooth(object):
 
 ########################################
 
+typeface = subprocess.check_output(
+"/usr/bin/xrescat i3xrocks.value.font", shell=True, universal_newlines=True)
+
+labelColor = subprocess.check_output(
+"/usr/bin/xrescat i3xrocks.label.color", shell=True, universal_newlines=True)
+
+valueColor = subprocess.check_output(
+"/usr/bin/xrescat i3xrocks.value.color", shell=True, universal_newlines=True)
+
+bluetoothLabel = subprocess.check_output(
+"/usr/bin/xrescat i3xrocks.label.bluetooth  ", shell=True, universal_newlines=True)
+
 
 bluetooth = Bluetooth()
 fs_s = str(bluetooth.get_connected_devices())
@@ -89,9 +101,18 @@ for x in range(0, l_r):
         d_name += fs_s[z]
     d_name += " "
 
+pango_output="<span color=\"{labelColor}\">{label}  </span>\
+<span color=\"{valueColor}\" font_desc=\"{typeface}\">{deviceName}</span>"
+
 len_dname = len(d_name)
 if len_dname != 0:
-    print("  "+d_name)
+    print(pango_output.format(
+    valueColor = valueColor,
+    labelColor = labelColor,
+    typeface = typeface,
+    deviceName = d_name,
+    label = bluetoothLabel
+    ))
 
 env_button = os.environ.get('button')
 cmd_open = "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth"
