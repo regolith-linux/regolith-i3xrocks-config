@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.3.2-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Remove next-workspace script as it's moved to it's own package: i3-next-workspace.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 12 Dec 2020 14:24:19 -0800
+
 regolith-i3xrocks-config (3.3.1-1) bionic; urgency=medium
 
   [ Roshak Zarhoun ]

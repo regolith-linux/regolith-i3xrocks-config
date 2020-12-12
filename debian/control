@@ -183,7 +183,7 @@ Architecture: any
 Depends: ${misc:Depends},
     python3 (>= 3.5),
     regolith-i3xrocks-config,
+    i3-next-workspace,
     python3-i3ipc
-Description: Button and script to open next workspace.
- An i3xrocks widget and an i3 script intended to be called by keycombo
- to open next available empty workspace.
+Description: Button to open next workspace.
+ An i3xrocks widget to open next available empty workspace.
