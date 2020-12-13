@@ -11,6 +11,5 @@ echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VAL
 echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> </span>" # short text
 
 if [ "x${BUTTON}" == "x1" ]; then
-    /usr/share/i3xrocks/next-workspace
+    /usr/bin/i3-next-workspace
 fi
-
