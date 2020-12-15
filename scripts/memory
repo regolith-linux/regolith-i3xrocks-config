@@ -19,8 +19,8 @@ VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.memory M)}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
-DISPLAY=${display:-$(xrescat i3xrocks.memory.display "free")}
 PERCENTAGE=${percentage:-$(xrescat i3xrocks.memory.percentage "false")}
+DISPLAY=${display:-$(xrescat i3xrocks.memory.display "free")}
 
 awk -v type=$TYPE -v display=$DISPLAY -v percentage=$PERCENTAGE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" -v vf="$VALUE_FONT" '
 /^MemTotal:/ {
