@@ -20,8 +20,9 @@ LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.memory M)}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 DISPLAY=${display:-$(xrescat i3xrocks.memory.display "free")}
+PERCENTAGE=${percentage:-$(xrescat i3xrocks.memory.percentage "false")}
 
-awk -v type=$TYPE -v display=$DISPLAY -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" -v vf="$VALUE_FONT" '
+awk -v type=$TYPE -v display=$DISPLAY -v percentage=$PERCENTAGE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" -v vf="$VALUE_FONT" '
 /^MemTotal:/ {
 	mem_total=$2
 }
@@ -52,13 +53,19 @@ END {
 		to_display = swap_free/1024/1024
 		if (display == "used")
 			to_display = swap_total/1024/1024 - to_display
-		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, to_display)
+		if (percentage == "true")
+			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %02d%%</span>\n", lc, li, vf, vc, 100 * to_display / (swap_total/1024/1024))
+		else
+			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, to_display)
 	}
 	else {
 		to_display = mem_free/1024/1024
 		if (display == "used")
 			to_display = mem_total/1024/1024 - to_display
-		printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, to_display)
+		if (percentage == "true")
+			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %02d%%</span>\n", lc, li, vf, vc, 100 * to_display / (mem_total/1024/1024))
+		else
+			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, to_display)
 	}
 }
 ' /proc/meminfo
