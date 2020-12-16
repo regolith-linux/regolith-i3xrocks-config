@@ -33,4 +33,4 @@ echo "${OUTPUT}" | grep -q -P '[+-]\d{1,3}°[CF].*\d{1,3}mph\<'
 
 # Test whether it reacts to button events
 OUTPUT=$(button=1 ../scripts/weather)
-echo "${OUTPUT}" | grep -q -P 'i3-msg\scalled\swith\s-q\sexec\sxdg-open\shttps:\/\/wttr.in\/.*\?format=1'
+echo "${OUTPUT}" | grep -q -P 'i3-msg\scalled\swith\s-q\sexec\sxdg-open\shttps:\/\/wttr.in\/.*'
