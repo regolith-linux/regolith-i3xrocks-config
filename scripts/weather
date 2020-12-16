@@ -1,51 +1,29 @@
 #!/bin/bash
 
-# Taken from https://gist.github.com/cdown/1163649
-urlencode() {
-    # urlencode <string>
-    old_lc_collate=$LC_COLLATE
-    LC_COLLATE=C
+set -Eeux -o pipefail
 
-    local length="${#1}"
-    for (( i = 0; i < length; i++ )); do
-        local c="${1:i:1}"
-        case $c in
-            [a-zA-Z0-9.~_-]) printf "$c" ;;
-            *) printf '%%%02X' "'$c" ;;
-        esac
-    done
-
-    LC_COLLATE=$old_lc_collate
-}
-
-LABEL_ICON=${icon:-$(xrescat i3xrocks.label.weather)}
-LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+BUTTON="${button:-}"
 
 # Information on the various formats: https://github.com/chubin/wttr.in
 VALUE_WEATHER_FORMAT=${weather_format:-$(xrescat i3xrocks.weather.format "1")}
+VALUE_WEATHER_FORMAT="?format=${VALUE_WEATHER_FORMAT}"
 
 # Determine units to use for temperature
-WEATHER_UNITS=$(xrescat i3xrocks.weather.units)
-if [ -z "$WEATHER_UNITS" ]; then
-    COUNTRY=$(locale | grep LC_TIME | head -n1 | cut -d "=" -f 2 | cut -d "_" -f 2 | cut -d "." -f 1)
-    if [ "$COUNTRY" == "US" ]; then
-        WEATHER_UNITS="f"
-    else
-        WEATHER_UNITS="m"
-    fi
+# We don't supply a default here because wttr.in is "smart" enough to choose for us
+WEATHER_UNIT=${weather_unit:-$(xrescat i3xrocks.weather.units "")}
+if [ -n "${WEATHER_UNIT}" ]; then
+    WEATHER_UNIT="&${WEATHER_UNIT}"
 fi
 
 # Defaults to IP address location
-IP_LOCATION="$(curl -s -N https://ipapi.co/yaml/ | awk 'BEGIN { FS=": " } /^country: / {country=$2} /^postal: / {gsub(/[\\^'\''|'\''$]/, "",$2) ; postal=$2} /^city: / {city=$2} /^region: / {region=$2} END { print city","region","postal","country}')"
-VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location "$IP_LOCATION")}
-ENCODED_VALUE_WEATHER_LOCATION=$(urlencode "$VALUE_WEATHER_LOCATION")
+VALUE_WEATHER_LOCATION=${weather_location:-$(xrescat i3xrocks.weather.location "")}
 VALUE_WEATHER_ERROR_MESSAGE=${error_message:-$(xrescat i3xrocks.weather.error_message "")}
-WEATHER_DATA=$(curl -sS "https://wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}?/${WEATHER_UNITS}&format=${VALUE_WEATHER_FORMAT}" || echo "${VALUE_WEATHER_ERROR_MESSAGE}")
-echo "<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER_DATA}</span>"
+WEATHER=$(curl -sS "https://wttr.in/${VALUE_WEATHER_LOCATION}${VALUE_WEATHER_FORMAT}${WEATHER_UNIT}" || echo "${VALUE_WEATHER_ERROR_MESSAGE}")
+echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER}</span>"
 
-if [ ! -z "$button" ]; then
-    ACTION=$(xrescat i3xrocks.action.weather "xdg-open https://wttr.in/${ENCODED_VALUE_WEATHER_LOCATION}")
+if [ ! "x${BUTTON}" == "x" ]; then
+    ACTION=$(xrescat i3xrocks.action.weather "xdg-open https://wttr.in/${VALUE_WEATHER_LOCATION}")
     /usr/bin/i3-msg -q exec "$ACTION"
 fi
