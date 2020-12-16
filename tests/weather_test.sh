@@ -25,7 +25,7 @@ echo "${OUTPUT}" | grep -q -P '[+-]\d{1,3}°[CF]\<'
 
 # Changing the output format works too
 OUTPUT=$(weather_format=2 ../scripts/weather)
-echo "${OUTPUT}" | grep -q -P '[+-]\d{1,3}°[CF].*\d{1,3}(m|km)\/h\<'
+echo "${OUTPUT}" | grep -q -P '[+-]\d{1,3}°[CF].*\d{1,3}(mph|km\/h)\<'
 
 # Changing the output format and the weather unit works
 OUTPUT=$(weather_unit=u weather_format=2 ../scripts/weather)

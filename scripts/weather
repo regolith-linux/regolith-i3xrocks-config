@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -Eeux -o pipefail
+set -Eeu -o pipefail
 
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
