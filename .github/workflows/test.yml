@@ -33,7 +33,7 @@ jobs:
         shell: bash
         run: |
           tests/temp_test.sh
-      - name: Run temp test
+      - name: Run weather test
         shell: bash
         run: |
           tests/weather_test.sh
