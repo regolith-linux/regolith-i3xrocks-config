@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.4.0-1) bionic; urgency=medium
+
+  [ Matthew Rossi ]
+  * Change memory rock default full text (#94)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 15 Dec 2020 21:01:38 -0800
+
 regolith-i3xrocks-config (3.3.3-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
