@@ -33,3 +33,7 @@ jobs:
         shell: bash
         run: |
           tests/temp_test.sh
+      - name: Run disk-capacity test
+        shell: bash
+        run: |
+          tests/disk-capacity_test.sh

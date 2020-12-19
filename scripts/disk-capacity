@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,11 +18,14 @@
 # Returns:
 #   The disk's available space in GB
 
+set -Eeux -o pipefail
+
 LABEL="${MNT:-/}"
-export LABEL
+BUTTON="${button:-}"
+export LABEL BUTTON
 
 get_disk_avail_gb() {
-    AVAIL_GB=$(df -hP "${LABEL}" |grep -vE '^Filesystem' | awk '{print $4}')
+    AVAIL_GB=$(df -h --output=avail "${LABEL}" | awk 'FNR == 2 {print $1}')
 }
 
 get_disk_avail_gb
@@ -35,6 +38,6 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"> $LABEL:</span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$AVAIL_GB</span>"
 
 if [ "x${BUTTON}" == "x1" ]; then
-    ACTION=$(xrescat i3xrocks.action.disk-capacity "/usr/bin/gnome-disks --class=floating_window power")
+    ACTION=$(xrescat i3xrocks.action.disk-capacity "/usr/bin/gnome-disks --class=floating_window")
     /usr/bin/i3-msg -q exec "$ACTION"
 fi
