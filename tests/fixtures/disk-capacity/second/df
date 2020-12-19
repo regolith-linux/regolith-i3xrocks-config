@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "${3}" == "/mnt" ]; then
+    echo "Avail
+ 213G"
+fi
