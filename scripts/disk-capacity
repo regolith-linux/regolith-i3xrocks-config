@@ -18,7 +18,7 @@
 # Returns:
 #   The disk's available space in GB
 
-set -Eeux -o pipefail
+set -Eeu -o pipefail
 
 LABEL="${MNT:-/}"
 BUTTON="${button:-}"
