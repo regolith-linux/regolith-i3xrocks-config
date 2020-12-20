@@ -37,3 +37,7 @@ jobs:
         shell: bash
         run: |
           tests/weather_test.sh
+      - name: Run disk-capacity test
+        shell: bash
+        run: |
+          tests/disk-capacity_test.sh

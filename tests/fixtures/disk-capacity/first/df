@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "${3}" == "/" ]; then
+    echo "Avail
+ 133G"
+fi

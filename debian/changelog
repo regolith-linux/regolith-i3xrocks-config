@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.4.1-1) bionic; urgency=medium
+
+  [ Moritz Heiber ]
+  * Fix disk-capacity button clicks, add tests (#98)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 19 Dec 2020 10:48:00 -0800
+
 regolith-i3xrocks-config (3.4.0-1) bionic; urgency=medium
 
   [ Matthew Rossi ]
