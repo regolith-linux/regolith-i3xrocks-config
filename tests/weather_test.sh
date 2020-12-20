@@ -38,4 +38,4 @@ echo "${OUTPUT}" | grep -q -P 'i3-msg\scalled\swith\s-q\sexec\sxdg-open\shttps:\
 # Test whether we can handle an unknown location properly
 PATH="$(pwd)/fixtures/weather/first:${PATH}"
 OUTPUT=$(../scripts/weather)
-echo "${OUTPUT}" | grep -q ""
+echo "${OUTPUT}" | grep -q $'\u26D4'
