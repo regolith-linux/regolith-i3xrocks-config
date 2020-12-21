@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+
+set -Eeu -o pipefail
+
+BUTTON="${button:-}"
 
 # get font and icon specifics from xresource file
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "JetBrains Mono Medium 13")}
@@ -7,7 +11,7 @@ LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.todo " ")}
 
 # format net usage output with fixed width
-COUNT="$(printf "%2d" "$(td count)")"
+COUNT="$(td count | awk '{printf "%2d", $1}')"
 
 # output net usage using pango markup
 ICON_SPAN="<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span>"
@@ -15,6 +19,6 @@ VALUE_SPAN="<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $COUNT</
 
 echo "${ICON_SPAN}${VALUE_SPAN}"
 
-if [ -n "$button" ]; then
+if [ "x${BUTTON}" == "x1" ]; then
     /usr/bin/i3-msg -q exec "/usr/bin/gnome-terminal --class=floating_window -e 'td --interactive'"
 fi

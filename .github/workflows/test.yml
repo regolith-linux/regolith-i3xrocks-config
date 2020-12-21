@@ -37,3 +37,7 @@ jobs:
         shell: bash
         run: |
           tests/disk-capacity_test.sh
+      - name: Run todo test
+        shell: bash
+        run: |
+          tests/todo_test.sh
