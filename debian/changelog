@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.4.2-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Remove todo scripts as migrated to regolith-todo package
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 22 Dec 2020 09:14:25 -0800
+
 regolith-i3xrocks-config (3.4.1-1) bionic; urgency=medium
 
   [ Moritz Heiber ]
