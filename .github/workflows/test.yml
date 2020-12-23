@@ -22,7 +22,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update -qq
-          apt install --no-install-recommends -y iproute2 bc silversearcher-ag
+          apt install --no-install-recommends -y curl ca-certificates iproute2 bc silversearcher-ag
           cp tests/xrescat_mock /usr/bin/xrescat
           cp tests/i3-msg_mock /usr/bin/i3-msg
       - name: Run net-traffic test
@@ -33,6 +33,10 @@ jobs:
         shell: bash
         run: |
           tests/temp_test.sh
+      - name: Run weather test
+        shell: bash
+        run: |
+          tests/weather_test.sh
       - name: Run disk-capacity test
         shell: bash
         run: |

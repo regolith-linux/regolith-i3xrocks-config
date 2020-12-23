@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "Unknown location; please try ~33.5965685,-117.659405"
