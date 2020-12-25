@@ -17,10 +17,8 @@ IF_PATH="/sys/class/net/${IF}"
 
 if [ -d "${IF_PATH}/wireless" ] ; then
   NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
-  INT_TYPE="W"
 else
   NIC=${label_icon:-$(xrescat i3xrocks.label.wired )}
-  INT_TYPE="C"
 fi
 
 # read dev file and compute net usage
@@ -77,13 +75,4 @@ else
   echo "$(lspan "${NIC}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}")"
 fi
 
-# Handle button event
-if [ "x${BUTTON}" == "x1" ] ; then
-  if [ "$INT_TYPE" == "W" ]; then
-    ACTION=$(xrescat i3xrocks.action.net-traffic.left "/usr/bin/gnome-control-center --class=floating_window wifi")
-    /usr/bin/i3-msg -q exec "$ACTION"
-  else
-    ACTION=$(xrescat i3xrocks.action.net-traffic.right "/usr/bin/gnome-control-center --class=floating_window network")
-    /usr/bin/i3-msg -q exec "$ACTION"
-  fi
-fi
+# net-traffic uses interval type 'repeat' so cannot use button events.
