@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.5.2-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Remove button handling code as net-traffic cannot use them w/ repeat interval type. (#100)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 26 Dec 2020 14:40:27 -0800
+
 regolith-i3xrocks-config (3.5.1-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
