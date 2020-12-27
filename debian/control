@@ -178,3 +178,12 @@ Depends: ${misc:Depends},
     python3-i3ipc
 Description: Button to open next workspace.
  An i3xrocks widget to open next available empty workspace.
+
+Package: i3xrocks-rofication
+Architecture: any
+Depends: ${misc:Depends},    
+         i3xrocks,
+         regolith-rofication,
+         regolith-i3xrocks-config
+Description: Status indicator for rofication
+ See active system notifications on the bar.
