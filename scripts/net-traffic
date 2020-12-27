@@ -5,7 +5,6 @@ set -Eeu -o pipefail
 # some default values for arguments"
 UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
 DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
-BUTTON=${button:-}
 DLY=${DLY:-5}
 RT=${RT:-}
 
@@ -15,7 +14,7 @@ IF="${BLOCK_INSTANCE:-$(ip route show default | awk 'NR==1 { print $5 }')}"
 
 IF_PATH="/sys/class/net/${IF}"
 
-if [ -d "${IF_PATH}/wireless" ] ; then
+if [ -d "${IF_PATH}/wireless" ]; then
   NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 else
   NIC=${label_icon:-$(xrescat i3xrocks.label.wired )}
@@ -37,15 +36,15 @@ TX=$(echo "${TX_DIFF}" | numfmt --to iec --format %f)
 AX=$(echo "($RX_DIFF+$TX_DIFF)" | bc | numfmt --to iec --format %f)
 
 # Add a B for bytes at the end if the string is missing a letter
-if [[ "${RX}" =~ ^[0-9]+$ ]] ; then
+if [[ "${RX}" =~ ^[0-9]+$ ]]; then
   RX="${RX}B"
 fi
 
-if [[ "${TX}" =~ ^[0-9]+$ ]] ; then
+if [[ "${TX}" =~ ^[0-9]+$ ]]; then
   TX="${TX}B"
 fi
 
-if [[ "${AX}" =~ ^[0-9]+$ ]] ; then
+if [[ "${AX}" =~ ^[0-9]+$ ]]; then
   AX="${AX}B"
 fi
 
