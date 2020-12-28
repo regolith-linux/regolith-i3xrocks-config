@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.5.4-1) bionic; urgency=medium
+
+  [ Moritz Heiber ]
+  * Add padding for net-traffic, extensive mocked tests (#101)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Mon, 28 Dec 2020 14:11:00 -0800
+
 regolith-i3xrocks-config (3.5.3-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
