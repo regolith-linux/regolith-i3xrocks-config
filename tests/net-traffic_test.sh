@@ -43,7 +43,7 @@ done
 
 sleep 5
 
-[ "2" -eq "$(ag -o '\>\s{2}1,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+[ "2" -eq "$(ag -o '\>\s{2}1[,.]0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
 
 # eth0, 1000B of RX/TX
 BYTES="1000"
@@ -87,7 +87,7 @@ done
 
 sleep 5
 
-[ "2" -eq "$(ag -o '\>\s{2}1,2M\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+[ "2" -eq "$(ag -o '\>\s{2}1[.,]2M\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
 
 # wlan0, 1KB of RX/TX
 BYTES="1024"
@@ -109,7 +109,7 @@ done
 
 sleep 5
 
-[ "2" -eq "$(ag -o '\>\s{2}1,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+[ "2" -eq "$(ag -o '\>\s{2}1[.,]0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
 grep -q $'\uf5a9' /tmp/net-traffic-${BLOCK_INSTANCE}-output
 
 # eth0, see whether we output only one direction correctly
@@ -133,7 +133,7 @@ for direction in up down; do
 
     sleep 5
 
-    [ "1" -eq "$(ag -o '\>\s{2}1,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+    [ "1" -eq "$(ag -o '\>\s{2}1[.,]0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
 done
 
 # eth0, see whether we can only report totals
@@ -156,4 +156,4 @@ done
 
 sleep 5
 
-[ "1" -eq "$(ag -o '\>\s{2}2,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+[ "1" -eq "$(ag -o '\>\s{2}2[.,]0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
