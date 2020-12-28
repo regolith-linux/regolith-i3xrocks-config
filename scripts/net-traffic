@@ -2,11 +2,17 @@
 
 set -Eeu -o pipefail
 
+# Note: net-traffic uses interval type 'repeat' so cannot use button events.
+# See https://github.com/vivien/i3blocks#interval
+
 # some default values for arguments"
 UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
 DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
 DLY=${DLY:-5}
 RT=${RT:-}
+
+# Padding the output to 5 characters to avoid jittering on the bar
+NUMFMT="numfmt --to iec --format %f --padding 5"
 
 # determine the net interface name
 IF="${BLOCK_INSTANCE:-$(ip route show default | awk 'NR==1 { print $5 }')}"
@@ -31,21 +37,21 @@ TX2=$(cat "${IF_PATH}"/statistics/tx_bytes)
 
 RX_DIFF=$(echo "($RX2-$RX1)/$DLY" | bc)
 TX_DIFF=$(echo "($TX2-$TX1)/$DLY" | bc)
-RX=$(echo "${RX_DIFF}" | numfmt --to iec --format %f)
-TX=$(echo "${TX_DIFF}" | numfmt --to iec --format %f)
-AX=$(echo "($RX_DIFF+$TX_DIFF)" | bc | numfmt --to iec --format %f)
+RX=$(echo "${RX_DIFF}" | ${NUMFMT})
+TX=$(echo "${TX_DIFF}" | ${NUMFMT})
+AX=$(echo "($RX_DIFF+$TX_DIFF)" | bc | ${NUMFMT})
 
 # Add a B for bytes at the end if the string is missing a letter
-if [[ "${RX}" =~ ^[0-9]+$ ]]; then
-  RX="${RX}B"
+if ! [[ "${RX}" =~ [BKMG]$ ]]; then
+  RX="${RX#?}B"
 fi
 
-if [[ "${TX}" =~ ^[0-9]+$ ]]; then
-  TX="${TX}B"
+if ! [[ "${TX}" =~ [BKMG]$ ]]; then
+  TX="${TX#?}B"
 fi
 
-if [[ "${AX}" =~ ^[0-9]+$ ]]; then
-  AX="${AX}B"
+if ! [[ "${AX}" =~ [BKMG]$ ]]; then
+  AX="${AX#?}B"
 fi
 
 # span for text
@@ -73,5 +79,3 @@ elif [ "$RT" = "total" ]; then
 else
   echo "$(lspan "${NIC}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}")"
 fi
-
-# net-traffic uses interval type 'repeat' so cannot use button events.

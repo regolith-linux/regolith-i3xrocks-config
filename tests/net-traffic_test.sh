@@ -5,16 +5,155 @@ set -Eeux -o pipefail
 SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 cd "${SCRIPT_DIR}/"
 
-# Regular syntax
-[ "2" -eq "$(../scripts/net-traffic | ag -o '(?<=\>\s)(\d{1,4}|\d{1,3},?\d{0,1}?)[GMKB](?=\<)' | wc -l)" ]
+SYS_PREFIX="/sys/class/net"
+declare -a NET_DIRS=(
+    "${SYS_PREFIX}/eth0/statistics"
+    "${SYS_PREFIX}/wlan0/statistics"
+    "${SYS_PREFIX}/wlan0/wireless"
+)
 
-# up, down, total as RT
-for summary in up down total ; do
-    [ "1" -eq "$(RT=${summary} ../scripts/net-traffic | ag -o '(?<=\>\s)(\d{1,4}|\d{1,3},?\d{0,1}?)[GMKB](?=\<)' | wc -l)" ]
+UMOCKDEV_DIR="${UMOCKDEV_DIR:-}"
+
+[[ -d "${UMOCKDEV_DIR}" ]] || {
+    echo "Not running inside umockdev environment!"
+    exit 1
+}
+
+for dir in "${NET_DIRS[@]}"; do
+    install -d "${UMOCKDEV_DIR}/${dir}"
 done
 
-# Test the two button inputs
-button=1
-export button
+# eth0, 1KB of RX/TX
+BYTES="1024"
+BLOCK_INSTANCE="eth0"
+export BLOCK_INSTANCE
 
-../scripts/net-traffic
+for b in rx tx; do
+    echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+../scripts/net-traffic >"/tmp/net-traffic-${BLOCK_INSTANCE}-output" &
+
+sleep 1
+
+for b in rx tx; do
+    # Need to multiple by 6 here in order to get exactly 1KB of traffic
+    echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+sleep 5
+
+[ "2" -eq "$(ag -o '\>\s{2}1,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+
+# eth0, 1000B of RX/TX
+BYTES="1000"
+BLOCK_INSTANCE="eth0"
+export BLOCK_INSTANCE
+
+for b in rx tx; do
+    echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+../scripts/net-traffic >"/tmp/net-traffic-${BLOCK_INSTANCE}-output" &
+
+sleep 1
+
+for b in rx tx; do
+    # Need to multiple by 6 here in order to get exactly 1KB of traffic
+    echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+sleep 5
+
+[ "2" -eq "$(ag -o '\>\s1000B\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+
+# eth0, see whether we measure M correctly in RX/TX
+BYTES="1024"
+BLOCK_INSTANCE="eth0"
+export BLOCK_INSTANCE
+
+for b in rx tx; do
+    echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+../scripts/net-traffic >"/tmp/net-traffic-${BLOCK_INSTANCE}-output" &
+
+sleep 1
+
+for b in rx tx; do
+    # Need to multiple by 6 here in order to get exactly 1KB of traffic
+    echo "${BYTES}*1024*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+sleep 5
+
+[ "2" -eq "$(ag -o '\>\s{2}1,2M\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+
+# wlan0, 1KB of RX/TX
+BYTES="1024"
+BLOCK_INSTANCE="wlan0"
+export BLOCK_INSTANCE
+
+for b in rx tx; do
+    echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+../scripts/net-traffic >"/tmp/net-traffic-${BLOCK_INSTANCE}-output" &
+
+sleep 1
+
+for b in rx tx; do
+    # Need to multiple by 6 here in order to get exactly 1KB of traffic
+    echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+sleep 5
+
+[ "2" -eq "$(ag -o '\>\s{2}1,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+grep -q $'\uf5a9' /tmp/net-traffic-${BLOCK_INSTANCE}-output
+
+# eth0, see whether we output only one direction correctly
+for direction in up down; do
+    BYTES="1024"
+    BLOCK_INSTANCE="eth0"
+    export BLOCK_INSTANCE
+
+    for b in rx tx; do
+        echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+    done
+
+    RT="${direction}" ../scripts/net-traffic >"/tmp/net-traffic-${BLOCK_INSTANCE}-output" &
+
+    sleep 1
+
+    for b in rx tx; do
+        # Need to multiple by 6 here in order to get exactly 1KB of traffic
+        echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+    done
+
+    sleep 5
+
+    [ "1" -eq "$(ag -o '\>\s{2}1,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+done
+
+# eth0, see whether we can only report totals
+BYTES="1024"
+BLOCK_INSTANCE="eth0"
+export BLOCK_INSTANCE
+
+for b in rx tx; do
+    echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+RT="total" ../scripts/net-traffic >"/tmp/net-traffic-${BLOCK_INSTANCE}-output" &
+
+sleep 1
+
+for b in rx tx; do
+    # Need to multiple by 6 here in order to get exactly 1KB of traffic
+    echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/${BLOCK_INSTANCE}/statistics/${b}_bytes"
+done
+
+sleep 5
+
+[ "1" -eq "$(ag -o '\>\s{2}2,0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]

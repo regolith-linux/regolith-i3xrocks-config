@@ -13,7 +13,6 @@ jobs:
   test:
     container: ubuntu:focal
     runs-on: ubuntu-latest
-    # if: "!contains(github.event.commits[0].message, '[ci skip]')"
     steps:
       - uses: actions/checkout@v2
       - name: Prepare test environment
@@ -22,13 +21,13 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update -qq
-          apt install --no-install-recommends -y curl ca-certificates iproute2 bc silversearcher-ag
+          apt install --no-install-recommends -y curl ca-certificates iproute2 bc silversearcher-ag umockdev
           cp tests/xrescat_mock /usr/bin/xrescat
           cp tests/i3-msg_mock /usr/bin/i3-msg
       - name: Run net-traffic test
         shell: bash
         run: |
-          tests/net-traffic_test.sh
+          umockdev-run -- tests/net-traffic_test.sh
       - name: Run temp test
         shell: bash
         run: |
