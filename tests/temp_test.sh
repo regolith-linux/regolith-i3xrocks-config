@@ -8,7 +8,7 @@ SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 cd "${SCRIPT_DIR}"
 
 declare -a FIXTURES
-FIXTURES=( "first" "second" )
+FIXTURES=( "first" "second" "third" )
 
 for fixture in "${FIXTURES[@]}"
 do

@@ -13,6 +13,11 @@ jobs:
   test:
     container: ubuntu:focal
     runs-on: ubuntu-latest
+    # We are running these tests for both awk variants
+    # See https://github.com/regolith-linux/regolith-i3xrocks-config/issues/107
+    strategy:
+      matrix:
+        awk: ["gawk", "mawk"]
     steps:
       - uses: actions/checkout@v2
       - name: Prepare test environment
@@ -21,7 +26,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           apt update -qq
-          apt install --no-install-recommends -y curl ca-certificates iproute2 bc silversearcher-ag umockdev
+          apt install --no-install-recommends -y curl ca-certificates iproute2 bc silversearcher-ag umockdev ${{ matrix.awk }}
           cp tests/xrescat_mock /usr/bin/xrescat
           cp tests/i3-msg_mock /usr/bin/i3-msg
       - name: Run net-traffic test
