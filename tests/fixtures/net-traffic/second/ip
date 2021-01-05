@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "default dev ppp0 proto static scope link metric 50 
+default via 192.168.0.1 dev eth0 proto dhcp metric 600"

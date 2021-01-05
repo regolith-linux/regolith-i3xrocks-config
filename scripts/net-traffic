@@ -15,7 +15,7 @@ RT=${RT:-}
 NUMFMT="numfmt --to iec --format %f --padding 5"
 
 # determine the net interface name
-IF="${BLOCK_INSTANCE:-$(ip route show default | awk 'NR==1 { print $5 }')}"
+IF="${BLOCK_INSTANCE:-$(ip route show default | awk '!/(ppp|tun|tap)/ { print $5 }')}"
 [ "$IF" = "" ] && exit
 
 IF_PATH="/sys/class/net/${IF}"
