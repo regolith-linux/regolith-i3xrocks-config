@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -Eeu -o pipefail
+
+echo "ucsi_source_psy_USBC000:001-isa-0000
+Adapter: ISA adapter
+in0:           5.00 V  (min =  +5.00 V, max =  +5.00 V)
+curr1:         0.00 A  (max =  +0.00 A)
+
+iwlwifi_1-virtual-0
+Adapter: Virtual device
+temp1:        +29.0°C
+
+pch_skylake-virtual-0
+Adapter: Virtual device
+temp1:        +38.0°C
+
+BAT0-acpi-0
+Adapter: ACPI interface
+in0:           8.40 V
+curr1:       805.00 mA
+
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +40.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 0:        +40.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 1:        +40.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 2:        +40.0°C  (high = +100.0°C, crit = +100.0°C)
+Core 3:        +40.0°C  (high = +100.0°C, crit = +100.0°C)
+
+dell_smm-virtual-0
+Adapter: Virtual device
+fan1:           0 RPM
+
+nvme-pci-3c00
+Adapter: PCI adapter
+Composite:    +28.9°C  (low  = -273.1°C, high = +80.8°C)
+                       (crit = +81.8°C)
+Sensor 1:     +28.9°C  (low  = -273.1°C, high = +65261.8°C)
+Sensor 2:     +30.9°C  (low  = -273.1°C, high = +65261.8°C)
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +25.0°C  (crit = +107.0°C)
+"
