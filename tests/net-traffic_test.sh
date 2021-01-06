@@ -157,3 +157,29 @@ done
 sleep 5
 
 [ "1" -eq "$(ag -o '\>\s{2}2[.,]0K\<' /tmp/net-traffic-${BLOCK_INSTANCE}-output | wc -l)" ]
+
+# eth0, see whether we select the right interface, traffic is irrelevant
+# We shouldn't hard-code the device because it is supposed get this back from the ip mock
+unset BLOCK_INSTANCE
+BYTES="1024"
+
+for mock in "first" "second"; do
+    PATH="${PWD}/fixtures/net-traffic/${mock}:${PATH}"
+    export PATH
+
+    for b in rx tx; do
+        echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/eth0/statistics/${b}_bytes"
+    done
+
+    ../scripts/net-traffic >"/tmp/net-traffic-eth0-output" &
+
+    sleep 1
+
+    for b in rx tx; do
+        echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/eth0/statistics/${b}_bytes"
+    done
+
+    sleep 5
+
+    [ "2" -eq "$(ag -o '\>\s{2}1[.,]0K\<' /tmp/net-traffic-eth0-output | wc -l)" ]
+done
