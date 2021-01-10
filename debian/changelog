@@ -1,14 +1,3 @@
-regolith-i3xrocks-config (3.5.5-1ubuntu1) bionic; urgency=medium
-
-  [ Moritz Heiber ]
-  * Added gawk specific testing for temp script (#108)
-  * Filter all interfaces associated with VPN traffic while determining default route (#110)
-
-  [ Ken Gilmer ]
-  * Capture error cases involving invalid network device paths and sleep before returning to resolve CPU consuming loop due to  interval type of i3blocks.  Addresses https://github.com/regolith-linux/regolith-desktop/issues/532.
-
- -- Regolith Linux <regolith.linux@gmail.com>  Sun, 10 Jan 2021 11:25:46 -0800
-
 regolith-i3xrocks-config (3.5.4-1) bionic; urgency=medium
 
   [ Moritz Heiber ]

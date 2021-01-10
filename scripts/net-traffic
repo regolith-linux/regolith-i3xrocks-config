@@ -2,7 +2,6 @@
 
 set -Eeu -o pipefail
 
-set -x
 # Note: net-traffic uses interval type 'repeat' so cannot use button events.
 # See https://github.com/vivien/i3blocks#interval
 
@@ -10,7 +9,6 @@ set -x
 UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
 DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
 DLY=${DLY:-5}
-ERROR_DLY=${ERROR_DLY:-10}
 RT=${RT:-}
 
 # Padding the output to 5 characters to avoid jittering on the bar
@@ -18,13 +16,9 @@ NUMFMT="numfmt --to iec --format %f --padding 5"
 
 # determine the net interface name
 IF="${BLOCK_INSTANCE:-$(ip route show default | awk '!/(ppp|tun|tap)/ { print $5 }')}"
+[ "$IF" = "" ] && exit
 
 IF_PATH="/sys/class/net/${IF}"
-
-if [[ "$IF" == "" || ! -d "$IF_PATH" || ! -f "${IF_PATH}"/statistics/rx_bytes || ! -f "${IF_PATH}"/statistics/tx_bytes ]]; then 
-  sleep "${ERROR_DLY}"
-  exit 1
-fi
 
 if [ -d "${IF_PATH}/wireless" ]; then
   NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
