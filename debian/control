@@ -46,7 +46,9 @@ Description: Indicator launch Remontoire.
 Package: i3xrocks-net-traffic
 Architecture: any
 Depends: ${misc:Depends},
-    regolith-i3xrocks-config,
+    bc,    
+    regolith-i3xrocks-config
+Recommends:
     gnome-control-center
 Description: Indicator to show network I/O status.
  An i3xrocks indicator to show network I/O status.

@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.5.6-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Add bc as dependency to net-traffic script.  Addresses https://github.com/regolith-linux/regolith-desktop/issues/533.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Mon, 11 Jan 2021 07:48:42 -0800
+
 regolith-i3xrocks-config (3.5.5-1ubuntu1) bionic; urgency=medium
 
   [ Moritz Heiber ]
