@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.5.6-1ubuntu1) UNRELEASED; urgency=medium
+
+  [ Ken Gilmer ]
+  * Vend Xresource file
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 17 Jan 2021 09:10:40 -0800
+
 regolith-i3xrocks-config (3.5.6-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
