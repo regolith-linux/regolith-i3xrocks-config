@@ -2,7 +2,6 @@
 
 set -Eeu -o pipefail
 
-set -x
 # Note: net-traffic uses interval type 'repeat' so cannot use button events.
 # See https://github.com/vivien/i3blocks#interval
 

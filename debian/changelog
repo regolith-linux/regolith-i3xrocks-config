@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.5.7-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * remove debugging output flag in net-traffic script
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 19 Jan 2021 09:01:20 -0800
+
 regolith-i3xrocks-config (3.5.6-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
