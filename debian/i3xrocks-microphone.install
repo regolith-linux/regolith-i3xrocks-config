@@ -1,0 +1,2 @@
+scripts/microphone /usr/share/i3xrocks
+conf.d/80_microphone /etc/regolith/i3xrocks/conf.d

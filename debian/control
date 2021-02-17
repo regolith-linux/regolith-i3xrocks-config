@@ -143,6 +143,14 @@ Depends: ${misc:Depends},
 Description: Indicator to show volume.
  An i3xrocks indicator for showing the current sound volume.
 
+ Package: i3xrocks-microphone
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    alsa-utils
+Description: Indicator to show microphone level.
+ An i3xrocks indicator for showing the current microphone level.
+
 Package: i3xrocks-weather
 Architecture: any
 Depends: ${misc:Depends},
