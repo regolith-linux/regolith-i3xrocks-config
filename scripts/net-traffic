@@ -19,10 +19,10 @@ NUMFMT="numfmt --to iec --format %f --padding 5"
 # XXX: DO NOT NAME THE ARRAY "IFS" -- you have been warned!
 
 # Original behavior: use the following to include only routable intefaces:
-# declare -a IFACES="${BLOCK_INSTANCE:-$(ip route show default | awk '!/(ppp|tun|tap)/ { print $5 }')}"
+declare -a IFACES="${BLOCK_INSTANCE:-$(ip route show default | awk '!/(ppp|tun|tap)/ { print $5 }')}"
 
 # Use the following to show all intefaces:
-declare -a IFACES="${BLOCK_INSTANCE:-$(ip -br link | cut -d\  -f1)}"
+# declare -a IFACES="${BLOCK_INSTANCE:-$(ip -br link | cut -d\  -f1)}"
 
 # Associative arrays to keep track of properties for each network interface
 declare -A IF_PATH NIC RX1 TX1 RX2 TX2
@@ -103,8 +103,9 @@ for IF in ${IFACES[@]}; do
     echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$AX")"
   else
     # I prefer seeing the ifname in the output; the original line is commented out below
-    echo -n "$(lspan "${NIC[${IF}]}${IF}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}  ")"
-    # echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}  ")"
+    # echo -n "$(lspan "${NIC[${IF}]}${IF}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}  ")"
+    # Original behavior:
+    echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}  ")"
   fi
 done
 
