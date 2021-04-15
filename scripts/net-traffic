@@ -5,7 +5,7 @@ set -Eeu -o pipefail
 # Note: net-traffic uses interval type 'repeat' so cannot use button events.
 # See https://github.com/vivien/i3blocks#interval
 
-# some default values for arguments"
+# Some default values for arguments:
 UP=${label_icon:-$(xrescat i3xrocks.label.up " up")}
 DN=${label_icon:-$(xrescat i3xrocks.label.dn " dn")}
 DLY=${DLY:-5}
@@ -15,72 +15,98 @@ RT=${RT:-}
 # Padding the output to 5 characters to avoid jittering on the bar
 NUMFMT="numfmt --to iec --format %f --padding 5"
 
-# determine the net interface name
-IF="${BLOCK_INSTANCE:-$(ip route show default | awk '!/(ppp|tun|tap)/ { print $5 }')}"
+# Determine the ifname(s) and store in an (indexed) array, "IFACES"
+# XXX: DO NOT NAME THE ARRAY "IFS" -- you have been warned!
 
-IF_PATH="/sys/class/net/${IF}"
+# Original behavior: use the following to include only routable intefaces:
+# declare -a IFACES="${BLOCK_INSTANCE:-$(ip route show default | awk '!/(ppp|tun|tap)/ { print $5 }')}"
 
-if [[ "$IF" == "" || ! -d "$IF_PATH" || ! -f "${IF_PATH}"/statistics/rx_bytes || ! -f "${IF_PATH}"/statistics/tx_bytes ]]; then 
-  sleep "${ERROR_DLY}"
-  exit 1
-fi
+# Use the following to show all intefaces:
+declare -a IFACES="${BLOCK_INSTANCE:-$(ip -br link | cut -d\  -f1)}"
 
-if [ -d "${IF_PATH}/wireless" ]; then
-  NIC=${label_icon:-$(xrescat i3xrocks.label.wifi )}
-else
-  NIC=${label_icon:-$(xrescat i3xrocks.label.wired )}
-fi
+# Associative arrays to keep track of properties for each network interface
+declare -A IF_PATH NIC RX1 TX1 RX2 TX2
 
-# read dev file and compute net usage
-RX1=$(cat "${IF_PATH}"/statistics/rx_bytes)
-TX1=$(cat "${IF_PATH}"/statistics/tx_bytes)
+for IF in ${IFACES[@]}; do
+  IF_PATH["${IF}"]="/sys/class/net/${IF}"
+
+  if [[ "${IF}" == "" || 
+    ! -d "${IF_PATH[${IF}]}" || 
+    ! -f "${IF_PATH[${IF}]}"/statistics/rx_bytes || 
+    ! -f "${IF_PATH[${IF}]}"/statistics/tx_bytes ]]; 
+  then 
+    sleep "${ERROR_DLY}"
+    exit 1
+  fi
+
+  if [ -d "${IF_PATH[${IF}]}/wireless" ]; 
+  then
+    NIC["${IF}"]=${label_icon:-$(xrescat i3xrocks.label.wifi )}
+  else
+    NIC["${IF}"]=${label_icon:-$(xrescat i3xrocks.label.wired )}
+  fi
+
+  # read dev file and compute net usage
+  RX1["${IF}"]=$(cat "${IF_PATH[${IF}]}"/statistics/rx_bytes)
+  TX1["${IF}"]=$(cat "${IF_PATH[${IF}]}"/statistics/tx_bytes)
+done 
 
 sleep "${DLY}"
 
-RX2=$(cat "${IF_PATH}"/statistics/rx_bytes)
-TX2=$(cat "${IF_PATH}"/statistics/tx_bytes)
+for IF in ${IFACES[@]}; do
+  RX2["${IF}"]=$(cat "${IF_PATH[${IF}]}"/statistics/rx_bytes)
+  TX2["${IF}"]=$(cat "${IF_PATH[${IF}]}"/statistics/tx_bytes)
 
-RX_DIFF=$(echo "($RX2-$RX1)/$DLY" | bc)
-TX_DIFF=$(echo "($TX2-$TX1)/$DLY" | bc)
-RX=$(echo "${RX_DIFF}" | ${NUMFMT})
-TX=$(echo "${TX_DIFF}" | ${NUMFMT})
-AX=$(echo "($RX_DIFF+$TX_DIFF)" | bc | ${NUMFMT})
+  RX_DIFF=$(echo "(${RX2[${IF}]}-${RX1[${IF}]})/$DLY" | bc)
+  TX_DIFF=$(echo "(${TX2[${IF}]}-${TX1[${IF}]})/$DLY" | bc)
 
-# Add a B for bytes at the end if the string is missing a letter
-if ! [[ "${RX}" =~ [BKMG]$ ]]; then
-  RX="${RX#?}B"
-fi
+  RX=$(echo "${RX_DIFF}" | ${NUMFMT})
+  TX=$(echo "${TX_DIFF}" | ${NUMFMT})
+  AX=$(echo "(${RX_DIFF}+${TX_DIFF})" | bc | ${NUMFMT})
 
-if ! [[ "${TX}" =~ [BKMG]$ ]]; then
-  TX="${TX#?}B"
-fi
+  # Add a B for bytes at the end if the string is missing a letter
+  if ! [[ "${RX}" =~ [BKMG]$ ]]; then
+    RX="${RX#?}B"
+  fi
 
-if ! [[ "${AX}" =~ [BKMG]$ ]]; then
-  AX="${AX#?}B"
-fi
+  if ! [[ "${TX}" =~ [BKMG]$ ]]; then
+    TX="${TX#?}B"
+  fi
 
-# span for text
-fspan() {
-  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
-}
+  if ! [[ "${AX}" =~ [BKMG]$ ]]; then
+    AX="${AX#?}B"
+  fi
 
-# span for label/icon
-lspan() {
-  echo "<span color=\"${LABEL_COLOR}\">${1}</span>"
-}
+  # span for text
+  fspan() {
+    echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> ${1}</span>"
+  }
 
-# get font specifics from xresource file
-VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
-LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+  # span for label/icon
+  lspan() {
+    echo "<span color=\"${LABEL_COLOR}\">${1}</span>"
+  }
 
-# output net usage using pango markup
-if [ "$RT" = "up" ]; then
-  echo "$(lspan "${NIC}")$(fspan "$TX")$(lspan "${UP}")"
-elif [ "$RT" = "down" ] || [ "$RT" = "dn" ]; then
-  echo "$(lspan "${NIC}")$(fspan "$RX")$(lspan "${DN}")"
-elif [ "$RT" = "total" ]; then
-  echo "$(lspan "${NIC}")$(fspan "$AX")"
-else
-  echo "$(lspan "${NIC}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}")"
-fi
+  # get font specifics from xresource file
+  VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+  LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+  VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+
+  # output net usage using pango markup
+  # Use 'echo -n' to defer printing a newline in case we are report-
+  # ing on multiple interfaces. Any output after a newline is lost.
+  if [ "$RT" = "up" ]; then
+    echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$TX")$(lspan "${UP}")"
+  elif [ "$RT" = "down" ] || [ "$RT" = "dn" ]; then
+    echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$RX")$(lspan "${DN}")"
+  elif [ "$RT" = "total" ]; then
+    echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$AX")"
+  else
+    # I prefer seeing the ifname in the output; the original line is commented out below
+    echo -n "$(lspan "${NIC[${IF}]}${IF}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}  ")"
+    # echo -n "$(lspan "${NIC[${IF}]}")$(fspan "$RX")$(lspan "${DN}")$(fspan "$TX")$(lspan "${UP}  ")"
+  fi
+done
+
+# finally, trigger the output
+echo
