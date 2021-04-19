@@ -143,7 +143,7 @@ Depends: ${misc:Depends},
 Description: Indicator to show volume.
  An i3xrocks indicator for showing the current sound volume.
 
- Package: i3xrocks-microphone
+Package: i3xrocks-microphone
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
