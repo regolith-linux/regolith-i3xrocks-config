@@ -197,3 +197,11 @@ Depends: ${misc:Depends},
          regolith-i3xrocks-config
 Description: Status indicator for rofication
  See active system notifications on the bar.
+
+Package: i3xrocks-app-launcher
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    rofi
+Description: Button to open app launcher.
+ An i3xrocks widget to open app launcher dialog.

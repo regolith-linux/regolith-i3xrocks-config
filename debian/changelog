@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (3.6.1-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Take nicolas-lopez's contribution via gist as microphone status indicator.  Related to https://github.com/regolith-linux/regolith-i3xrocks-config/issues/105.
+  * Add app launcher status indicator
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 18 Apr 2021 18:14:46 -0700
+
 regolith-i3xrocks-config (3.5.7-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
