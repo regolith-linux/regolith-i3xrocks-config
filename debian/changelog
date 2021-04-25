@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (3.6.2-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Fix control file
+  * Fix config for app-launcher, remove incorrect interval on next-workspace
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 24 Apr 2021 22:03:44 -0700
+
 regolith-i3xrocks-config (3.6.1-1) bionic; urgency=medium
 
   [ Ken Gilmer ]

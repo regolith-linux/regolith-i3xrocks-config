@@ -1,5 +1,5 @@
 # next workspace
 #
 # Open next available workspace
-[next-workspace-widget]
-interval=60
+[app-launcher]
+interval=once
