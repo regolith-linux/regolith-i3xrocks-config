@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.6.3-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Add missing dependency to net-traffic script on iproute2
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 28 Apr 2021 21:26:39 -0700
+
 regolith-i3xrocks-config (3.6.2-1) bionic; urgency=medium
 
   [ Ken Gilmer ]

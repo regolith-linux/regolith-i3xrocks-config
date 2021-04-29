@@ -47,7 +47,8 @@ Package: i3xrocks-net-traffic
 Architecture: any
 Depends: ${misc:Depends},
     bc,    
-    regolith-i3xrocks-config
+    regolith-i3xrocks-config,
+    iproute2
 Recommends:
     gnome-control-center
 Description: Indicator to show network I/O status.
