@@ -24,10 +24,10 @@
 
 # The first parameter sets the step to change the volume by (and units to display)
 # This may be in in % or dB (eg. 5% or 3dB)
-STEP="${1:-$(xrescat i3xrocks.mic.volume.step 5)}"
+STEP="${1:-$(xrescat i3xrocks.mic.step 5)}"
 
 # The second parameter sets the unit. It can be '%' or 'dB' only.
-UNIT="${2:-$(xrescat i3xrocks.mic.volume.unit %)}"
+UNIT="${2:-$(xrescat i3xrocks.mic.unit %)}"
 
 # The third parameter overrides the mixer selection
 # For PulseAudio users, use "pulse"
@@ -37,7 +37,7 @@ UNIT="${2:-$(xrescat i3xrocks.mic.volume.unit %)}"
 MIXER="default"
 pactl list 1>/dev/null && MIXER="pulse"
 lsmod | grep -q jack && MIXER="jackplug"
-MIXER="${3:-$(xrescat i3xrocks.mic.volume.mixer $MIXER)}"
+MIXER="${3:-$(xrescat i3xrocks.mic.mixer $MIXER)}"
 
 # The instance option sets the control to report and configure
 # This defaults to the first control of your selected mixer
@@ -72,11 +72,11 @@ mixer_value() {
     fi
 }
 
-ACTION_1=$(xrescat i3xrocks.action.mic.volume.left "true")
-ACTION_2=$(xrescat i3xrocks.action.mic.volume.middle "true")
-ACTION_3=$(xrescat i3xrocks.action.mic.volume.right "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle")
-ACTION_4=$(xrescat i3xrocks.action.mic.volume.scrollup "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+")
-ACTION_5=$(xrescat i3xrocks.action.mic.volume.scrolldn "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-")
+ACTION_1=$(xrescat i3xrocks.action.mic.left "true")
+ACTION_2=$(xrescat i3xrocks.action.mic.middle "true")
+ACTION_3=$(xrescat i3xrocks.action.mic.right "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle")
+ACTION_4=$(xrescat i3xrocks.action.mic.scrollup "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+")
+ACTION_5=$(xrescat i3xrocks.action.mic.scrolldn "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-")
 case $BLOCK_BUTTON in
     1) eval $ACTION_1 ;;
     2) eval $ACTION_2 ;;

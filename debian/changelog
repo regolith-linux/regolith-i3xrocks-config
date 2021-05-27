@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.6.4-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Remove invalid Xresource key segment from microphone block
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 27 May 2021 16:41:36 -0700
+
 regolith-i3xrocks-config (3.6.3-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
