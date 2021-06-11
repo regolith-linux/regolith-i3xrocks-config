@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.6.5-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Pass units to launch action. Addresses https://github.com/regolith-linux/regolith-i3xrocks-config/issues/120.
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 10 Jun 2021 21:49:22 -0700
+
 regolith-i3xrocks-config (3.6.4-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
