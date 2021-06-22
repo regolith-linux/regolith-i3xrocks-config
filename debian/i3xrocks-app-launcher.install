@@ -1,0 +1,2 @@
+scripts/app-launcher /usr/share/i3xrocks
+conf.d/10_app-launcher /etc/regolith/i3xrocks/conf.d
