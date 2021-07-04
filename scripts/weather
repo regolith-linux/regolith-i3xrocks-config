@@ -12,6 +12,7 @@ VALUE_WEATHER_FORMAT="?format=${VALUE_WEATHER_FORMAT}"
 
 # Determine units to use for temperature
 # We don't supply a default here because wttr.in is "smart" enough to choose for us
+ACTION_WEATHER_UNIT=""
 WEATHER_UNIT=${weather_unit:-$(xrescat i3xrocks.weather.units "")}
 if [ -n "${WEATHER_UNIT}" ]; then
     ACTION_WEATHER_UNIT="?${WEATHER_UNIT}"
