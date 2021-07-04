@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (3.6.6-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Fix microphone block config, was a copy from volume w/out change
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 04 Jul 2021 08:02:40 -0700
+
 regolith-i3xrocks-config (3.6.5-1) bionic; urgency=medium
 
   [ Ken Gilmer ]

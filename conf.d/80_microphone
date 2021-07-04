@@ -1,5 +1,5 @@
-# volume
+# microphone
 #
-# Display Volume
-[volume]
+# Display Microphone Level and Status
+[microphone]
 interval=5
