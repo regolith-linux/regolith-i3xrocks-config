@@ -12,8 +12,10 @@ VALUE_WEATHER_FORMAT="?format=${VALUE_WEATHER_FORMAT}"
 
 # Determine units to use for temperature
 # We don't supply a default here because wttr.in is "smart" enough to choose for us
+ACTION_WEATHER_UNIT=""
 WEATHER_UNIT=${weather_unit:-$(xrescat i3xrocks.weather.units "")}
 if [ -n "${WEATHER_UNIT}" ]; then
+    ACTION_WEATHER_UNIT="?${WEATHER_UNIT}"
     WEATHER_UNIT="&${WEATHER_UNIT}"
 fi
 
@@ -29,6 +31,6 @@ fi
 echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER}</span>"
 
 if [ ! "x${BUTTON}" == "x" ]; then
-    ACTION=$(xrescat i3xrocks.action.weather "xdg-open https://wttr.in/${VALUE_WEATHER_LOCATION}")
+    ACTION=$(xrescat i3xrocks.action.weather "xdg-open https://wttr.in/${VALUE_WEATHER_LOCATION}${ACTION_WEATHER_UNIT}")
     /usr/bin/i3-msg -q exec "$ACTION"
 fi
