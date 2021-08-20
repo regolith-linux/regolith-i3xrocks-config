@@ -2,7 +2,7 @@ name: pkg-change-broadcast
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, i3cp ]
   workflow_dispatch:
 
 jobs:
