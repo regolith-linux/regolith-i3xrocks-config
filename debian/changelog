@@ -1,3 +1,16 @@
+regolith-i3xrocks-config (4.0.1-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Merge latest from Regolith 1.6
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 19 Aug 2021 20:25:58 -0700
+
+regolith-i3xrocks-config (4.0.0-1) bionic; urgency=medium
+
+  [ Ken Gilmer ]
+  * Vend Xresource file
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 17 Jan 2021 09:10:40 -0800
 regolith-i3xrocks-config (3.6.6-1) bionic; urgency=medium
 
   [ Ken Gilmer ]
