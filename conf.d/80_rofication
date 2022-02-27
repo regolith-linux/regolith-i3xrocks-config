@@ -1,6 +1,5 @@
 # Rofication
 #
-# Displays notifications.
+# Displays notification count
 [rofication]
-command=rofication-status
 interval=10

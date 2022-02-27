@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (4.0.2) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Deprecate python rofication status block for shell script. Launch ilia on click by default
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 27 Feb 2022 08:32:33 -0800
+
 regolith-i3xrocks-config (4.0.1-1) bionic; urgency=medium
 
   [ Ken Gilmer ]

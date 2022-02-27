@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Get unread notifications from rofication
+#
+# Returns:
+#   The count of unread notifications
+
+set -Eeu -o pipefail
+
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "JetBrains Mono Medium 13")}
+
+BUTTON="${button:-}"
+export LABEL BUTTON
+
+get_info() {
+    response=$(echo "num" | nc -U /tmp/rofi_notification_daemon)
+    NOTIFICATION_COUNT=$(echo $response | cut -d, -f1)
+    CRIT_NOTIFICATION_COUNT=$(echo $response | cut -d, -f2)
+}
+
+get_info
+
+if [ $CRIT_NOTIFICATION_COUNT -gt 0 ]; then 
+    VALUE_COLOR=${color:-$(xrescat i3xrocks.critical.color "#D8DEE9")}
+    LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.notify.some N)}
+    NOTIFICATION_LABEL="$CRIT_NOTIFICATION_COUNT/$NOTIFICATION_COUNT"
+elif [ $NOTIFICATION_COUNT -gt 0 ]; then
+    VALUE_COLOR=${color:-$(xrescat i3xrocks.warning "#D8DEE9")}
+    LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.notify.some N)}
+    NOTIFICATION_LABEL="$NOTIFICATION_COUNT"
+else
+    VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+    LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.notify.none N)}
+    NOTIFICATION_LABEL="0"
+fi
+
+
+echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"></span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$NOTIFICATION_LABEL</span>"
+
+if [ "x${BUTTON}" == "x1" ]; then
+    ACTION=$(xrescat i3xrocks.action.rofication "--no-startup-id ilia -p notifications")
+    /usr/bin/i3-msg -q exec "$ACTION"
+fi
