@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (4.0.4) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Fix automation
+  * Add missing dep on rofication block
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 05 Mar 2022 07:35:27 -0800
+
 regolith-i3xrocks-config (4.0.3) focal; urgency=medium
 
   [ Ken Gilmer ]

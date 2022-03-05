@@ -194,6 +194,7 @@ Package: i3xrocks-rofication
 Architecture: any
 Depends: ${misc:Depends},    
          i3xrocks,
+         netcat,
          regolith-rofication,
          regolith-i3xrocks-config
 Description: Status indicator for rofication
