@@ -20,7 +20,7 @@ Package: i3xrocks-time
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
-    gnome-control-center
+    regolith-control-center
 Description: Indicator to show date and time.
  An i3xrocks indicator to show date and time.
 
@@ -50,7 +50,7 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     iproute2
 Recommends:
-    gnome-control-center
+    regolith-control-center
 Description: Indicator to show network I/O status.
  An i3xrocks indicator to show network I/O status.
 

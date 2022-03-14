@@ -65,6 +65,6 @@ CHARGE_SPAN="<span color=\"${LABEL_COLOR}\">$CHARGE_ICON</span>"
 echo "${ICON_SPAN}${VALUE_SPAN}${CHARGE_SPAN}"
 
 if [[ "x${BUTTON}" == "x1" ]]; then
-    ACTION=$(xrescat i3xrocks.action.battery "/usr/bin/gnome-control-center --class=floating_window power")
+    ACTION=$(xrescat i3xrocks.action.battery "regolith-control-center --class=floating_window power")
     /usr/bin/i3-msg -q exec "$ACTION"
 fi

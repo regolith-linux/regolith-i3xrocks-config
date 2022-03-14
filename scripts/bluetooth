@@ -115,6 +115,6 @@ if len_dname != 0:
     ))
 
 env_button = os.environ.get('button')
-cmd_open = "/usr/bin/i3-msg -q exec /usr/bin/gnome-control-center bluetooth"
+cmd_open = "/usr/bin/i3-msg -q exec regolith-control-center bluetooth"
 if(env_button == "1"):
     result = subprocess.check_output(cmd_open, shell=True)
