@@ -1,4 +1,4 @@
-regolith-i3xrocks-config (4.0.5) UNRELEASED; urgency=medium
+regolith-i3xrocks-config (4.0.5) focal; urgency=medium
 
   [ Ken Gilmer ]
   * Swap gnome-control-center for regolith-control-center
