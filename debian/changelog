@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (4.0.5) UNRELEASED; urgency=medium
+
+  [ Ken Gilmer ]
+  * Swap gnome-control-center for regolith-control-center
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 15 Mar 2022 19:18:56 -0700
+
 regolith-i3xrocks-config (4.0.4) focal; urgency=medium
 
   [ Ken Gilmer ]
