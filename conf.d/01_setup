@@ -22,7 +22,7 @@
 #
 # The top properties below are applied to every block, but can be overridden.
 # Each block command defaults to the script name to avoid boilerplate.
-command=/usr/share/i3xrocks/$BLOCK_NAME
+command=/usr/share/i3xrocks/scripts/$BLOCK_NAME
 separator_block_width=35
 markup=pango
 color=xresource:i3xrocks.value.color

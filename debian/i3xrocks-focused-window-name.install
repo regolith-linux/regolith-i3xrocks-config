@@ -1,2 +1,2 @@
-scripts/focused-window-name /usr/share/i3xrocks
-conf.d/10_focused-window-name /etc/regolith/i3xrocks/conf.d
+scripts/focused-window-name /usr/share/i3xrocks/scripts
+conf.d/10_focused-window-name /usr/share/i3xrocks/conf.d

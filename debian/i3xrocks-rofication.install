@@ -1,2 +1,2 @@
-scripts/rofication /usr/share/i3xrocks
-conf.d/80_rofication /etc/regolith/i3xrocks/conf.d
+scripts/rofication /usr/share/i3xrocks/scripts
+conf.d/80_rofication /usr/share/i3xrocks/conf.d

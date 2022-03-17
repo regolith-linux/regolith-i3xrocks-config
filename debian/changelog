@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (5.0.0) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Migrate configuration from /etc to /usr/share due to problematic apt policy in /etc directories
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 16 Mar 2022 20:20:52 -0700
+
 regolith-i3xrocks-config (4.0.5) focal; urgency=medium
 
   [ Ken Gilmer ]

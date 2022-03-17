@@ -1,2 +1,2 @@
-scripts/temp /usr/share/i3xrocks
-conf.d/40_temp /etc/regolith/i3xrocks/conf.d
+scripts/temp /usr/share/i3xrocks/scripts
+conf.d/40_temp /usr/share/i3xrocks/conf.d

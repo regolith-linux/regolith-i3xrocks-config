@@ -1,2 +1,2 @@
-scripts/wifi /usr/share/i3xrocks
-conf.d/30_wifi /etc/regolith/i3xrocks/conf.d
+scripts/wifi /usr/share/i3xrocks/scripts
+conf.d/30_wifi /usr/share/i3xrocks/conf.d

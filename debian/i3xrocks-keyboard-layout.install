@@ -1,2 +1,2 @@
-scripts/keyboard-layout /usr/share/i3xrocks
-conf.d/20_keyboard-layout /etc/regolith/i3xrocks/conf.d
+scripts/keyboard-layout /usr/share/i3xrocks/scripts
+conf.d/20_keyboard-layout /usr/share/i3xrocks/conf.d

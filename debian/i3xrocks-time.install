@@ -1,2 +1,2 @@
-scripts/time /usr/share/i3xrocks
-conf.d/90_time /etc/regolith/i3xrocks/conf.d
+scripts/time /usr/share/i3xrocks/scripts
+conf.d/90_time /usr/share/i3xrocks/conf.d

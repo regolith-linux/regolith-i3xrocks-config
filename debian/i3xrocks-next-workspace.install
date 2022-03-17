@@ -1,2 +1,2 @@
-scripts/next-workspace-widget /usr/share/i3xrocks
-conf.d/10_next-workspace /etc/regolith/i3xrocks/conf.d
+scripts/next-workspace-widget /usr/share/i3xrocks/scripts
+conf.d/10_next-workspace /usr/share/i3xrocks/conf.d

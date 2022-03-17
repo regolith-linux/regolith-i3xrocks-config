@@ -10,8 +10,6 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> </span>" # full text
 echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> </span>" # short text
 
-if [ "x${BUTTON}" == "x1" ]; then
-    rofi_theme=$(xrescat rofi.theme "/etc/regolith/styles/lascaille/rofi.rasi")
-    rofi_launch="rofi -show drun -theme $rofi_theme"
-    eval "$rofi_launch"
+if [ "x${BUTTON}" == "x1" ]; then    
+    eval "ilia"
 fi

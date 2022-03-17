@@ -1,2 +1,2 @@
-conf.d/01_setup /etc/regolith/i3xrocks/conf.d
-Xresources/40_i3xrocks /etc/regolith/Xresources.d
+conf.d/01_setup /usr/share/i3xrocks/conf.d
+Xresources/40_i3xrocks /usr/share/regolith/Xresources.d
