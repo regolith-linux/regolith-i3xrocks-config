@@ -19,4 +19,4 @@ else
     COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 fi
 
-echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${COLOR}\"> ${TEMP}℃</span>"
+echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${COLOR}\"> ${TEMP}°C</span>"
