@@ -49,7 +49,7 @@ else
 fi
 
 
-echo "<span color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"></span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$NOTIFICATION_LABEL</span>"
+echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\"></span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$NOTIFICATION_LABEL</span>"
 
 if [ "x${BUTTON}" == "x1" ]; then
     ACTION=$(xrescat i3xrocks.action.rofication "ilia -p notifications")

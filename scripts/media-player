@@ -49,7 +49,7 @@ TEXT=${TEXT//&/&amp;}
 TEXT=${TEXT//>/&gt;}
 TEXT=${TEXT//</&lt;}
 
-echo "<span color=\"${LABEL_COLOR}\">${ICON}</span>\
+echo "<span ont_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${ICON}</span>\
 <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> \
 ${TEXT}</span>"
 

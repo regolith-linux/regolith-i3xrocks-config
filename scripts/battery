@@ -58,7 +58,7 @@ else
     CHARGE_ICON=$(echo -e '\u2003')
 fi
 
-ICON_SPAN="<span color=\"${LABEL_COLOR}\">$LABEL_ICON</span>"
+ICON_SPAN="<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">$LABEL_ICON</span>"
 VALUE_SPAN="<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $BATT_PERCENT%</span>"
 CHARGE_SPAN="<span color=\"${LABEL_COLOR}\">$CHARGE_ICON</span>"
 

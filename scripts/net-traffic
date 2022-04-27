@@ -66,7 +66,7 @@ fspan() {
 
 # span for label/icon
 lspan() {
-  echo "<span color=\"${LABEL_COLOR}\">${1}</span>"
+  echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${1}</span>"
 }
 
 # get font specifics from xresource file

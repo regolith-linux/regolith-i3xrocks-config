@@ -101,7 +101,7 @@ for x in range(0, l_r):
         d_name += fs_s[z]
     d_name += " "
 
-pango_output="<span color=\"{labelColor}\">{label}  </span>\
+pango_output="<span color=\"{labelColor}\" font_desc=\"{typeface}\">{label}  </span>\
 <span color=\"{valueColor}\" font_desc=\"{typeface}\">{deviceName}</span>"
 
 len_dname = len(d_name)

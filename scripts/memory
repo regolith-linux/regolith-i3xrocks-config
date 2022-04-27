@@ -55,18 +55,18 @@ END {
 		if (display == "used")
 			to_display = swap_total/1024/1024 - to_display
 		if (percentage == "true")
-			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %02d%%</span>\n", lc, li, vf, vc, 100 * to_display / (swap_total/1024/1024))
+			printf("<span font_desc=\"%s\" color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %02d%%</span>\n", vf, lc, li, vf, vc, 100 * to_display / (swap_total/1024/1024))
 		else
-			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, to_display)
+			printf("<span font_desc=\"%s\" color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", vf, lc, li, vf, vc, to_display)
 	}
 	else {
 		to_display = mem_free/1024/1024
 		if (display == "used")
 			to_display = mem_total/1024/1024 - to_display
 		if (percentage == "true")
-			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %02d%%</span>\n", lc, li, vf, vc, 100 * to_display / (mem_total/1024/1024))
+			printf("<span font_desc=\"%s\" color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %02d%%</span>\n", vf, lc, li, vf, vc, 100 * to_display / (mem_total/1024/1024))
 		else
-			printf("<span color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", lc, li, vf, vc, to_display)
+			printf("<span font_desc=\"%s\" color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", vf, lc, li, vf, vc, to_display)
 	}
 }
 ' /proc/meminfo

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-KB_MASK=`xset -q | grep -o "mask:[\ 0-9]*$" | cut -d" " -f 3`
+KB_MASK=$(xset -q | grep -o "mask:[\ 0-9]*$" | cut -d" " -f 3)
 
 #Set icon variables (can be overridden from the i3 config file)
 [[ -z "$caps_icon" ]] && CAPS_ICON=$(xrescat i3xrocks.label.capslock C) || CAPS_ICON=$caps_icon
@@ -33,4 +33,6 @@ else
     NUM_ICON_COLOR=$(xrescat i3-wm.bar.background.color "#2E3440")
 fi
 
-echo "<span color=\"${CAPS_ICON_COLOR}\">${CAPS_ICON}</span><span color=\"${NUM_ICON_COLOR}\">${NUM_ICON}</span>"
+VALUE_FONT=$(xrescat i3xrocks.value.font "monospace")
+
+echo "<span font_desc=\"${VALUE_FONT}\" color=\"${CAPS_ICON_COLOR}\">${CAPS_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${NUM_ICON_COLOR}\">${NUM_ICON}</span>"

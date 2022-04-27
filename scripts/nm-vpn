@@ -17,6 +17,6 @@ VALUE_FONT=${font:-$(xrescat i3xrocks.value.font)}
 if [[ -z "$CONNECTION" ]]; then
     exit 0
 else
-    echo "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\"> </span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$CONNECTION</span>" # full text
-    echo "<span color=\"${LABEL_COLOR}\" font=\"FontAwesome\"> </span>" # short text
+    echo "<span color=\"${LABEL_COLOR}\" font_desc=\"${VALUE_FONT}\"> </span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$CONNECTION</span>" # full text
+    echo "<span color=\"${LABEL_COLOR}\" font_desc=\"${VALUE_FONT}\"> </span>" # short text
 fi

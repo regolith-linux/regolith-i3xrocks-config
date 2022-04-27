@@ -49,7 +49,7 @@ my $value_icon = $ENV{'icon'} || `xrescat i3xrocks.label.cpu `;
 
 # Print short_text, full_text
 binmode STDOUT, ":utf8";
-printf "<span color='%s'>%s</span><span font_desc='%s' color='%s'> %02d%%</span>\n", $label_color, $value_icon, $value_font, $value_color, $cpu_usage;
+printf "<span font_desc='%s' color='%s'>%s</span><span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $label_color, $value_icon, $value_font, $value_color, $cpu_usage;
 printf "<span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $value_color, $cpu_usage;
 
 if (defined $ENV{'button'}) {

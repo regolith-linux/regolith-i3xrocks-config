@@ -98,4 +98,4 @@ fi
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 VALUE=$(mixer_value)
 
-echo "<span color=\"${LABEL_COLOR}\">${ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"
+echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"
