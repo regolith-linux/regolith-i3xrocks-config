@@ -1,3 +1,11 @@
+regolith-i3xrocks-config (5.1.0) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Specify font for both label and value after transition to nerdfonts
+  * i3xrocks Xresource moves into looks
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Wed, 27 Apr 2022 22:14:04 -0700
+
 regolith-i3xrocks-config (5.0.1) focal; urgency=medium
 
   [ Ken Gilmer ]
