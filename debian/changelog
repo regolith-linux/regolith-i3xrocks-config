@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (5.1.2) focal; urgency=medium
+
+  [ Florian Anderiasch ]
+  * Use /proc/net/route for interface detection (#126)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 17 May 2022 07:15:49 -0700
+
 regolith-i3xrocks-config (5.1.1) focal; urgency=medium
 
   [ Ken Gilmer ]
