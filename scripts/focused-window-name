@@ -22,12 +22,20 @@
 # from command line arguments, but the latter takes precendence.
 #
 #
-import sys
 import argparse
 import os
 import subprocess
+import sys
 
 from i3ipc import Connection, Event
+
+
+def escape(name):
+    name = name.replace("&", "&amp;")
+    name = name.replace("<", "&lt;")
+    name = name.replace(">", "&gt;")
+    name = name.replace('"', "&quot;")
+    return name
 
 
 def value_span(value):
@@ -35,24 +43,37 @@ def value_span(value):
 
 
 parser = argparse.ArgumentParser(
-    description="Returns the title of the currently focused window")
-parser.add_argument("-f", "--filter_list", nargs='+',
-                    help="only return window title if the window instance is in the provided list, eg. specifying libreoffice will result in only instance of libreoffice being returned")
-parser.add_argument("-s", "--short_length", type=int,
-                    help="max number of characters to print for short version")
+    description="Returns the title of the currently focused window"
+)
+parser.add_argument(
+    "-f",
+    "--filter_list",
+    nargs="+",
+    help="only return window title if the window instance is in the provided list, eg. specifying libreoffice will result in only instance of libreoffice being returned",
+)
+parser.add_argument(
+    "-s",
+    "--short_length",
+    type=int,
+    help="max number of characters to print for short version",
+)
 args = parser.parse_args()
 
-filter_list_env = os.environ.get('filter_list')
+filter_list_env = os.environ.get("filter_list")
 short_length_env = os.environ.get("short_length")
 
 value_color, err = subprocess.Popen(
-    ['xrescat', 'i3xrocks.value.color', '#D8DEE9'], stdout=subprocess.PIPE).communicate()
+    ["xrescat", "i3xrocks.value.color", "#D8DEE9"], stdout=subprocess.PIPE
+).communicate()
 value_color = value_color.decode("utf-8")
 label_color, err = subprocess.Popen(
-    ['xrescat', 'i3xrocks.label.color', '#7B8394'], stdout=subprocess.PIPE).communicate()
+    ["xrescat", "i3xrocks.label.color", "#7B8394"], stdout=subprocess.PIPE
+).communicate()
 label_color = label_color.decode("utf-8")
 value_font, err = subprocess.Popen(
-    ['xrescat', 'i3xrocks.value.font', 'Source Code Pro Medium 13'], stdout=subprocess.PIPE).communicate()
+    ["xrescat", "i3xrocks.value.font", "Source Code Pro Medium 13"],
+    stdout=subprocess.PIPE,
+).communicate()
 value_font = value_font.decode("utf-8")
 
 
@@ -75,13 +96,21 @@ focused = i3.get_tree().find_focused()
 if focused is None:
     sys.exit()
 
-name = focused.name if hasattr(focused, "name") and focused.name is not None else sys.exit()
+name = (
+    focused.name
+    if hasattr(focused, "name") and focused.name is not None
+    else sys.exit()
+)
 instance = focused.window_instance if hasattr(focused, "window_instance") else None
 
 # LibreOffice adds its own name at the end so we need to remove that
-if name is not None and "LibreOffice" in name.split("-")[-1] and instance == "libreoffice":
+if (
+    name is not None
+    and "LibreOffice" in name.split("-")[-1]
+    and instance == "libreoffice"
+):
     name = "-".join(name.split("-")[:-1])
 
 if len(filter_list) == 0 or instance in filter_list:
-    print(value_span(name))
-    print(value_span(name[:short_length]))
+    print(value_span(escape(name)))
+    print(value_span(escape(name[:short_length])))
