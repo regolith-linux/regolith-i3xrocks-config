@@ -71,7 +71,7 @@ label_color, err = subprocess.Popen(
 ).communicate()
 label_color = label_color.decode("utf-8")
 value_font, err = subprocess.Popen(
-    ["xrescat", "i3xrocks.value.font", "Source Code Pro Medium 13"],
+    ["xrescat", "i3xrocks.value.font", "sans"],
     stdout=subprocess.PIPE,
 ).communicate()
 value_font = value_font.decode("utf-8")
