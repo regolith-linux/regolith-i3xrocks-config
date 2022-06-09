@@ -17,9 +17,15 @@ NUMFMT="numfmt --to iec --format %f --padding 5"
 
 # determine the net interface name, but only use one interface
 # there could be several default routes, if you have a VPN for example
-IF="${BLOCK_INSTANCE:-$(awk '$2 == 00000000 && $1 ~ /^(wl|en|eth)/ { print $1; exit }' < /proc/net/route)}"
+IF="${BLOCK_INSTANCE:-$(awk '$2 == 00000000 && $1 ~ /^(wl|en|eth|bond)/ { print $1; exit }' < /proc/net/route)}"
 
 IF_PATH="/sys/class/net/${IF}"
+
+if [ -d "${IF_PATH}/bonding" ]; then
+  # this is a bond, use the active slave's interface
+  IF="$(< "${IF_PATH}/bonding/active_slave")"
+  IF_PATH="/sys/class/net/${IF}"
+fi
 
 if [[ "$IF" == "" || ! -d "$IF_PATH" || ! -f "${IF_PATH}"/statistics/rx_bytes || ! -f "${IF_PATH}"/statistics/tx_bytes ]]; then 
   sleep "${ERROR_DLY}"
