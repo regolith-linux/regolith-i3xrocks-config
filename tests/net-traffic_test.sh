@@ -23,6 +23,8 @@ for dir in "${NET_DIRS[@]}"; do
     install -d "${UMOCKDEV_DIR}/${dir}"
 done
 
+install -D "${PWD}/fixtures/net-traffic/proc-net-route_eth0" "${UMOCKDEV_DIR}/proc/net/route"
+
 # eth0, 1KB of RX/TX
 BYTES="1024"
 BLOCK_INSTANCE="eth0"
