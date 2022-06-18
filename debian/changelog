@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (5.1.5) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Load ilia over remontoire for help action
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 18 Jun 2022 11:17:53 -0700
+
 regolith-i3xrocks-config (5.1.4) focal; urgency=medium
 
   [ Jeffrey Larson ]
