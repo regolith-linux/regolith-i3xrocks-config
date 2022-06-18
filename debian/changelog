@@ -1,3 +1,13 @@
+regolith-i3xrocks-config (5.1.4) focal; urgency=medium
+
+  [ Jeffrey Larson ]
+  * Add support for bond interface in net-traffic (#128)
+
+  [ Bence Ferdinandy ]
+  * Adding a fix to not show anything on empty workspace (#129)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Fri, 17 Jun 2022 19:21:43 -0700
+
 regolith-i3xrocks-config (5.1.3) focal; urgency=medium
 
   [ Bence Ferdinandy ]
