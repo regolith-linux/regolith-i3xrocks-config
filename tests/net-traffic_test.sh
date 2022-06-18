@@ -8,6 +8,8 @@ cd "${SCRIPT_DIR}/"
 SYS_PREFIX="/sys/class/net"
 declare -a NET_DIRS=(
     "${SYS_PREFIX}/eth0/statistics"
+    "${SYS_PREFIX}/eth1/statistics"
+    "${SYS_PREFIX}/bond0/bonding"
     "${SYS_PREFIX}/wlan0/statistics"
     "${SYS_PREFIX}/wlan0/wireless"
 )
@@ -22,6 +24,8 @@ UMOCKDEV_DIR="${UMOCKDEV_DIR:-}"
 for dir in "${NET_DIRS[@]}"; do
     install -d "${UMOCKDEV_DIR}/${dir}"
 done
+
+install -D "${PWD}/fixtures/net-traffic/proc-net-route_eth0" "${UMOCKDEV_DIR}/proc/net/route"
 
 # eth0, 1KB of RX/TX
 BYTES="1024"
@@ -182,4 +186,31 @@ for mock in "first" "second"; do
     sleep 5
 
     [ "2" -eq "$(ag -o '\>\s{2}1[.,]0K\<' /tmp/net-traffic-eth0-output | wc -l)" ]
+done
+
+# bond0 where active-slave is eth1
+install -D "${PWD}/fixtures/net-traffic/proc-net-route_bond0" "${UMOCKDEV_DIR}/proc/net/route"
+echo eth1>"${UMOCKDEV_DIR}/${SYS_PREFIX}/bond0/bonding/active_slave"
+unset BLOCK_INSTANCE
+BYTES="1024"
+
+for mock in "first" "second"; do
+    PATH="${PWD}/fixtures/net-traffic/${mock}:${PATH}"
+    export PATH
+
+    for b in rx tx; do
+        echo "${BYTES}" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/eth1/statistics/${b}_bytes"
+    done
+
+    ../scripts/net-traffic >"/tmp/net-traffic-bond0-output" &
+
+    sleep 1
+
+    for b in rx tx; do
+        echo "${BYTES}*6" | bc >"${UMOCKDEV_DIR}/${SYS_PREFIX}/eth1/statistics/${b}_bytes"
+    done
+
+    sleep 5
+
+    [ "2" -eq "$(ag -o '\>\s{2}1[.,]0K\<' /tmp/net-traffic-bond0-output | wc -l)" ]
 done
