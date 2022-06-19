@@ -1,2 +1,1 @@
-scripts/app-launcher /usr/share/i3xrocks/scripts
 conf.d/10_app-launcher /usr/share/i3xrocks/conf.d
