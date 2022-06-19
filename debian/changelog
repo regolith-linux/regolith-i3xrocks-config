@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (5.1.6) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Another attempt to fix keybinding bar indicator
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 18 Jun 2022 20:42:22 -0700
+
 regolith-i3xrocks-config (5.1.5) focal; urgency=medium
 
   [ Ken Gilmer ]
