@@ -1,3 +1,10 @@
+regolith-i3xrocks-config (5.1.8) focal; urgency=medium
+
+  [ Ken Gilmer ]
+  * Add linefeed to fix indicator
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 19 Jun 2022 10:50:04 -0700
+
 regolith-i3xrocks-config (5.1.7) focal; urgency=medium
 
   [ Ken Gilmer ]
