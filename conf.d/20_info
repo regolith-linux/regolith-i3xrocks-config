@@ -1,4 +1,4 @@
 # Link to execute shortcuts.
 [info]
 full_text=xresource:i3xrocks.label.help
-command=i3-msg -q exec --no-startup-id ilia -p keybindings
+command=i3-msg -q "exec --no-startup-id ilia -p keybindings"
