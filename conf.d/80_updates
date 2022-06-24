@@ -1,0 +1,3 @@
+# Package Updates
+[updates]
+interval=xresource:i3xrocks.updates.interval 3600
