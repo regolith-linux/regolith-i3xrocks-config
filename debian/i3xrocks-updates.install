@@ -1,0 +1,2 @@
+scripts/updates /usr/share/i3xrocks/scripts
+conf.d/80_updates /usr/share/i3xrocks/conf.d

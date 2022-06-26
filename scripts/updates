@@ -1,0 +1,61 @@
+#!/bin/bash
+# This update blocklet will use Xresources check command if defined
+# or use the apt-check utility to display the number of pending package updates
+
+# > Xresources
+# i3xrocks.updates.checkcmd : command to run to get the number of updates should return in format '<total_updates>;<security_updates>'
+# i3xrocks.updates.displayzero : bool, if true display even if there are zero updates
+# i3xrocks.action.updates : command to run when block is left clicked
+# i3xrocks.action.updates.reboot : command to run when block is left clicked and reboot is required
+# i3xrocks.label.updates : glyph icon to display
+# i3xrocks.label.updates.reboot : glyph icon to display when reboot is required
+# i3xrocks.updates.interval : interval in seconds between checks
+
+
+CHECK_CMD=$(xrescat i3xrocks.updates.checkcmd '/usr/lib/update-notifier/apt-check 2>&1')
+CHECK_OUTPUT=$(eval $CHECK_CMD)
+
+[ -z "$CHECK_OUTPUT" ] && echo "error: Cannot evaluate CHECK_CMD" && exit 1
+
+TOTAL_UPDATES=$(echo $CHECK_OUTPUT | cut -f1 -d';' | tr -d $'\n')
+SECURITY_UPDATES=$(echo $CHECK_OUTPUT | cut -f2 -d';' | tr -d $'\n')
+
+re='^[0-9]+$'
+
+if ! [[ $TOTAL_UPDATES =~ $re ]] ; then
+   echo "error: TOTAL_UPDATES Not a number" >&2; exit 1
+fi
+
+if ! [[ $SECURITY_UPDATES =~ $re ]] ; then
+   echo "error: SECURITY_UPDATES Not a number" >&2; exit 1
+fi
+
+LABEL_ICON=${icon:-$(xrescat i3xrocks.label.updates  )}
+LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
+VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
+VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+BUTTON=${button:-}
+
+if [ -f /var/run/reboot-required ]
+then
+    REBOOT_REQUIRED="true"
+    ACTION=$(xrescat i3xrocks.action.updates.reboot "systemctl reboot")
+    LABEL_ICON=${icon:-$(xrescat i3xrocks.label.updates.reboot  )}
+    OUTPUT="<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">$LABEL_ICON</span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">Reboot Required</span>"
+else
+    ACTION=$(xrescat i3xrocks.action.updates "update-manager")
+    OUTPUT="<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">$LABEL_ICON</span> <span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">$TOTAL_UPDATES/$SECURITY_UPDATES</span>"
+fi
+
+if [ "x${BUTTON}" == "x1" ]; then
+    /usr/bin/i3-msg -q exec "$ACTION"
+fi
+
+DISPLAY_ZERO=$(xrescat i3xrocks.updates.displayzero 'false')
+if [[ $TOTAL_UPDATES -eq 0 && $DISPLAY_ZERO != "true" && $REBOOT_REQUIRED != "true" ]]
+then
+    exit 0
+else
+    echo $OUTPUT
+fi
+
