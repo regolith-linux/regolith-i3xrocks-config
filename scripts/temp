@@ -7,16 +7,14 @@ set -Eeu -o pipefail
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.thermometer )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-TEMP=$(sensors | awk -F '(\\+|\\.)' '/(Core|Tdie)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
+TEMP=$(sensors | awk -F '(\\+|\\.)' '/(Core|Tdie|Tctl)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
 
-if [[ ${TEMP} -gt 90 ]]
-then
-    COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}
-elif [[ ${TEMP} -gt 70 ]]
-then
-    COLOR=${warning:-$(xrescat i3xrocks.warning "#EBCB8B")}
+if [[ ${TEMP} -gt 90 ]]; then
+  COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}
+elif [[ ${TEMP} -gt 70 ]]; then
+  COLOR=${warning:-$(xrescat i3xrocks.warning "#EBCB8B")}
 else
-    COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
+  COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
 fi
 
 echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${COLOR}\"> ${TEMP}°C</span>"
