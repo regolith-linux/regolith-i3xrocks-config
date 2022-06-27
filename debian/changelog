@@ -1,3 +1,14 @@
+regolith-i3xrocks-config (5.2.0) focal; urgency=medium
+
+  [ Joe Searle ]
+  * Add updates block (#131)
+  * Remove extra space in output (nm-vpn) (#130)
+
+  [ Jesse Cooke ]
+  * Add support to temp script for Tctl (#124)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 26 Jun 2022 20:26:13 -0700
+
 regolith-i3xrocks-config (5.1.9) focal; urgency=medium
 
   [ Ken Gilmer ]
