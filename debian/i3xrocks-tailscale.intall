@@ -1,0 +1,2 @@
+scripts/tailscale /usr/share/i3xrocks/scripts
+conf.d/40_tailscale /usr/share/i3xrocks/conf.d
