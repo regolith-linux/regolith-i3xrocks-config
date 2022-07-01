@@ -214,5 +214,12 @@ Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     tailscale
 Description: Indicator to show tailscale IP.
- A i3xrocks indicator for showing the current tailscale IP.
+ An i3xrocks indicator for showing the current tailscale IP.
 
+Package: i3xrocks-updates
+Architecture: any
+Depends: ${misc:Depends},
+    regolith-i3xrocks-config,
+    update-notifier-common,
+Description: Indicator for available updates
+ An i3xrocks indicator to show the number of apt packages that may be upgraded.
