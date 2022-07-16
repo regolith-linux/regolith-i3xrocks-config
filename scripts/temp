@@ -7,7 +7,7 @@ set -Eeu -o pipefail
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.thermometer )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-TEMP=$(sensors | awk -F '(\\+|\\.)' '/(Core|Tdie|Tctl)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
+TEMP=$(sensors | awk -F '(\\+|\\.)' '/(Core|Tdie|Tctl|CPU)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
 
 if [[ ${TEMP} -gt 90 ]]; then
   COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}
