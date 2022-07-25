@@ -3,7 +3,7 @@
 set -Eeu -o pipefail
 
 # Debug: echo all called commands
-set -x
+# set -x
 
 # Depends on lm-sensors (https://packages.ubuntu.com/bionic/lm-sensors)
 
