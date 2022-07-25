@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -Eeu -o pipefail
+
+# Debug: echo all called commands
 set -x
 
 # Depends on lm-sensors (https://packages.ubuntu.com/bionic/lm-sensors)
@@ -16,14 +18,14 @@ COMMAND_Tdie=( awk -F '(\\+|\\.)' '/(Tdie)/ {printf $2}' )
 # "Core #" is prioritized, then "Tctl", then "Tdie", then "CPU"
 # Change this if-elif to reorder priority
 sensors_output=$(sensors)
-if echo $sensors_output | grep -q "Core"; then
-  TEMP=$(echo $sensors_output | "${COMMAND_CPU[@]}")
-elif echo $sensors_output | grep -q "Tctl"; then
-  TEMP=$(echo $sensors_output | "${COMMAND_Tctl[@]}")
-elif echo $sensors_output | grep -q "Tdie"; then
-  TEMP=$(echo $sensors_output | "${COMMAND_Tdie[@]}")
-elif echo $sensors_output | grep -q "Core"; then
-  TEMP=$(echo $sensors_output | "${COMMAND_Core[@]}")
+if echo "$sensors_output" | grep -q "Core"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_Core[@]}")
+elif echo "$sensors_output" | grep -q "Tctl"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_Tctl[@]}")
+elif echo "$sensors_output" | grep -q "Tdie"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_Tdie[@]}")
+elif echo "$sensors_output" | grep -q "CPU"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_CPU[@]}")
 else
   TEMP="err"
 fi
