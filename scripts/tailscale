@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CONNECTION=$(LC_ALL=C tailscale ip --1)
 LABEL_COLOR=${vpn_label_color:-$(xrescat i3xrocks.label.color)}
 VALUE_COLOR="${vpn_color:-$(xrescat i3xrocks.value.color)}"
