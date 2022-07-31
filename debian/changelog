@@ -1,3 +1,16 @@
+regolith-i3xrocks-config (5.4.3) focal; urgency=medium
+
+  [ Julius Francisco ]
+  * Rename install file for tailscale (#138)
+
+  [ Patsch ]
+  * Fixed volume and microphone mixer_value to display values below 10 and (#137)
+
+  [ Ken Gilmer ]
+  * Exit 0 if network device unfound to avoid spamming logs
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 31 Jul 2022 10:55:05 -0700
+
 regolith-i3xrocks-config (5.4.2) focal; urgency=medium
 
   [ Joe Searle ]
