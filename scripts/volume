@@ -75,11 +75,23 @@ mixer_value() {
     fi
 }
 
+toggle() {
+    amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle
+}
+
+volume_up() {
+    amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+
+}
+
+volume_down() {
+    amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-
+}
+
 ACTION_1=$(xrescat i3xrocks.action.volume.left "true")
 ACTION_2=$(xrescat i3xrocks.action.volume.middle "true")
-ACTION_3=$(xrescat i3xrocks.action.volume.right "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle")
-ACTION_4=$(xrescat i3xrocks.action.volume.scrollup "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+")
-ACTION_5=$(xrescat i3xrocks.action.volume.scrolldn "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-")
+ACTION_3=$(xrescat i3xrocks.action.volume.right "toggle")
+ACTION_4=$(xrescat i3xrocks.action.volume.scrollup "volume_up")
+ACTION_5=$(xrescat i3xrocks.action.volume.scrolldn "volume_down")
 case $BLOCK_BUTTON in
     1) eval $ACTION_1 ;;
     2) eval $ACTION_2 ;;
