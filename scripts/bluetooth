@@ -54,6 +54,9 @@ class Bluetooth(object):
                             if "Name" not in dev:
                                 dev["Name"] = "<unknown>"
 
+                            if "Alias" in dev:
+                                dev["Name"] = dev["Alias"]
+
                             device = {
                                 "mac_address": dev["Address"].encode("utf-8"),
                                 "name": dev["Name"].encode("utf-8")
