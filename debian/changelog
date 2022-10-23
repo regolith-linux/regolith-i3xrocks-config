@@ -1,3 +1,9 @@
+regolith-i3xrocks-config (5.4.6) focal; urgency=medium
+
+  * Remove floating flags for gtk4 breaking change in regolith-control-center
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 22 Oct 2022 20:01:20 -0700
+
 regolith-i3xrocks-config (5.4.5) focal; urgency=medium
 
   * Depend on netcat-openbsd due to bsd specific options used for rofication
