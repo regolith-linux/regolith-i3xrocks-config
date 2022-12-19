@@ -25,8 +25,8 @@ echo "${PANGO_START}${KBD}${PANGO_END}"
 
 case "x${BUTTON}" in
 "x1")
-    # Handle left click, default to launch region settings
-    LEFT_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.left_click_action "regolith-control-center region")
+    # Handle left click, default to launch keyboard settings
+    LEFT_CLICK_ACTION=$(xrescat i3xrocks.keyboard_layout.left_click_action "regolith-control-center keyboard")
     [[ ! -z $LEFT_CLICK_ACTION ]] && $(which i3-msg) -q exec "$LEFT_CLICK_ACTION"
     ;;
 "x2")
