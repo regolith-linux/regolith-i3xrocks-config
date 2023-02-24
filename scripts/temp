@@ -2,12 +2,33 @@
 
 set -Eeu -o pipefail
 
+# Debug: echo all called commands
+# set -x
+
 # Depends on lm-sensors (https://packages.ubuntu.com/bionic/lm-sensors)
 
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.thermometer )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-TEMP=$(sensors | awk -F '(\\+|\\.)' '/(Core|Tdie|Tctl)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
+COMMAND_CPU=( awk -F '(\\+|\\.)' '/(CPU)/ {printf $2}' )
+COMMAND_Tctl=( awk -F '(\\+|\\.)' '/(Tctl)/ {printf $2}' )
+COMMAND_Core=( awk -F '(\\+|\\.)' '/(Core)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
+COMMAND_Tdie=( awk -F '(\\+|\\.)' '/(Tdie)/ {printf $2}' )
+
+# "Core #" is prioritized, then "Tctl", then "Tdie", then "CPU"
+# Change this if-elif to reorder priority
+sensors_output=$(sensors)
+if echo "$sensors_output" | grep -q "Core"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_Core[@]}")
+elif echo "$sensors_output" | grep -q "Tctl"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_Tctl[@]}")
+elif echo "$sensors_output" | grep -q "Tdie"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_Tdie[@]}")
+elif echo "$sensors_output" | grep -q "CPU"; then
+  TEMP=$(echo "$sensors_output" | "${COMMAND_CPU[@]}")
+else
+  TEMP="err"
+fi
 
 if [[ ${TEMP} -gt 90 ]]; then
   COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}
