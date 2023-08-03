@@ -31,14 +31,14 @@ TITLE="$(playerctl $PLAYER_ARGS metadata title)"
 # get half of the total allowed field width
 HALF_FIELD_WIDTH=$(( FIELD_WIDTH / 2 ))
 
-# trim artist length, remove an extra 4 to allow for spaces and "..."
+# trim artist length, remove an extra 2 to allow for spaces and "…"
 if [[ ${#ARTIST} -gt ${HALF_FIELD_WIDTH} ]]; then
-    ARTIST="${ARTIST:0:$(( HALF_FIELD_WIDTH -4 ))}..."
+    ARTIST="${ARTIST:0:$(( HALF_FIELD_WIDTH -2 ))}…"
 fi
 
-# trim song title length, remove an extra 5 to allow for the separator and "..."
+# trim song title length, remove an extra 3 to allow for the separator and "…"
 if [[ ${#TITLE} -gt ${HALF_FIELD_WIDTH} ]]; then
-    TITLE="${TITLE:0:$(( HALF_FIELD_WIDTH -5 ))}..."
+    TITLE="${TITLE:0:$(( HALF_FIELD_WIDTH -3 ))}…"
 fi
 
 # print resulting information (fulltext)
