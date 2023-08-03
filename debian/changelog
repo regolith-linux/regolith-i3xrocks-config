@@ -1,3 +1,22 @@
+regolith-i3xrocks-config (5.5.0) focal; urgency=medium
+
+  [ Jeffrey Larson ]
+  * Try to use bluetooth device alias instead of name (#142)
+
+  [ DrWursterich ]
+  * Add scrolling as inputs to media-player (#141)
+
+  [ Uli Fahrer ]
+  * fix(keyboard-layout): open keyboard menu instead (#145)
+
+  [ Pieter Marsman ]
+  * Use value colors for battery percentage and charge (#148)
+
+  [ Jeffrey Larson ]
+  * Use a … instead of ... to show more of the artist and title (#143)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Thu, 03 Aug 2023 07:33:25 -0700
+
 regolith-i3xrocks-config (5.4.6) focal; urgency=medium
 
   * Remove floating flags for gtk4 breaking change in regolith-control-center
