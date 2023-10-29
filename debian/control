@@ -19,8 +19,8 @@ Description: Regolith configuration for i3xrocks launcher
 Package: i3xrocks-time
 Architecture: any
 Depends: ${misc:Depends},
-    regolith-i3xrocks-config,
-    regolith-control-center
+    regolith-i3xrocks-config
+Recommends: regolith-control-center
 Description: Indicator to show date and time.
  An i3xrocks indicator to show date and time.
 
@@ -46,7 +46,7 @@ Description: Indicator launch Remontoire.
 Package: i3xrocks-net-traffic
 Architecture: any
 Depends: ${misc:Depends},
-    bc,    
+    bc,
     regolith-i3xrocks-config,
     iproute2
 Recommends:
@@ -192,7 +192,7 @@ Description: Button to open next workspace.
 
 Package: i3xrocks-rofication
 Architecture: any
-Depends: ${misc:Depends},    
+Depends: ${misc:Depends},
          i3xrocks,
          netcat-openbsd,
          regolith-rofication,
