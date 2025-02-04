@@ -1,3 +1,17 @@
+regolith-i3xrocks-config (5.5.2) focal; urgency=medium
+
+  [ Khosrow Moossavi ]
+  * chore: remove obsolete package broadcast action
+  * chore: remove obsolete release action
+  * chore: remove obsolete test action
+  * feat: enable github action to test pull requests
+  * feat: enable github action to publish to unstable
+  * feat: enable github action to publish to testing
+  * feat: enable github action to prepare release
+  * fix: create release tag from correct git sha
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 04 Feb 2025 03:45:36 +0000
+
 regolith-i3xrocks-config (5.5.1) focal; urgency=medium
 
   [ Ken Gilmer ]
