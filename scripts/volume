@@ -35,7 +35,7 @@ UNIT="${2:-$(xrescat i3xrocks.volume.unit %)}"
 # For ALSA users, you may use "default" for your primary card
 # or you may use hw:# where # is the number of the card desired
 MIXER="default"
-pactl list 1>/dev/null && MIXER="pulse"
+pactl list 1>/dev/null 2>&1 && MIXER="pulse"
 lsmod | grep -q jack && MIXER="jackplug"
 MIXER="${3:-$(xrescat i3xrocks.volume.mixer $MIXER)}"
 
