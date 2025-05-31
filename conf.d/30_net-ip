@@ -1,0 +1,14 @@
+# Show IPv4 address for specified network interface
+[net-ip]
+
+# how often to update the text
+interval=10
+
+# The interfaces to display an IPv4 address for
+iface=enp0s8,eth0
+
+# rename displayed interfaces
+alias=eth0:WAN,enp0s8:LAN
+
+# hide interfaces that are down vs. showing error text down in error color
+hide=true
