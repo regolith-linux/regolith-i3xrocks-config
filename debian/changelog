@@ -1,3 +1,13 @@
+regolith-i3xrocks-config (5.5.3) focal; urgency=medium
+
+  [ Khosrow Moossavi ]
+  * feat: use build-only to test pull request
+
+  [ Mario Pareja ]
+  * volume: avoid logging error while detecting pulseaudio (#157)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sun, 19 Oct 2025 15:02:29 +0000
+
 regolith-i3xrocks-config (5.5.2) focal; urgency=medium
 
   [ Khosrow Moossavi ]
