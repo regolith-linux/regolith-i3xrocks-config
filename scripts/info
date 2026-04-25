@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ILIA_STYLESHEET=${ilia_stylesheet:-$(xrescat ilia.stylesheet "/usr/share/regolith-look/default/ilia.css")}
+BUTTON=${button:-}
+
+if [ -f "$ILIA_STYLESHEET" ]; then
+    ACTION="ilia -a -p keybindings -t \"$ILIA_STYLESHEET\""
+else
+    ACTION="ilia -a -p keybindings"
+fi
+
+if [ "x${BUTTON}" == "x1" ]; then
+    /usr/bin/i3-msg -q "exec --no-startup-id $ACTION"
+fi

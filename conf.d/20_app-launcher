@@ -2,4 +2,3 @@
 #
 [app-launcher]
 full_text=xresource:i3xrocks.label.app_launcher
-command=i3-msg -q "exec --no-startup-id ilia -a -p apps"
