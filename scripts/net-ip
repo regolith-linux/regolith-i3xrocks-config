@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import subprocess
+import sys
+import socket
+import fcntl
+import struct
+
+from pathlib import PosixPath
+
+parser = argparse.ArgumentParser(description="Returns interface IP addresses")
+parser.add_argument(
+    "-i",
+    "--iface",
+    type=str,
+    help="The interfaces to display status/IP for - for more than one use a comma",
+)
+parser.add_argument(
+    "-a",
+    "--alias",
+    type=str,
+    help="A new name for an interface",
+)
+parser.add_argument(
+    "--hide",
+    action="store_true",
+    default=False,
+    help="Do not show interfaces which are down",
+)
+args = parser.parse_args()
+
+
+def get_status(ifname: str):
+    status = False
+    # https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/if.h#n85
+
+    try:
+        ifname = ifname.decode("utf8")
+        status = (
+            int(PosixPath(f"/sys/class/net/{ifname}/flags").read_text().strip(), 16)
+            & 0x1
+        )
+    except Exception:
+        pass
+
+    return status
+
+
+def get_ip_address(ifname):
+    status = get_status(ifname)
+    ip = "down"
+
+    if status:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            ip = socket.inet_ntoa(
+                fcntl.ioctl(
+                    s.fileno(),
+                    0x8915,  # SIOCGIFADDR
+                    struct.pack("256s", ifname[:15]),
+                )[20:24]
+            )
+            s.close()
+        except Exception:
+            pass
+
+    return status, ip
+
+
+def label(value: str, font: str, color: str) -> str:
+    return f'<span font_desc="{font}" color="{color}"> {value} </span>'
+
+
+if __name__ == "__main__":
+    alias_list = {}
+    iface_list = args.iface
+    hide_down = os.environ.get("hide", args.hide)
+
+    if not iface_list or len(iface_list) <= 0:
+        iface_list = os.environ.get("iface", None)
+
+    if not args.alias or len(args.alias) <= 0:
+        args.alias = os.environ.get("alias", None)
+
+    if not iface_list or len(iface_list) <= 0:
+        exit(0)
+
+    if args.alias and len(args.alias) > 0 and isinstance(args.alias, str):
+        for pair in args.alias.split(","):
+            try:
+                k, v = pair.split(":")
+                alias_list[k] = v if len(v) > 0 else k
+            except:
+                alias_list[pair] = pair
+
+    font, err = subprocess.Popen(
+        ["xrescat", "i3xrocks.value.font", "sans"],
+        stdout=subprocess.PIPE,
+        text=True,
+    ).communicate()
+
+    color, err = subprocess.Popen(
+        ["xrescat", "i3xrocks.label.color", "#7B8394"],
+        stdout=subprocess.PIPE,
+        text=True,
+    ).communicate()
+
+    error_color, err = subprocess.Popen(
+        ["xrescat", "i3xrocks.error.color", "#f1290f"],
+        stdout=subprocess.PIPE,
+        text=True,
+    ).communicate()
+
+    for iface in iface_list.split(","):
+        status, ip = get_ip_address(bytes(iface, "utf8"))
+        label_color = color
+
+        iface = alias_list.get(iface, iface)
+
+        if not status:
+            label_color = error_color
+
+            if hide_down:
+                continue
+
+        print(label(f"{iface}:{ip}", font, label_color), end="")
+print("")  # must end with newline for values to be displayed in bar - weird...
