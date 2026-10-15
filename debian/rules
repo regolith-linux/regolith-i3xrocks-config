@@ -2,3 +2,6 @@
 
 %:
 	dh $@
+
+override_dh_auto_test:
+	./tests/run.sh
