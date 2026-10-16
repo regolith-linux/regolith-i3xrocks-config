@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+if [[ "$*" == *'&u'* ]]; then
+    printf '+72°F'
+    [[ "$*" != *'format=2'* ]] || printf ' 8mph'
+else
+    printf '+22°C'
+    [[ "$*" != *'format=2'* ]] || printf ' 13km/h'
+fi
+printf '\n'

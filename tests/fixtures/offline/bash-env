@@ -1,0 +1,4 @@
+# weather calls this absolute path; Bash loads this fixture through BASH_ENV.
+# shellcheck shell=bash
+# shellcheck disable=SC2112,SC2218
+function /usr/bin/i3-msg { printf 'i3-msg called with %s\n' "$*"; }

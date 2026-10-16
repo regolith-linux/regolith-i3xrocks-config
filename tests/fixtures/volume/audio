@@ -1,0 +1,30 @@
+#!/bin/bash
+set -euo pipefail
+name=${0##*/}
+[[ "$name" = "${AUDIO_BACKEND:-}" ]] || exit 1
+read -r value muted < "$AUDIO_STATE"
+case "$name:$1" in
+    wpctl:get-volume) printf 'Volume: 0.%02d%s\n' "$value" "${muted:+ [MUTED]}"; exit ;;
+    pactl:get-sink-volume) printf 'Volume: front-left: 32768 / %s%% / -18.00 dB\n' "$value"; exit ;;
+    pactl:get-sink-mute) printf 'Mute: %s\n' "${muted:-no}"; exit ;;
+    amixer:*)
+        if [[ " $* " = *' scontrols '* ]]; then
+            echo "Simple mixer control 'Master',0"; exit
+        elif [[ " $* " = *' get '* ]]; then
+            printf '  Capabilities: pvolume pswitch\n  Front Left: Playback 30 [%s%%] [-18.00dB] [%s]\n' "$value" "${muted:-on}"; exit
+        fi
+        ;;
+esac
+printf '%s %s\n' "$name" "$*" >> "$AUDIO_LOG"
+case "$*" in
+    *toggle*)
+        if [ -n "$muted" ]; then muted=''; else
+            case "$name" in wpctl) muted=yes ;; pactl) muted=yes ;; amixer) muted=off ;; esac
+        fi ;;
+    *'5%'*)
+        if [[ "$*" == *'5%-'* || "$*" == *'-5%'* ]]; then
+            value=$((value - 5))
+        else value=$((value + 5)); fi ;;
+    *) exit 1 ;;
+esac
+printf '%s %s\n' "$value" "$muted" > "$AUDIO_STATE"
