@@ -1,11 +1,18 @@
 #!/bin/bash
 
-CONNECTION=$(LC_ALL=C nmcli -t connection show --active | awk -F ':' '
+# Network devices attached to a bridge or another master device, such as the
+# vnetN tap devices libvirt adds to virbr0 for each running guest. NetworkManager
+# reports them as tun connections, but they carry VM traffic, not a VPN tunnel.
+PORTS=""
+for dev in /sys/class/net/*; do
+    [ -e "$dev/master" ] && PORTS="$PORTS ${dev##*/}"
+done
+
+CONNECTION=$(LC_ALL=C nmcli -t connection show --active | awk -F ':' -v ports="$PORTS" '
+BEGIN { n = split(ports, p, " "); for (i = 1; i <= n; i++) port[p[i]] = 1 }
 { if($3 == "vpn") {
     vpn_name=$1
-  } else if ($3 == "tun"){
-    tun_name=$1
-  } else if ($3 == "tap"){
+  } else if (($3 == "tun" || $3 == "tap") && !($4 in port)){
     tun_name=$1
   } else if ($3 == "wireguard"){
     tun_name=$1

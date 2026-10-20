@@ -8,7 +8,7 @@ export PATH="$WORK:$SCRIPT_DIR/fixtures/offline:$PATH"
 export BASH_ENV="$SCRIPT_DIR/fixtures/offline/bash-env"
 for test in "$SCRIPT_DIR"/*_test.sh; do
     case "${test##*/}" in
-        net-traffic_test.sh) umockdev-run -- bash "$test" ;;
+        net-traffic_test.sh | nm-vpn_test.sh) umockdev-run -- bash "$test" ;;
         *) bash "$test" ;;
     esac
 done
