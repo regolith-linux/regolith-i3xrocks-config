@@ -1,0 +1,21 @@
+#!/bin/bash
+# upower mock: a laptop with two batteries and an AC adapter
+PREFIX=/org/freedesktop/UPower/devices
+info() {
+    printf '  native-path:          %s\n  power supply:         yes\n  battery\n' "$1"
+    printf '    present:             yes\n    state:               %s\n' "$2"
+    printf '    percentage:          %s%%\n' "$3"
+}
+case "$1" in
+    -e | --enumerate)
+        printf '%s\n' "$PREFIX/line_power_AC" "$PREFIX/battery_BAT0" "$PREFIX/battery_BAT1" "$PREFIX/DisplayDevice"
+        ;;
+    -i | --show-info)
+        case "$2" in
+            "$PREFIX/battery_BAT0") info BAT0 discharging 85 ;;
+            "$PREFIX/battery_BAT1") info BAT1 charging 40 ;;
+            "$PREFIX/DisplayDevice") info '(null)' discharging 62 ;;
+        esac
+        ;;
+esac
+exit 0
