@@ -28,6 +28,14 @@ if echo "${WEATHER}" | grep -q -P "Unknown\slocation"; then
     WEATHER="${VALUE_WEATHER_ERROR_MESSAGE}"
 fi
 
+# wttr.in pads its output for terminal alignment (for example two or three
+# spaces after the condition icon). Collapse each run of whitespace to a single
+# space and trim the ends so the bar shows compact text.
+shopt -s extglob
+WEATHER="${WEATHER//+([[:space:]])/ }"
+WEATHER="${WEATHER# }"
+WEATHER="${WEATHER% }"
+
 echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\">${WEATHER}</span>"
 
 if [ ! "x${BUTTON}" == "x" ]; then
