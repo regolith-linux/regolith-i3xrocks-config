@@ -41,10 +41,10 @@ Package: i3xrocks-info
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
-    remontoire,
+    ilia,
     regolith-ftue
-Description: Indicator launch Remontoire.
- An i3xrocks indicator to launch Remontoire.
+Description: Indicator to launch the keybinding viewer.
+ An i3xrocks indicator to launch the ilia keybinding viewer.
 
 Package: i3xrocks-net-traffic
 Architecture: any
