@@ -1,5 +1,7 @@
-# Keyboard layout
+# Key indicator
 #
-# Displays current keyboard layout.
+# Displays the Caps Lock and Num Lock state: C and N are shown while the
+# matching lock is on. For the keyboard layout, use the keyboard-layout
+# blocklet (i3xrocks-keyboard-layout).
 [key-indicator]
 interval=5
