@@ -22,83 +22,173 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# The first parameter sets the step to change the volume by (and units to display)
-# This may be in in % or dB (eg. 5% or 3dB)
+# Optional step, unit and ALSA mixer arguments retain their existing meaning.
 STEP="${1:-$(xrescat i3xrocks.mic.step 5)}"
-
-# The second parameter sets the unit. It can be '%' or 'dB' only.
 UNIT="${2:-$(xrescat i3xrocks.mic.unit %)}"
-
-# The third parameter overrides the mixer selection
-# For PulseAudio users, use "pulse"
-# For Jack/Jack2 users, use "jackplug"
-# For ALSA users, you may use "default" for your primary card
-# or you may use hw:# where # is the number of the card desired
-MIXER="default"
-pactl list 1>/dev/null && MIXER="pulse"
-lsmod | grep -q jack && MIXER="jackplug"
-MIXER="${3:-$(xrescat i3xrocks.mic.mixer $MIXER)}"
-
-# The instance option sets the control to report and configure
-# This defaults to the first control of your selected mixer
-# For a list of the available, use `amixer -D $Your_Mixer scontrols`
-SCONTROL="${BLOCK_INSTANCE:-$(
-    amixer -D $MIXER scontrols |
-        sed -n "s/Simple mixer control '\([A-Za-z0-9 ]*\)',0/\1/p" |
-        grep Capture
-)}"
-
-mixer_capability() { # Return "Capture" if the device is a capture device
-    amixer -D $MIXER get $SCONTROL |
-        sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
-}
-
-mixer_info() {
-    amixer -D $MIXER get $SCONTROL $(mixer_capability)
-}
-
-# Returns "on" if not mute, "off" if mute
-mixer_status() {
-    mixer_info | sed -n "s/.*\[\(on\|off\)\].*/\1/p" | head -n 1
-}
-
-mixer_value() {
-    VAL=$(mixer_info | sed -n -E "s/.*\[(-?[0-9]+)$UNIT\].*/\1/p" | head -n 1)
-    if [ -z "$VAL" ]; then
-        # return empty string of same width to prevent bar shift.
-        echo "   "
-    elif [ "$VAL" -lt "10" ]; then
-        # prepend a zero if volume is below 10
-        echo "0$VAL$UNIT"
-    else
-        echo "$VAL$UNIT"
+MIXER="${3:-$(xrescat i3xrocks.mic.mixer '')}"
+SCONTROL="${BLOCK_INSTANCE:-}"
+EXPLICIT_ALSA=false
+if [ -n "$MIXER" ] || [ -n "$SCONTROL" ]; then
+    EXPLICIT_ALSA=true
+fi
+if [ -z "$MIXER" ]; then
+    MIXER=default
+    if lsmod 2>/dev/null | grep -q jack; then
+        MIXER=jackplug
     fi
+fi
+STEP="${STEP%"$UNIT"}"
+export LC_ALL=C
+
+# All readers publish both fields only after checking the command and output.
+# wpctl exposes a linear volume, but no native dB reading.
+read_pipewire() {
+    [ "$UNIT" = '%' ] || return 1
+    local output
+    output=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null) || return 1
+    if [[ "$output" =~ ^Volume:[[:space:]]+([0-9]+([.][0-9]+)?)([[:space:]]+\[MUTED\])?[[:space:]]*$ ]]; then
+        VALUE=$(awk -v volume="${BASH_REMATCH[1]}" 'BEGIN {printf "%.0f", volume * 100}')
+        STATUS=on
+        [[ "$output" == *'[MUTED]'* ]] && STATUS=off
+        return 0
+    fi
+    return 1
 }
+
+read_pulse() {
+    local output mute
+    output=$(pactl get-source-volume @DEFAULT_SOURCE@ 2>/dev/null) || return 1
+    mute=$(pactl get-source-mute @DEFAULT_SOURCE@ 2>/dev/null) || return 1
+    case "$mute" in
+        'Mute: yes') STATUS=off ;;
+        'Mute: no') STATUS=on ;;
+        *) return 1 ;;
+    esac
+    case "$UNIT" in
+        '%')
+            [[ "$output" =~ /[[:space:]]*([0-9]+)%[[:space:]]*/ ]] || return 1
+            VALUE="${BASH_REMATCH[1]}"
+            ;;
+        dB)
+            [[ "$output" =~ /[[:space:]]*([+-]?[0-9]+([.][0-9]+)?|-inf)[[:space:]]+dB ]] || return 1
+            VALUE="${BASH_REMATCH[1]}"
+            ;;
+        *) return 1 ;;
+    esac
+}
+
+# Without an instance, use the first control of the mixer named like Capture.
+prepare_alsa() {
+    if [ -z "$SCONTROL" ]; then
+        local controls
+        controls=$(amixer -D "$MIXER" scontrols 2>/dev/null) || return 1
+        SCONTROL=$(sed -n "s/Simple mixer control '\(.*\)',0/\1/p" <<< "$controls" | grep Capture | head -n1)
+    fi
+    [ -n "$SCONTROL" ]
+}
+
+read_alsa() {
+    local output
+    prepare_alsa || return 1
+    output=$(amixer -D "$MIXER" get "$SCONTROL" 2>/dev/null) || return 1
+    CAPABILITY=()
+    if [[ "$output" == *'cvolume'* ]]; then
+        CAPABILITY=(Capture)
+        output=$(amixer -D "$MIXER" get "$SCONTROL" Capture 2>/dev/null) || return 1
+    fi
+    [[ "$output" =~ \[(on|off)\] ]] || return 1
+    STATUS="${BASH_REMATCH[1]}"
+    case "$UNIT" in
+        '%')
+            [[ "$output" =~ \[([0-9]+)%\] ]] || return 1
+            VALUE="${BASH_REMATCH[1]}"
+            ;;
+        dB)
+            [[ "$output" =~ \[([+-]?[0-9]+([.][0-9]+)?|-inf)dB\] ]] || return 1
+            VALUE="${BASH_REMATCH[1]}"
+            ;;
+        *) return 1 ;;
+    esac
+}
+
+select_backend() {
+    BACKEND=''
+    if ! "$EXPLICIT_ALSA"; then
+        if command -v wpctl >/dev/null && read_pipewire; then
+            BACKEND=pipewire
+            return 0
+        fi
+        if command -v pactl >/dev/null && read_pulse; then
+            BACKEND=pulse
+            return 0
+        fi
+    fi
+    if command -v amixer >/dev/null && read_alsa; then
+        BACKEND=alsa
+        return 0
+    fi
+    VALUE=''
+    STATUS=off
+    return 1
+}
+
+# Choose a usable backend before dispatching a button. Never replay a button
+# when refreshing state, even if the server disappears after the mutation.
+select_backend || true
+
+toggle() {
+    case "$BACKEND" in
+        pipewire) wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle ;;
+        pulse) pactl set-source-mute @DEFAULT_SOURCE@ toggle ;;
+        alsa) amixer -q -D "$MIXER" sset "$SCONTROL" "${CAPABILITY[@]}" toggle ;;
+    esac
+}
+
+adjust_volume() {
+    local direction="$1"
+    case "$BACKEND" in
+        pipewire) wpctl set-volume @DEFAULT_AUDIO_SOURCE@ "${STEP}%${direction}" ;;
+        pulse) pactl set-source-volume @DEFAULT_SOURCE@ "${direction}${STEP}${UNIT}" ;;
+        alsa) amixer -q -D "$MIXER" sset "$SCONTROL" "${CAPABILITY[@]}" "${STEP}${UNIT}${direction}" ;;
+    esac
+}
+
+volume_up() { adjust_volume +; }
+volume_down() { adjust_volume -; }
 
 ACTION_1=$(xrescat i3xrocks.action.mic.left "true")
 ACTION_2=$(xrescat i3xrocks.action.mic.middle "true")
-ACTION_3=$(xrescat i3xrocks.action.mic.right "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) toggle")
-ACTION_4=$(xrescat i3xrocks.action.mic.scrollup "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}+")
-ACTION_5=$(xrescat i3xrocks.action.mic.scrolldn "amixer -q -D $MIXER sset $SCONTROL $(mixer_capability) ${STEP}${UNIT}-")
-case $BLOCK_BUTTON in
-    1) eval $ACTION_1 ;;
-    2) eval $ACTION_2 ;;
-    3) eval $ACTION_3 ;;
-    4) eval $ACTION_4 ;;
-    5) eval $ACTION_5 ;;
+ACTION_3=$(xrescat i3xrocks.action.mic.right "toggle")
+ACTION_4=$(xrescat i3xrocks.action.mic.scrollup "volume_up")
+ACTION_5=$(xrescat i3xrocks.action.mic.scrolldn "volume_down")
+case "${BLOCK_BUTTON:-}" in
+    1) eval "$ACTION_1" ;;
+    2) eval "$ACTION_2" ;;
+    3) eval "$ACTION_3" ;;
+    4) eval "$ACTION_4" ;;
+    5) eval "$ACTION_5" ;;
 esac
+# Default and configured actions share the same refresh path.
+select_backend || true
+
+if [ -n "$VALUE" ]; then
+    if [ "$UNIT" = '%' ]; then
+        VALUE=$(printf '%02d%%' "$((10#$VALUE))")
+    else
+        VALUE="${VALUE}dB"
+    fi
+else
+    VALUE='   '
+fi
 
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#E6E1CF")}
-
-if [ "$(mixer_status)" == "on" ]; then
+if [ "$STATUS" = on ]; then
     ICON=${icon_on:-$(xrescat i3xrocks.label.mic )}
     VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#E6E1CF")}
 else
     ICON=${icon_mute:-$(xrescat i3xrocks.label.mic.mute )}
     VALUE_COLOR=${warn_color:-$(xrescat i3xrocks.warning "#FFD580")}
 fi
-
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
-VALUE=$(mixer_value)
-
-echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $VALUE</span>"
+printf '<span font_desc="%s" color="%s">%s</span><span font_desc="%s" color="%s"> %s</span>\n' \
+    "$VALUE_FONT" "$LABEL_COLOR" "$ICON" "$VALUE_FONT" "$VALUE_COLOR" "$VALUE"
