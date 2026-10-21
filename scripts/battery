@@ -22,8 +22,37 @@ get_battery_percent() {
     echo "$__UPOWER_INFO" | awk -W posix '$1 == "percentage:" { gsub("%","",$2); print int($2)}'
 }
 
-BATT_DEVICE="DisplayDevice"
-__UPOWER_INFO=$(upower --show-info "/org/freedesktop/UPower/devices/${BLOCK_INSTANCE:-$BATT_DEVICE}")
+# Resolve the UPower object path of the device to show.
+#
+# Accepts a full object path, a UPower device name (battery_BAT0,
+# DisplayDevice) or a kernel power supply name (BAT0), which UPower
+# exposes as battery_BAT0.
+#
+# Arguments:
+#   $1 - the instance from the blocklet config (may be empty)
+#
+# Returns:
+#   The UPower object path.
+get_device_path() {
+    local name=${1:-DisplayDevice}
+    local prefix="/org/freedesktop/UPower/devices"
+    local devices
+
+    case "$name" in
+        /*)
+            echo "$name"
+            return
+            ;;
+    esac
+
+    devices=$(upower --enumerate 2>/dev/null)
+    if ! grep -qxF "$prefix/$name" <<< "$devices" && grep -qxF "$prefix/battery_$name" <<< "$devices"; then
+        name="battery_$name"
+    fi
+    echo "$prefix/$name"
+}
+
+__UPOWER_INFO=$(upower --show-info "$(get_device_path "${BLOCK_INSTANCE:-}")")
 
 
 BATT_PERCENT=$(get_battery_percent)

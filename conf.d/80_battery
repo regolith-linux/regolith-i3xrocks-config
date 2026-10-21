@@ -1,7 +1,11 @@
 # Battery indicator
 #
 # Displays total percentage charge left of specified battery.
-# You can specify the instance by adding:
+# By default it shows the combined charge of all batteries (UPower's
+# DisplayDevice). To show one battery, set the instance to its kernel name
+# (as listed in /sys/class/power_supply) or its UPower device name (as listed
+# by `upower --enumerate`), for example:
 # instance=BAT0
+# Add one [battery] section per battery to show several.
 [battery]
 interval=10
