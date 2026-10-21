@@ -1,0 +1,4 @@
+#!/bin/bash
+# nmcli mock: prints the active connections listed in $NM_ACTIVE
+[ "$*" == "-t connection show --active" ] || exit 1
+cat "${NM_ACTIVE}"
