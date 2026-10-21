@@ -151,7 +151,7 @@ Package: i3xrocks-microphone
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
-    alsa-utils
+    wireplumber | pulseaudio-utils | alsa-utils
 Description: Indicator to show microphone level.
  An i3xrocks indicator for showing the current microphone level.
 
