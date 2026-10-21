@@ -35,6 +35,12 @@ echo "${OUTPUT}" | grep -q -P '[+-]\d{1,3}°[CF].*\d{1,3}mph\<'
 OUTPUT=$(button=1 ../scripts/weather)
 echo "${OUTPUT}" | grep -q -P 'i3-msg\scalled\swith\s-q\sexec\sxdg-open\shttps:\/\/wttr.in\/.*'
 
+# Padding whitespace from wttr.in is collapsed and trimmed (#139)
+OUTPUT=$(PATH="$(pwd)/fixtures/weather/padded:${PATH}" ../scripts/weather)
+[ "${OUTPUT}" == $'<span font_desc="Source Code Pro Medium 13" color="#D8DEE9">\xf0\x9f\x8c\xa4\xef\xb8\x8f +22\xc2\xb0C</span>' ]
+OUTPUT=$(PATH="$(pwd)/fixtures/weather/padded:${PATH}" weather_format=2 ../scripts/weather)
+[ "${OUTPUT}" == $'<span font_desc="Source Code Pro Medium 13" color="#D8DEE9">\xf0\x9f\x8c\xa4\xef\xb8\x8f \xf0\x9f\x8c\xa1\xef\xb8\x8f+22\xc2\xb0C \xf0\x9f\x8c\xac\xef\xb8\x8f\xe2\x86\x9713km/h</span>' ]
+
 # Test whether we can handle an unknown location properly
 PATH="$(pwd)/fixtures/weather/first:${PATH}"
 OUTPUT=$(../scripts/weather)
