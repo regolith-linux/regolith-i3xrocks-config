@@ -1,0 +1,77 @@
+#!/bin/bash
+# Stands in for lsmod, wpctl, pactl and amixer. AUDIO_SERVER is pipewire
+# (WirePlumber and pipewire-pulse), pipewire-pulse (no wpctl), pulse or empty;
+# AUDIO_JACK loads the jack module. As on a PipeWire system without the
+# PulseAudio ALSA plugin, amixer only opens the pulse device under pulse.
+set -euo pipefail
+name=${0##*/}
+call="$name $*"
+server=${AUDIO_SERVER:-}
+if [ "$name" = lsmod ]; then
+    echo 'snd_hda_intel 61440 3'
+    [ -z "${AUDIO_JACK:-}" ] || echo 'jack 16384 0'
+    exit 0
+fi
+read -r value muted < "$AUDIO_STATE"
+value=$((10#$value))
+case "$name" in
+    wpctl)
+        [ "$server" = pipewire ] || exit 1
+        [ "${2:-}" = @DEFAULT_AUDIO_SOURCE@ ] || exit 1
+        if [ "$1" = get-volume ]; then
+            printf 'Volume: 0.%02d%s\n' "$value" "${muted:+ [MUTED]}"; exit
+        fi ;;
+    pactl)
+        [[ "$server" == pipewire* || "$server" = pulse ]] || exit 1
+        case "$1" in
+            list) echo 'Module #0'; exit ;;
+            get-source-volume)
+                [ "$2" = @DEFAULT_SOURCE@ ] || exit 1
+                printf 'Volume: front-left: 26214 / %s%% / -23.88 dB,   front-right: 26214 / %s%% / -23.88 dB\n        balance 0.00\n' "$value" "$value"; exit ;;
+            get-source-mute)
+                [ "$2" = @DEFAULT_SOURCE@ ] || exit 1
+                printf 'Mute: %s\n' "${muted:-no}"; exit ;;
+            set-source-*) [ "$2" = @DEFAULT_SOURCE@ ] || exit 1 ;;
+            *) exit 1 ;;
+        esac ;;
+    amixer)
+        device='' args=()
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                -q) ;;
+                -D) device=$2; shift ;;
+                *) args+=("$1") ;;
+            esac
+            shift
+        done
+        case "$device" in
+            default | hw:1) ;;
+            pulse) [ "$server" = pulse ] ;;
+            jackplug) [ -n "${AUDIO_JACK:-}" ] ;;
+            *) false ;;
+        esac || {
+            echo "ALSA lib control.c:1570:(snd_ctl_open_noupdate) Invalid CTL $device" >&2
+            echo "amixer: Mixer attach $device error: No such file or directory" >&2
+            exit 1
+        }
+        case "${args[0]}:${args[1]:-}" in
+            scontrols:)
+                printf "Simple mixer control 'Master',0\nSimple mixer control 'Capture',0\n"; exit ;;
+            get:Master)
+                printf '  Capabilities: pvolume pswitch\n  Front Left: Playback 60 [99%%] [-0.50dB] [on]\n'; exit ;;
+            get:Capture)
+                printf "Simple mixer control 'Capture',0\n  Capabilities: cvolume cswitch\n  Front Left: Capture 26 [%s%%] [-23.88dB] [%s]\n" \
+                    "$value" "$([ -n "$muted" ] && echo off || echo on)"; exit ;;
+            sset:Capture) [ "${args[2]}" = Capture ] || exit 1 ;;
+            *) exit 1 ;;
+        esac ;;
+esac
+# Only a state change reaches here; record it for the test.
+echo "$call" >> "$AUDIO_LOG"
+case "$call" in
+    *toggle*) if [ -n "$muted" ]; then muted=''; else muted=yes; fi ;;
+    *'5%-'* | *'-5%'*) value=$((value - 5)) ;;
+    *'5%+'* | *'+5%'*) value=$((value + 5)) ;;
+    *) exit 1 ;;
+esac
+printf '%s %s\n' "$value" "$muted" > "$AUDIO_STATE"
