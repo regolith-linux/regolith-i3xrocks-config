@@ -1,6 +1,6 @@
 #!/bin/bash
 
 if [ "${3}" == "/mnt" ]; then
-    echo "Avail
- 213G"
+    echo "Avail Use%
+ 213G  83%"
 fi

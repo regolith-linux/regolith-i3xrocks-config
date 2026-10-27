@@ -22,8 +22,14 @@ LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "JetBrains Mono Medium 13")}
 DISP=${display:-$(xrescat i3xrocks.memory.display "free")}
 PERCENTAGE=${percentage:-$(xrescat i3xrocks.memory.percentage "false")}
+# The value turns to the warning or critical colour when this much (in percent) is used.
+WARN=${warning_threshold:-$(xrescat i3xrocks.memory.warning_threshold 80)}
+CRIT=${critical_threshold:-$(xrescat i3xrocks.memory.critical_threshold 95)}
+WARN_COLOR=${warning_color:-$(xrescat i3xrocks.warning "#EBCB8B")}
+CRIT_COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}
 
-awk -v type=$TYPE -v display=$DISP -v percentage=$PERCENTAGE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" -v vf="$VALUE_FONT" '
+awk -v type=$TYPE -v display=$DISP -v percentage=$PERCENTAGE -v vc="$VALUE_COLOR" -v li="$LABEL_ICON" -v lc="$LABEL_COLOR" -v vf="$VALUE_FONT" \
+    -v warn="$WARN" -v crit="$CRIT" -v wc="$WARN_COLOR" -v cc="$CRIT_COLOR" '
 /^MemTotal:/ {
 	mem_total=$2
 }
@@ -45,10 +51,21 @@ awk -v type=$TYPE -v display=$DISP -v percentage=$PERCENTAGE -v vc="$VALUE_COLOR
 /^SwapFree:/ {
 	swap_free=$2
 }
+function used_color(total, free) {
+	if (total <= 0)
+		return vc
+	used = 100 * (total - free) / total
+	if (used >= crit)
+		return cc
+	if (used >= warn)
+		return wc
+	return vc
+}
 END {
 	# fallback for mem_available
 	if (mem_available == "")
 		mem_available=mem_free
+	vc = (type == "swap") ? used_color(swap_total, swap_free) : used_color(mem_total, mem_free)
 	# full text
 	if (type == "swap") {
 		to_display = swap_free/1024/1024

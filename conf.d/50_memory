@@ -1,3 +1,9 @@
 # Memory
+#
+# The value turns to i3xrocks.warning when 80% of the memory is used and to
+# i3xrocks.critical.color at 95%. Change the thresholds with the
+# warning_threshold and critical_threshold properties or the
+# i3xrocks.memory.warning_threshold and i3xrocks.memory.critical_threshold
+# resources.
 [memory]
 interval=10

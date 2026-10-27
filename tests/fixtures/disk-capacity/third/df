@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "${3}" == "/" ]; then
+    echo "Avail Use%
+ 4.1G  97%"
+fi
