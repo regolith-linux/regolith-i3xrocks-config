@@ -12,15 +12,17 @@ use utf8;
 use Getopt::Long;
 use open IO => ':encoding(UTF-8)';
 
-# default values
-my $t_warn = 50;
-my $t_crit = 80;
+# Thresholds in percent: the -w and -c options, else the block properties
+# warning_threshold and critical_threshold, else the resources
+# i3xrocks.cpu-usage.warning_threshold and i3xrocks.cpu-usage.critical_threshold.
+my $t_warn = $ENV{'warning_threshold'} // `xrescat i3xrocks.cpu-usage.warning_threshold 50`;
+my $t_crit = $ENV{'critical_threshold'} // `xrescat i3xrocks.cpu-usage.critical_threshold 80`;
 my $cpu_usage = -1;
 
 sub help {
     print "Usage: cpu_usage [-w <warning>] [-c <critical>]\n";
-    print "-w <percent>: warning threshold to become yellow\n";
-    print "-c <percent>: critical threshold to become red\n";
+    print "-w <percent>: warning threshold, shown in i3xrocks.warning (default 50)\n";
+    print "-c <percent>: critical threshold, shown in i3xrocks.critical.color (default 80)\n";
     exit 0;
 }
 
@@ -46,6 +48,11 @@ my $label_color = $ENV{'label_color'} || `xrescat i3xrocks.label.color #7B8394`;
 my $value_color = $ENV{'color'} || `xrescat i3xrocks.value.color #D8DEE9`;
 my $value_font = $ENV{'font'} || `xrescat i3xrocks.value.font "Source Code Pro Medium 13"`;
 my $value_icon = $ENV{'icon'} || `xrescat i3xrocks.label.cpu `;
+if ($cpu_usage >= $t_crit) {
+    $value_color = $ENV{'critical_color'} || `xrescat i3xrocks.critical.color "#BF616A"`;
+} elsif ($cpu_usage >= $t_warn) {
+    $value_color = $ENV{'warning_color'} || `xrescat i3xrocks.warning "#EBCB8B"`;
+}
 
 # Print short_text, full_text
 binmode STDOUT, ":utf8";

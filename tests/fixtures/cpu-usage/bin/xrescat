@@ -1,0 +1,4 @@
+#!/bin/bash
+# Like the real xrescat (and unlike xrescat_mock): print the default without a
+# newline, which cpu-usage embeds in its markup as is.
+printf '%s' "${2}"

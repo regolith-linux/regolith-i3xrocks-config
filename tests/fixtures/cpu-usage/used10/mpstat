@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Linux 6.8.0 (host) 	10/27/2026 	_x86_64_	(4 CPU)
+
+12:00:01 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+12:00:02 PM  all    1.00    0.00    1.00    0.00    0.00    0.00    0.00    0.00    0.00   90.00
+Average:     all    1.00    0.00    1.00    0.00    0.00    0.00    0.00    0.00    0.00   90.00"

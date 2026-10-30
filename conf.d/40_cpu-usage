@@ -1,7 +1,10 @@
 # CPU usage
 #
-# The script may be called with -w and -c switches to specify thresholds,
-# see the script for details.
+# The value turns to i3xrocks.warning from 50% and to i3xrocks.critical.color
+# from 80%. Change the thresholds with the warning_threshold and
+# critical_threshold properties, the i3xrocks.cpu-usage.warning_threshold and
+# i3xrocks.cpu-usage.critical_threshold resources, or the script's -w and -c
+# switches.
 [cpu-usage]
 interval=5
 min_width=100%

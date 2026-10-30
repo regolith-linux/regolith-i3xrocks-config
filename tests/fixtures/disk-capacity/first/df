@@ -1,6 +1,6 @@
 #!/bin/bash
 
 if [ "${3}" == "/" ]; then
-    echo "Avail
- 133G"
+    echo "Avail Use%
+ 133G  45%"
 fi

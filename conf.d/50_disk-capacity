@@ -1,4 +1,10 @@
 # Disk Capacity
+#
+# The value turns to i3xrocks.warning when the disk is 80% full and to
+# i3xrocks.critical.color at 90%. Change the thresholds with the
+# warning_threshold and critical_threshold properties or the
+# i3xrocks.disk-capacity.warning_threshold and
+# i3xrocks.disk-capacity.critical_threshold resources.
 [disk-capacity]
 interval=240
 #MNT=/home
