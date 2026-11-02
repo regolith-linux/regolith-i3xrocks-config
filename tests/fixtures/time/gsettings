@@ -1,0 +1,4 @@
+#!/bin/bash
+# org.gnome.desktop.interface clock-format, from TEST_CLOCK_FORMAT
+[[ "$*" == "get org.gnome.desktop.interface clock-format" ]] || exit 1
+printf "'%s'\n" "${TEST_CLOCK_FORMAT:-24h}"

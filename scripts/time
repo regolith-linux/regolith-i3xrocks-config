@@ -23,12 +23,14 @@ if [ -z "$DATE_FORMAT" ]; then # No custom format defined, use system defaults
     TIME_FORMAT=$(gsettings get org.gnome.desktop.interface clock-format)
 
     if [ "$TIME_FORMAT" == "'12h'" ]; then
-        TIME_SPEC="%I:%M"
+        # %p is AM or PM; without it 00:02 and 12:02 both read 12:02.
+        TIME_SPEC="%I:%M %p"
     else
         TIME_SPEC="%H:%M"
     fi
 
-    DATE_VALUE=$(date "+ $DATE_SPEC $TIME_SPEC")
+    # Locales without AM/PM strings leave %p empty; drop the trailing space.
+    DATE_VALUE=$(date "+ $DATE_SPEC $TIME_SPEC" | sed 's/ *$//')
 else
     DATE_VALUE=$(date "+ $DATE_FORMAT")
 fi
