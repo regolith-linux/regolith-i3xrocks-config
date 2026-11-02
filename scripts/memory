@@ -92,6 +92,10 @@ END {
 ' /proc/meminfo
 
 if [ "x${BUTTON}" == "x1" ]; then
-    ACTION=$(xrescat i3xrocks.action.memory "/usr/bin/gnome-system-monitor --class=floating_window --show-resources-tab")
+    # gnome-system-monitor takes --class=floating_window up to GTK 3 (42), ignores
+    # it in 46 and rejects it from 48 on. GTK 4 builds take their window class
+    # from argv[0], so also start it as floating_window, and retry without
+    # --class when it is rejected. The window floats in all of them.
+    ACTION=$(xrescat i3xrocks.action.memory "bash -c \"(exec -a floating_window /usr/bin/gnome-system-monitor --class=floating_window --show-resources-tab) || exec -a floating_window /usr/bin/gnome-system-monitor --show-resources-tab\"")
     /usr/bin/i3-msg -q exec "$ACTION"
 fi
