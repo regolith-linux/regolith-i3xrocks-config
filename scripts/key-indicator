@@ -21,16 +21,21 @@ KB_MASK=$(xset -q | grep -o "mask:[\ 0-9]*$" | cut -d" " -f 3)
 [[ -z "$caps_icon" ]] && CAPS_ICON=$(xrescat i3xrocks.label.capslock C) || CAPS_ICON=$caps_icon
 [[ -z "$num_icon" ]] && NUM_ICON=$(xrescat i3xrocks.label.numlock N) || NUM_ICON=$num_icon
 
+# An indicator that is off is drawn in the bar's background colour, so it
+# disappears. Regolith 3 looks set wm.bar.background.color; Regolith 1 and 2
+# used i3-wm.bar.background.color.
+OFF_COLOR=$(xrescat wm.bar.background.color "$(xrescat i3-wm.bar.background.color "#2E3440")")
+
 if [[ $((KB_MASK & 1)) == 1 ]]; then
     CAPS_ICON_COLOR=$(xrescat i3xrocks.label.color "#7B8394")
 else
-    CAPS_ICON_COLOR=$(xrescat i3-wm.bar.background.color "#2E3440")
+    CAPS_ICON_COLOR=$OFF_COLOR
 fi
 
 if [[ $(((KB_MASK & 2) >> 1)) == 1 ]]; then
     NUM_ICON_COLOR=$(xrescat i3xrocks.label.color "#7B8394")
 else
-    NUM_ICON_COLOR=$(xrescat i3-wm.bar.background.color "#2E3440")
+    NUM_ICON_COLOR=$OFF_COLOR
 fi
 
 VALUE_FONT=$(xrescat i3xrocks.value.font "monospace")

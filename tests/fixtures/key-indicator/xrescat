@@ -1,0 +1,9 @@
+#!/bin/bash
+# xrescat with the resources of a Regolith 3 look (wm.bar.background.color),
+# or of a Regolith 2 one when TEST_LEGACY_RESOURCES is set
+case "${1}" in
+    wm.bar.background.color) [[ -n "${TEST_LEGACY_RESOURCES:-}" ]] || { printf '#393939'; exit 0; } ;;
+    i3-wm.bar.background.color) [[ -z "${TEST_LEGACY_RESOURCES:-}" ]] || { printf '#282828'; exit 0; } ;;
+    i3xrocks.label.color) printf '#C0C0C0'; exit 0 ;;
+esac
+printf '%s' "${2:-}"
