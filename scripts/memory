@@ -62,10 +62,13 @@ function used_color(total, free) {
 	return vc
 }
 END {
-	# fallback for mem_available
+	# Free memory is what the kernel estimates can be used without swapping
+	# (MemAvailable, the "available" column of free). MemFree + Buffers + Cached
+	# counts tmpfs and other shared memory as free. Kernels before 3.14 have no
+	# MemAvailable, so fall back to that sum there.
 	if (mem_available == "")
 		mem_available=mem_free
-	vc = (type == "swap") ? used_color(swap_total, swap_free) : used_color(mem_total, mem_free)
+	vc = (type == "swap") ? used_color(swap_total, swap_free) : used_color(mem_total, mem_available)
 	# full text
 	if (type == "swap") {
 		to_display = swap_free/1024/1024
@@ -77,7 +80,7 @@ END {
 			printf("<span font_desc=\"%s\" color=\"%s\">%s</span><span font_desc=\"%s\" color=\"%s\"> %.1fG</span>\n", vf, lc, li, vf, vc, to_display)
 	}
 	else {
-		to_display = mem_free/1024/1024
+		to_display = mem_available/1024/1024
 		if (display == "used")
 			to_display = mem_total/1024/1024 - to_display
 		if (percentage == "true")

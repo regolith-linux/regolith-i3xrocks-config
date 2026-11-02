@@ -58,3 +58,30 @@ echo "${OUTPUT}" | grep -q -F 'color="#BF616A"> 0.1G<'
 meminfo 16777216 8388608 0 0
 OUTPUT=$(BLOCK_INSTANCE=swap ../scripts/memory)
 echo "${OUTPUT}" | grep -q -F 'color="#D8DEE9"> 0.0G<'
+
+# 4 GiB with 1.5 GiB pinned in tmpfs: Cached includes the Shmem, so
+# MemFree + Buffers + Cached would report 3.2G free. Free is MemAvailable.
+install -d "${UMOCKDEV_DIR}/proc"
+cat >"${UMOCKDEV_DIR}/proc/meminfo" <<MEMINFO
+MemTotal:        4194304 kB
+MemFree:          204800 kB
+MemAvailable:    1784832 kB
+Buffers:           51200 kB
+Cached:          3072000 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Shmem:           1536000 kB
+MEMINFO
+OUTPUT=$(../scripts/memory)
+echo "${OUTPUT}" | grep -q -F 'color="#D8DEE9"> 1.7G<'
+OUTPUT=$(display=used ../scripts/memory)
+echo "${OUTPUT}" | grep -q -F 'color="#D8DEE9"> 2.3G<'
+OUTPUT=$(display=used percentage=true ../scripts/memory)
+echo "${OUTPUT}" | grep -q -F 'color="#D8DEE9"> 57%<'
+OUTPUT=$(warning_threshold=50 ../scripts/memory)
+echo "${OUTPUT}" | grep -q -F 'color="#EBCB8B"> 1.7G<'
+
+# kernels without MemAvailable (before 3.14): MemFree + Buffers + Cached
+sed -i '/^MemAvailable:/d' "${UMOCKDEV_DIR}/proc/meminfo"
+OUTPUT=$(../scripts/memory)
+echo "${OUTPUT}" | grep -q -F 'color="#D8DEE9"> 3.2G<'
