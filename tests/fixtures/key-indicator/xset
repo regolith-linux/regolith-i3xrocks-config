@@ -1,0 +1,10 @@
+#!/bin/bash
+# xset -q with the LED mask from TEST_LED_MASK (1 = Caps Lock, 2 = Num Lock)
+[[ "$*" == "-q" ]] || exit 1
+cat <<XSET
+Keyboard Control:
+  auto repeat:  on    key click percent:  0    LED mask:  $(printf '%08x' "${TEST_LED_MASK:-0}")
+  XKB indicators:
+    00: Caps Lock:   off    01: Num Lock:    off    02: Scroll Lock: off
+  auto repeat delay:  500    repeat rate:  33
+XSET
