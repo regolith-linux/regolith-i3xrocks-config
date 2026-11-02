@@ -59,8 +59,13 @@ binmode STDOUT, ":utf8";
 printf "<span font_desc='%s' color='%s'>%s</span><span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $label_color, $value_icon, $value_font, $value_color, $cpu_usage;
 printf "<span font_desc='%s' color='%s'> %02d%%</span>\n", $value_font, $value_color, $cpu_usage;
 
-if (defined $ENV{'button'}) {
-    my $action = `xrescat i3xrocks.action.cpu-usage "/usr/bin/gnome-system-monitor --class=floating_window"`;
+# Left click only: scrolling over the bar should not open anything.
+if (($ENV{'button'} // '') eq '1') {
+    # gnome-system-monitor takes --class=floating_window up to GTK 3 (42), ignores
+    # it in 46 and rejects it from 48 on. GTK 4 builds take their window class
+    # from argv[0], so also start it as floating_window, and retry without
+    # --class when it is rejected. The window floats in all of them.
+    my $action = `xrescat i3xrocks.action.cpu-usage 'bash -c "(exec -a floating_window /usr/bin/gnome-system-monitor --class=floating_window) || exec -a floating_window /usr/bin/gnome-system-monitor"'`;
     system("/usr/bin/i3-msg -q exec '$action'");
 }
 

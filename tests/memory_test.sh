@@ -33,6 +33,10 @@ meminfo 16777216 4194304 2097152 2097152
 OUTPUT=$(../scripts/memory)
 echo "${OUTPUT}" | grep -q -F 'color="#D8DEE9"> 4.0G<'
 
+# left click opens System Monitor through i3, floating as floating_window
+OUTPUT=$(button=1 ../scripts/memory)
+echo "${OUTPUT}" | grep -q -F 'i3-msg called with -q exec bash -c "(exec -a floating_window /usr/bin/gnome-system-monitor --class=floating_window --show-resources-tab) || exec -a floating_window /usr/bin/gnome-system-monitor --show-resources-tab"'
+
 # 2 GiB free: 87.5% used, warning colour (default 80)
 meminfo 16777216 2097152 2097152 2097152
 OUTPUT=$(../scripts/memory)
