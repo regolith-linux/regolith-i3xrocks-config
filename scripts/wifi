@@ -6,7 +6,9 @@ LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.wifi )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 
-ESSID=$(LC_ALL=C nmcli -t -f active,ssid dev wifi |  perl -n -e '/yes:(.*)/ && print $1')
+# --escape no: terse mode would print a ':' in the SSID as '\:'. The SSID is free
+# text, so escape it for the Pango markup below.
+ESSID=$(LC_ALL=C nmcli -t --escape no -f active,ssid dev wifi | perl -n -e 'if (/^yes:(.*)/) { $s = $1; $s =~ s/&/&amp;/g; $s =~ s/</&lt;/g; $s =~ s/>/&gt;/g; print $s; exit }')
 if [ -n "$ESSID" ]; then
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${LABEL_COLOR}\">${LABEL_ICON}</span><span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>" # full text
     echo "<span font_desc=\"${VALUE_FONT}\" color=\"${VALUE_COLOR}\"> $ESSID</span>" # short text

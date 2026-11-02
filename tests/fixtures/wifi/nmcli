@@ -1,0 +1,20 @@
+#!/bin/bash
+# nmcli -t -f active,ssid dev wifi: a neighbour network, then the connected one
+# (TEST_SSID). Like the real nmcli, terse mode escapes ':' and '\' in values
+# unless --escape no is given.
+escape=yes
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -e | --escape) escape=$2; shift ;;
+    esac
+    shift
+done
+value() {
+    if [ "$escape" = yes ]; then
+        printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/:/\\:/g'
+    else
+        printf '%s' "$1"
+    fi
+}
+printf 'no:%s\n' "$(value 'yes:neighbour')"
+[ -z "${TEST_SSID:-}" ] || printf 'yes:%s\n' "$(value "$TEST_SSID")"
