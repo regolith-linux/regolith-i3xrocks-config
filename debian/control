@@ -96,6 +96,7 @@ Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     libglib2.0-bin
+Recommends: gkbd-capplet
 Description: Indicator to show keyboard layout.
  An i3xrocks indicator to show the current keyboard layout.
 
