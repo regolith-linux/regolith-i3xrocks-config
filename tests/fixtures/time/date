@@ -1,0 +1,3 @@
+#!/bin/bash
+# date at a fixed time: TEST_TIME (default just after midnight)
+exec /usr/bin/date -d "${TEST_TIME:-2026-10-29 00:02}" "$@"
