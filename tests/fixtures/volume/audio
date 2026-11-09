@@ -3,28 +3,35 @@ set -euo pipefail
 name=${0##*/}
 [[ "$name" = "${AUDIO_BACKEND:-}" ]] || exit 1
 read -r value muted < "$AUDIO_STATE"
+# dB readings are value - 100: 100% is 0 dB
 case "$name:$1" in
-    wpctl:get-volume) printf 'Volume: 0.%02d%s\n' "$value" "${muted:+ [MUTED]}"; exit ;;
-    pactl:get-sink-volume) printf 'Volume: front-left: 32768 / %s%% / -18.00 dB\n' "$value"; exit ;;
+    wpctl:get-volume)
+        printf 'Volume: %d.%02d%s\n' "$((value / 100))" "$((value % 100))" "${muted:+ [MUTED]}"; exit ;;
+    pactl:get-sink-volume) printf 'Volume: front-left: 32768 / %s%% / %d.00 dB\n' "$value" "$((value - 100))"; exit ;;
     pactl:get-sink-mute) printf 'Mute: %s\n' "${muted:-no}"; exit ;;
     amixer:*)
         if [[ " $* " = *' scontrols '* ]]; then
             echo "Simple mixer control 'Master',0"; exit
         elif [[ " $* " = *' get '* ]]; then
-            printf '  Capabilities: pvolume pswitch\n  Front Left: Playback 30 [%s%%] [-18.00dB] [%s]\n' "$value" "${muted:-on}"; exit
+            printf '  Capabilities: pvolume pswitch\n  Front Left: Playback 30 [%s%%] [%d.00dB] [%s]\n' "$value" "$((value - 100))" "${muted:-on}"; exit
         fi
         ;;
 esac
 printf '%s %s\n' "$name" "$*" >> "$AUDIO_LOG"
+# The limit: wpctl's -l 1.0, and an ALSA mixer's maximum
+limit=''
+[[ " $* " == *' -l 1.0 '* || "$name" == amixer ]] && limit=100
 case "$*" in
     *toggle*)
         if [ -n "$muted" ]; then muted=''; else
             case "$name" in wpctl) muted=yes ;; pactl) muted=yes ;; amixer) muted=off ;; esac
         fi ;;
-    *'5%'*)
-        if [[ "$*" == *'5%-'* || "$*" == *'-5%'* ]]; then
+    *' 100%' | *' 0dB') value=100 ;;
+    *'5%'* | *'5dB'*)
+        if [[ "$*" == *'5%-'* || "$*" == *'-5%'* || "$*" == *'-5dB'* ]]; then
             value=$((value - 5))
         else value=$((value + 5)); fi ;;
     *) exit 1 ;;
 esac
+if [ -n "$limit" ] && [ "$value" -gt "$limit" ]; then value=$limit; fi
 printf '%s %s\n' "$value" "$muted" > "$AUDIO_STATE"

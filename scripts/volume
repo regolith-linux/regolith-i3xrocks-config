@@ -143,11 +143,36 @@ toggle() {
     esac
 }
 
+# Raising the volume stops at 100% (0 dB), as with the volume keys and in the
+# sway session. ALSA mixers stop at their maximum by themselves.
+over_limit() {
+    local limit=100
+    [ "$UNIT" = dB ] && limit=0
+    [ "$VALUE" != -inf ] && awk -v value="$VALUE" -v step="$STEP" -v limit="$limit" \
+        'BEGIN { exit !(value + step > limit) }'
+}
+
 adjust_volume() {
     local direction="$1"
     case "$BACKEND" in
-        pipewire) wpctl set-volume @DEFAULT_AUDIO_SINK@ "${STEP}%${direction}" ;;
-        pulse) pactl set-sink-volume @DEFAULT_SINK@ "${direction}${STEP}${UNIT}" ;;
+        pipewire)
+            if [ "$direction" = + ]; then
+                wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ "${STEP}%+"
+            else
+                wpctl set-volume @DEFAULT_AUDIO_SINK@ "${STEP}%-"
+            fi
+            ;;
+        pulse)
+            if [ "$direction" = + ] && over_limit; then
+                if [ "$UNIT" = dB ]; then
+                    pactl set-sink-volume @DEFAULT_SINK@ 0dB
+                else
+                    pactl set-sink-volume @DEFAULT_SINK@ 100%
+                fi
+            else
+                pactl set-sink-volume @DEFAULT_SINK@ "${direction}${STEP}${UNIT}"
+            fi
+            ;;
         alsa) amixer -q -D "$MIXER" sset "$SCONTROL" "${CAPABILITY[@]}" "${STEP}${UNIT}${direction}" ;;
     esac
 }

@@ -28,3 +28,25 @@ for AUDIO_BACKEND in wpctl pactl amixer; do
     done
     [ "$(wc -l < "$AUDIO_LOG")" -eq 4 ]
 done
+
+# Scrolling up stops at 100% (0 dB), as with the volume keys; scrolling down
+# from above 100% is not limited
+volume_after() { # volume_after <start> <button> [<step> <unit>]: the new volume
+    printf '%s \n' "$1" > "$AUDIO_STATE"
+    BLOCK_BUTTON=$2 "$SCRIPT_DIR/../scripts/volume" "${@:3}" > /dev/null
+    read -r value _ < "$AUDIO_STATE"
+    echo "$value"
+}
+for AUDIO_BACKEND in wpctl pactl amixer; do
+    [ "$(volume_after 90 4)" -eq 95 ]
+    [ "$(volume_after 97 4)" -eq 100 ]
+    [ "$(volume_after 100 4)" -eq 100 ]
+done
+for AUDIO_BACKEND in wpctl pactl; do
+    [ "$(volume_after 120 4)" -eq 100 ]
+    [ "$(volume_after 120 5)" -eq 115 ]
+done
+AUDIO_BACKEND=pactl
+[ "$(volume_after 90 4 5 dB)" -eq 95 ]
+[ "$(volume_after 97 4 5 dB)" -eq 100 ]
+[ "$(volume_after 100 5 5 dB)" -eq 95 ]
