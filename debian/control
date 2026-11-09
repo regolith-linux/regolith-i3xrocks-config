@@ -225,5 +225,13 @@ Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     update-notifier-common,
+Breaks: fonts-nerd-font-bitstreamverasansmono (<< 3.5.1),
+    fonts-nerd-font-cousine (<< 3.5.1),
+    fonts-nerd-font-dejavusansmono (<< 3.5.1),
+    fonts-nerd-font-hack (<< 3.5.1),
+    fonts-nerd-font-meslo (<< 3.5.1),
+    fonts-nerd-font-mononoki (<< 3.5.1),
+    fonts-nerd-font-robotomono (<< 3.5.1),
+    fonts-nerd-font-sourcecodepro (<< 3.5.1)
 Description: Indicator for available updates
  An i3xrocks indicator to show the number of apt packages that may be upgraded.

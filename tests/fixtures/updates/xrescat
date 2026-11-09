@@ -1,0 +1,8 @@
+#!/bin/bash
+# Report pending updates through a canned check command; every other
+# resource falls back to the blocklet's default.
+if [ "$1" = i3xrocks.updates.checkcmd ]; then
+    echo "echo '3;1'"
+else
+    echo "${2-}"
+fi
