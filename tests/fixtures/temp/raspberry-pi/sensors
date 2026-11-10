@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -Eeu -o pipefail
+
+# Raspberry Pi 4: the only CPU reading comes from the cpu_thermal chip
+echo "cpu_thermal-virtual-0
+Adapter: Virtual device
+temp1:        +47.2°C
+
+rpi_volt-isa-0000
+Adapter: ISA adapter
+in0:              N/A
+"

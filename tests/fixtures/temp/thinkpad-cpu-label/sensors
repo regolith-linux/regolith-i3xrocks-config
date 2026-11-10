@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -Eeu -o pipefail
+
+# A ThinkPad without a coretemp or k10temp reading: the EC labels it CPU
+echo "thinkpad-isa-0000
+Adapter: ISA adapter
+fan1:           0 RPM
+fan2:           0 RPM
+CPU:          +41.0°C
+GPU:           +0.0°C
+temp3:         +0.0°C
+temp4:            N/A
+
+nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  =  -5.2°C, high = +79.8°C)
+                       (crit = +84.8°C)
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +45.0°C  (crit = +128.0°C)
+"

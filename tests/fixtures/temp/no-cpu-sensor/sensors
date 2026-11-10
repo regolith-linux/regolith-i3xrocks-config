@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -Eeu -o pipefail
+
+# A virtual machine: no CPU temperature reading at all
+echo "nvme-pci-0100
+Adapter: PCI adapter
+Composite:    +32.9°C  (low  =  -5.2°C, high = +79.8°C)
+                       (crit = +84.8°C)
+"
