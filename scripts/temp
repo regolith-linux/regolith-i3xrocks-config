@@ -7,7 +7,35 @@ set -Eeu -o pipefail
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 LABEL_ICON=${label_icon:-$(xrescat i3xrocks.label.thermometer )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
-TEMP=$(sensors | awk -F '(\\+|\\.)' '/(Core|Tdie|Tctl)/ {sum+= $2; count++} END { printf "%d\n", sum/count}')
+
+# The CPU temperature is the average of the per-core (Intel "Core N") or die
+# (AMD "Tdie", "Tctl") readings. Machines without those (the Raspberry Pi and
+# other ARM boards, some ThinkPads, virtual machines) use a reading labelled
+# "CPU" or "Package id N", or else the first reading of a CPU sensor chip such
+# as the Pi's cpu_thermal. With no CPU temperature at all, TEMP stays empty.
+TEMP=$({ sensors 2>/dev/null || true; } | awk '
+  /^Adapter:/ { chip = prev }
+  { prev = $0 }
+  !/:/ { next }
+  {
+    label = $0; sub(/:.*/, "", label)
+    value = $0; sub(/^[^:]*:[ \t]*/, "", value)
+    if (value !~ /^[+-]?[0-9]/) next
+    value += 0
+  }
+  label ~ /^(Core [0-9]+|Tdie|Tctl)$/ { sum += value; count++; next }
+  !have_named && label ~ /^(CPU|Package id [0-9]+)$/ { named = value; have_named = 1; next }
+  !have_chip && chip ~ /cpu/ && label ~ /^temp[0-9]+$/ { chip_value = value; have_chip = 1 }
+  END {
+    if (count) printf "%d\n", sum / count
+    else if (have_named) printf "%d\n", named
+    else if (have_chip) printf "%d\n", chip_value
+  }')
+
+# Nothing to show: print nothing, which hides the blocklet.
+if [[ -z ${TEMP} ]]; then
+  exit 0
+fi
 
 if [[ ${TEMP} -gt 90 ]]; then
   COLOR=${critical_color:-$(xrescat i3xrocks.critical.color "#BF616A")}

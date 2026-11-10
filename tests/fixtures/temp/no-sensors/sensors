@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# No sensor chips: sensors complains and fails
+echo "No sensors found!" >&2
+echo "Make sure you loaded all the kernel drivers you need." >&2
+echo "Try sensors-detect to find out which these are." >&2
+exit 1
