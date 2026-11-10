@@ -29,7 +29,7 @@ if ! [[ $SECURITY_UPDATES =~ $re ]] ; then
    echo "error: SECURITY_UPDATES Not a number" >&2; exit 1
 fi
 
-LABEL_ICON=${icon:-$(xrescat i3xrocks.label.updates  )}
+LABEL_ICON=${icon:-$(xrescat i3xrocks.label.updates 󰏗 )}
 LABEL_COLOR=${label_color:-$(xrescat i3xrocks.label.color "#7B8394")}
 VALUE_FONT=${font:-$(xrescat i3xrocks.value.font "Source Code Pro Medium 13")}
 VALUE_COLOR=${color:-$(xrescat i3xrocks.value.color "#D8DEE9")}
