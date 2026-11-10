@@ -45,3 +45,15 @@ OUTPUT=$(PATH="$(pwd)/fixtures/weather/padded:${PATH}" weather_format=2 ../scrip
 PATH="$(pwd)/fixtures/weather/first:${PATH}"
 OUTPUT=$(../scripts/weather)
 echo "${OUTPUT}" | grep -q $'\u26D4'
+
+# An HTTP error status shows the error message, not the error page
+OUTPUT=$(PATH="$(pwd)/fixtures/weather/http-error:${PATH}" ../scripts/weather)
+[ "${OUTPUT}" == $'<span font_desc="Source Code Pro Medium 13" color="#D8DEE9">\u26D4</span>' ]
+
+# So does an HTML page served with a success status
+OUTPUT=$(PATH="$(pwd)/fixtures/weather/html-page:${PATH}" ../scripts/weather)
+[ "${OUTPUT}" == $'<span font_desc="Source Code Pro Medium 13" color="#D8DEE9">\u26D4</span>' ]
+
+# Characters that are markup in Pango are escaped
+OUTPUT=$(PATH="$(pwd)/fixtures/weather/markup:${PATH}" ../scripts/weather)
+[ "${OUTPUT}" == $'<span font_desc="Source Code Pro Medium 13" color="#D8DEE9">Rain &amp; fog &lt;3 +12\xc2\xb0C</span>' ]

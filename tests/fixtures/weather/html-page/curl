@@ -1,0 +1,3 @@
+#!/bin/bash
+# An HTML page served with a success status (a captive portal or proxy page)
+printf '<!DOCTYPE html>\n<html><head><title>Sign in to the network</title></head>\n<body><p>Please sign in</p></body></html>\n'

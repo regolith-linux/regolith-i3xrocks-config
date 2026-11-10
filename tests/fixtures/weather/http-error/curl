@@ -1,0 +1,10 @@
+#!/bin/bash
+# wttr.in answering with an HTTP error status (rate limited, server error or
+# unknown location), as curl reports it with and without --fail
+for arg in "$@"; do
+    if [[ "${arg}" == "--fail" || "${arg}" == "-f" ]]; then
+        echo "curl: (22) The requested URL returned error: 503" >&2
+        exit 22
+    fi
+done
+printf '<html>\n<head><title>503 Service Temporarily Unavailable</title></head>\n<body>\n<center><h1>503 Service Temporarily Unavailable</h1></center>\n</body>\n</html>\n'
