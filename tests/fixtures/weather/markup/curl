@@ -1,0 +1,3 @@
+#!/bin/bash
+# A reply with characters that are markup in Pango
+printf 'Rain & fog <3 +12\xc2\xb0C\n'
