@@ -1,3 +1,30 @@
+regolith-i3xrocks-config (6.0.0) focal; urgency=medium
+
+  [ anatolepain ]
+  * fix: align ilia launch commands with wm config (#160)
+
+  [ Carlos Fernandez Sanz ]
+  * Fix volume blocklet on PipeWire systems (#161)
+  * weather: collapse the padding whitespace from wttr.in (#162)
+  * key-indicator: describe what the blocklet shows (#163)
+  * nm-vpn: do not report bridge-attached tun/tap devices as a VPN (#164)
+  * battery: accept kernel battery names as the instance (#165)
+  * fix(debian): make i3xrocks-info depend on ilia, not remontoire (#166)
+  * feat: colour the CPU, memory and disk values when usage is high (#168)
+  * fix(memory): show MemAvailable as free memory (#169)
+  * fix(time): show AM or PM with the 12-hour clock (#170)
+  * fix: open System Monitor again from the CPU and memory blocklets (#171)
+  * fix(key-indicator): hide the off indicators again (#172)
+  * fix: show bluetooth device names and Wi-Fi SSIDs as they are (#173)
+  * fix(debian): recommend gkbd-capplet for the keyboard layout blocklet (#174)
+  * fix(volume): stop at 100% when scrolling up (#175)
+  * Fix microphone blocklet on PipeWire systems (#167)
+  * fix(weather): show the error message for wttr.in error replies (#177)
+  * fix(temp): fall back to other CPU sensors instead of dividing by zero (#178)
+  * fix(updates): use the Nerd Fonts 3 code point for the default label (#176)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Tue, 10 Nov 2026 17:37:39 -0800
+
 regolith-i3xrocks-config (5.5.3) focal; urgency=medium
 
   [ Khosrow Moossavi ]
