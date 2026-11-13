@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# tailscale comes from Tailscale's own apt repository, so it may be missing
+command -v tailscale >/dev/null || exit 0
+
 CONNECTION=$(LC_ALL=C tailscale ip --1)
 LABEL_COLOR=${vpn_label_color:-$(xrescat i3xrocks.label.color)}
 VALUE_COLOR="${vpn_color:-$(xrescat i3xrocks.value.color)}"

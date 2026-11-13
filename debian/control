@@ -215,8 +215,8 @@ Description: Button to open app launcher.
 Package: i3xrocks-tailscale
 Architecture: any
 Depends: ${misc:Depends},
-    regolith-i3xrocks-config,
-    tailscale
+    regolith-i3xrocks-config
+Recommends: tailscale
 Description: Indicator to show tailscale IP.
  An i3xrocks indicator for showing the current tailscale IP.
 
