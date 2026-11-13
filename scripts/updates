@@ -2,6 +2,9 @@
 # This update blocklet will use Xresources check command if defined
 # or use the apt-check utility to display the number of pending package updates
 
+# Without apt-check (Debian has no update-notifier-common) it counts what
+# apt-get would upgrade, and the upgrades from a -security suite.
+
 # > Xresources
 # i3xrocks.updates.checkcmd : command to run to get the number of updates should return in format '<total_updates>;<security_updates>'
 # i3xrocks.updates.displayzero : bool, if true display even if there are zero updates
@@ -11,7 +14,22 @@
 # i3xrocks.updates.interval : interval in seconds between checks
 
 
-CHECK_CMD=$(xrescat i3xrocks.updates.checkcmd '/usr/lib/update-notifier/apt-check 2>&1')
+APT_CHECK=${apt_check:-/usr/lib/update-notifier/apt-check}
+
+# Prints '<total_updates>;<security_updates>' from a simulated dist-upgrade
+apt_get_check() {
+    LC_ALL=C apt-get -qq -s -o Debug::NoLocking=true dist-upgrade 2>/dev/null |
+        awk '/^Inst / { total++; if ($0 ~ /-security[ ,]/) security++ }
+             END { printf "%d;%d\n", total, security }'
+}
+
+if [ -x "$APT_CHECK" ]; then
+    DEFAULT_CHECK_CMD="$APT_CHECK 2>&1"
+else
+    DEFAULT_CHECK_CMD=apt_get_check
+fi
+
+CHECK_CMD=$(xrescat i3xrocks.updates.checkcmd "$DEFAULT_CHECK_CMD")
 CHECK_OUTPUT=$(eval $CHECK_CMD)
 
 [ -z "$CHECK_OUTPUT" ] && echo "error: Cannot evaluate CHECK_CMD" && exit 1

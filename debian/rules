@@ -1,7 +1,16 @@
 #!/usr/bin/make -f
 
+# apt-check, which the updates blocklet prefers, is Ubuntu's: Debian has no
+# update-notifier-common, and the blocklet asks apt-get there instead.
+ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+UPDATES_DEPENDS = update-notifier-common
+endif
+
 %:
 	dh $@
+
+override_dh_gencontrol:
+	dh_gencontrol -- -Vupdates:Depends="$(UPDATES_DEPENDS)"
 
 override_dh_auto_test:
 	./tests/run.sh

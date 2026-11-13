@@ -1,0 +1,11 @@
+#!/bin/bash
+# A simulated dist-upgrade with three upgrades, two of them from a -security
+# suite (one listed with a second suite after it), and one new package
+cat <<'OUT'
+Inst libssl3 [3.0.11-1~deb12u1] (3.0.15-1~deb12u1 Debian-Security:12/oldstable-security [amd64])
+Inst base-files [14ubuntu6] (14ubuntu6.3 Ubuntu:26.04/resolute-updates, Ubuntu:26.04/resolute-security [amd64])
+Inst bsdutils [1:2.38.1-5+deb12u1] (1:2.38.1-5+deb12u3 Debian:12.12/oldstable [amd64])
+Inst linux-image-6.1.0-40-amd64 (6.1.153-1 Debian:12.12/oldstable [amd64])
+Conf libssl3 (3.0.15-1~deb12u1 Debian-Security:12/oldstable-security [amd64])
+Conf base-files (14ubuntu6.3 Ubuntu:26.04/resolute-updates, Ubuntu:26.04/resolute-security [amd64])
+OUT

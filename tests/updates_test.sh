@@ -17,6 +17,11 @@ if [ ! -f /var/run/reboot-required ]; then
     echo "${OUTPUT}" | grep -q -F $'\U000F03D7'
 fi
 
+# Without apt-check (Debian), the default check counts the upgrades a
+# simulated dist-upgrade lists, and those from a -security suite
+OUTPUT=$(apt_check=/nonexistent PATH="$(pwd)/fixtures/updates-apt-get:${PATH}" ../scripts/updates)
+echo "${OUTPUT}" | grep -q -F '4/2</span>'
+
 # Nerd Fonts 3 dropped the legacy Material Design range (U+F500-U+FD46),
 # so no blocklet may use it.
 if LC_ALL=C grep -rnI -E "$(printf '\357[\224-\264][\200-\277]|\357\265[\200-\206]')" ../scripts; then
