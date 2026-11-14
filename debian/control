@@ -70,6 +70,7 @@ Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
     gnome-system-monitor,
+    perl,
     sysstat
 Description: Indicator to show CPU load.
  An i3xrocks indicator to show CPU load.
