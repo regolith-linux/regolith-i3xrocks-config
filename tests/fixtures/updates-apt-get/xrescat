@@ -1,0 +1,3 @@
+#!/bin/bash
+# Every resource falls back to the blocklet's default, the check command too
+echo "${2-}"

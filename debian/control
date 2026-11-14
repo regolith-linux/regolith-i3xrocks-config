@@ -224,7 +224,7 @@ Package: i3xrocks-updates
 Architecture: any
 Depends: ${misc:Depends},
     regolith-i3xrocks-config,
-    update-notifier-common,
+    ${updates:Depends}
 Breaks: fonts-nerd-font-bitstreamverasansmono (<< 3.5.1),
     fonts-nerd-font-cousine (<< 3.5.1),
     fonts-nerd-font-dejavusansmono (<< 3.5.1),
