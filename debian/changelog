@@ -1,3 +1,13 @@
+regolith-i3xrocks-config (6.0.1) focal; urgency=medium
+
+  [ Carlos Fernandez Sanz ]
+  * fix(debian): recommend tailscale instead of depending on it (#181)
+  * fix(updates): make i3xrocks-updates installable and working on Debian (#182)
+  * fix(debian): make i3xrocks-cpu-usage depend on perl (#184)
+  * fix: keep media and window titles with line breaks on one bar line (#185)
+
+ -- Regolith Linux <regolith.linux@gmail.com>  Sat, 14 Nov 2026 10:43:29 -0800
+
 regolith-i3xrocks-config (6.0.0) focal; urgency=medium
 
   [ anatolepain ]
