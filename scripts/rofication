@@ -27,9 +27,13 @@ BUTTON="${button:-}"
 export LABEL BUTTON
 
 get_info() {
-    response=$(echo "num" | nc -U /tmp/rofi_notification_daemon)
-    NOTIFICATION_COUNT=$(echo $response | cut -d, -f1)
-    CRIT_NOTIFICATION_COUNT=$(echo $response | cut -d, -f2)
+    # The daemon may not be running (yet, early in the session): then there are no
+    # notifications to show, rather than an error block.
+    response=$(echo "num" | nc -U /tmp/rofi_notification_daemon 2>/dev/null) || response=""
+    NOTIFICATION_COUNT=$(echo "$response" | cut -d, -f1)
+    CRIT_NOTIFICATION_COUNT=$(echo "$response" | cut -d, -f2)
+    [[ $NOTIFICATION_COUNT =~ ^[0-9]+$ ]] || NOTIFICATION_COUNT=0
+    [[ $CRIT_NOTIFICATION_COUNT =~ ^[0-9]+$ ]] || CRIT_NOTIFICATION_COUNT=0
 }
 
 get_info
