@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Ken Gilmer <kgilmer@gmail.com>
 Build-Depends: debhelper-compat (= 11),
     bc,
+    python3 <!nocheck>,
     silversearcher-ag,
     umockdev
 Standards-Version: 4.1.2

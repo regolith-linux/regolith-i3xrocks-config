@@ -1,0 +1,3 @@
+#!/bin/sh
+# Like xrescat with no resource database: the default, without a newline
+printf '%s' "$2"
