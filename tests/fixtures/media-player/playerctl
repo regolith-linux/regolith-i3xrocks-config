@@ -1,0 +1,7 @@
+#!/bin/bash
+# A player whose artist and title metadata contain line breaks
+case "$*" in
+  status) echo Playing ;;
+  "metadata artist") printf 'Artist\nSecond line' ;;
+  "metadata title") printf 'Title\r\nEvilColor' ;;
+esac

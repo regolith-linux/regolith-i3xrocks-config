@@ -101,6 +101,8 @@ name = (
     if hasattr(focused, "name") and focused.name is not None
     else sys.exit()
 )
+# keep the title on one line: the bar reads the block's lines as full text, short text and colour
+name = " ".join(name.splitlines())
 instance = focused.window_instance if hasattr(focused, "window_instance") else None
 if instance is None:
     sys.exit()

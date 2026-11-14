@@ -28,6 +28,10 @@ esac
 ARTIST="$(playerctl $PLAYER_ARGS metadata artist)"
 TITLE="$(playerctl $PLAYER_ARGS metadata title)"
 
+# keep them on one line: the bar reads the block's lines as full text, short text and colour
+ARTIST=${ARTIST//[$'\n\r']/ }
+TITLE=${TITLE//[$'\n\r']/ }
+
 # get half of the total allowed field width
 HALF_FIELD_WIDTH=$(( FIELD_WIDTH / 2 ))
 
