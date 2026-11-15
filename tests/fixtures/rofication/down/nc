@@ -1,0 +1,4 @@
+#!/bin/bash
+# The notification daemon isn't running: its socket is missing
+echo "nc: /tmp/rofi_notification_daemon: No such file or directory" >&2
+exit 1

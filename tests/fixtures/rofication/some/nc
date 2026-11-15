@@ -1,0 +1,4 @@
+#!/bin/bash
+# The daemon has 3 notifications, 1 of them critical
+cat >/dev/null
+printf '3,1'
